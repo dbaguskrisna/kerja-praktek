@@ -117,20 +117,23 @@
         $username = $_POST['username'];
         $password = md5(md5('alvian'.$_POST['password']));
         $jabatan = $_POST['jabatan'];
+        $decrypt = $_POST['password'];
 
-        $sql = "INSERT INTO user (email, password, jabatan)VALUES ('$username', '$password', '$jabatan')";
-    
+        $sql = "INSERT INTO user (email, password, jabatan, decrypt)VALUES('$username', '$password', '$jabatan', '$decrypt')";
+        
         if (mysqli_query($conn, $sql)) {
             echo "
                 <div class='alert alert-success text-center' role='alert'>
                     Menambahkan data user sukses
                 </div>
             ";
+            header("refresh: 3;");
         } else {
             echo "
             <div class='alert alert-danger text-center' role='alert'>".
                 $sql . "<br>" . mysqli_error($conn)
             ."</div>";
+            header("refresh: 3;");
         }
     }
 
@@ -140,9 +143,9 @@
         $username = $_POST['usernameUpdate'];
         $password = md5(md5('alvian'.$_POST['passwordUpdate']));
         $jabatan = $_POST['jabatanUpdate'];
+        $decrypt = $_POST['passwordUpdate'];
 
-        $sql = "UPDATE user SET email = '$username', password = '$password', jabatan='$jabatan' WHERE id = '$id'";
-        $data = mysqli_query($conn,$sql);
+        $sql = "UPDATE user SET email = '$username', password = '$password', jabatan='$jabatan', decrypt='$decrypt' WHERE id_user = '$id'";
 
         if (mysqli_query($conn, $sql)) {
             echo "
@@ -150,36 +153,33 @@
                     Update data user sukses
                 </div>
             ";
+            header("refresh: 3;");
         } else {
             echo "
             <div class='alert alert-danger text-center' role='alert'>".
                 $sql . "<br>" . mysqli_error($conn)
             ."</div>";
+            header("refresh: 3;");
         }
     }
 
     function deleteUser($data){
-        echo "
-        <div class='alert alert-success text-center' role='alert'>
-            Delete data user sukses
-        </div>
-            ";
+        
         global $conn;//untuk connect ke database
-        $id = $_POST["id"];
-        $sql = "DELETE FROM user WHERE id=$id";
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM user WHERE id_user=$id";
 
-        if(mysqli_query($conn,$sql)){
+        if (mysqli_query($conn, $sql)) {
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Delete data user sukses
-            </div>
-                ";
-        }else {
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data user sukses
+                </div>
+            ";
+        } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
         }
     }
 
