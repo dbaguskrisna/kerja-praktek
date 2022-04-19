@@ -175,11 +175,13 @@
                     Delete data user sukses
                 </div>
             ";
+            header("refresh: 3;");
         } else {
             echo "
             <div class='alert alert-danger text-center' role='alert'>".
                 $sql . "<br>" . mysqli_error($conn)
             ."</div>";
+            header("refresh: 3;");
         }
     }
 
@@ -232,18 +234,16 @@
 
         $sql = "UPDATE pembayaran_supplier SET jumlah_pembayaran = '$jumlahTransfer', tanggal = '$tanggal', total_barang='$totalBarang', status_pembayaran='$statusPembayaran', grade_barang='$gradeBarang', bank='$bank' WHERE id = '$id'";
         if (mysqli_query($conn, $sql)) {
-            header("Refresh:3");
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Update data user sukses
-            </div>
-                ";
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data user sukses
+                </div>
+            ";
         } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
         }
     }
 
@@ -278,21 +278,20 @@
         $namaKapal = $_POST['namaKapal'];
         $noKapal = $_POST['nomorKapal'];
 
-        $sql = "INSERT INTO kapal (nama_kapal,no_kapal) VALUES ('$namaKapal', '$noKapal')";
+        $sql = "INSERT INTO kapal (nama_kapal,nomor_kapal) VALUES ('$namaKapal', '$noKapal')";
     
         if (mysqli_query($conn, $sql)) {
-            header("Refresh:3");
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Update data user sukses
-            </div>
+                <div class='alert alert-success text-center' role='alert'>
+                    Tambah data kapal sukses
+                </div>
             ";
+            header("refresh: 3;");
         } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
         }
     }
 
@@ -302,23 +301,23 @@
             die("Connection failed: " . mysqli_connect_error());
         }
         
-        $id=$_POST['id'];
+        $id=$_POST['idUpdate'];
         $namaKapal = $_POST['namaKapal'];
         $noKapal = $_POST['nomorKapal'];
 
-        $sql = "UPDATE kapal SET nama_kapal = '$namaKapal', no_kapal = '$noKapal' WHERE id = '$id'";
+        $sql = "UPDATE kapal SET nama_kapal = '$namaKapal', nomor_kapal = '$noKapal' WHERE id_kapal = '$id'";
         
         if (mysqli_query($conn, $sql)) {
             header("Refresh:3");
             echo "
             <div class='alert alert-success text-center' role='alert'>
-                Update data user sukses
+                Update data kapal sukses
             </div>
                 ";
         } else {
             echo "
             <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
+                Update data kapal gagal
             </div>
             ";    
         }
@@ -327,20 +326,20 @@
 
     function deleteKapal($data){
         global $conn;//untuk connect ke database
-        $id = $_POST["id"];
-        $sql = "DELETE FROM kapal WHERE id=$id";
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM kapal WHERE id_kapal=$id";
 
         if(mysqli_query($conn,$sql)){
             header("Refresh:3");
             echo "
             <div class='alert alert-success text-center' role='alert'>
-                Delete data user sukses
+                Menghapus data kapal sukses
             </div>
                 ";
         }else {
             echo "
             <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
+                Menghapus data kapal gagal
             </div>
             ";    
         }
