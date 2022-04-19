@@ -376,12 +376,12 @@ if (isset($_POST["submit"])) {
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah Data</button>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
