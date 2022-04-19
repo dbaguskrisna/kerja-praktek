@@ -549,4 +549,79 @@
             ";    
         }
     }
+
+    function insertKontainer($data){
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        $namaKontainer = $_POST['namaKontainer'];
+        $nomorKontainer = $_POST['nomorKontainer'];
+
+        $sql = "INSERT INTO kontainer (nama_kontainer,nomor_seal) VALUES ('$namaKontainer', '$nomorKontainer')";
+    
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Tambah data kontainer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
+    function updateKontainer($data){
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        $id=$_POST['idUpdate'];
+        $namaKapal = $_POST['namaKontainer'];
+        $noKapal = $_POST['nomorSeal'];
+
+        $sql = "UPDATE kontainer SET nama_kontainer = '$namaKapal', nomor_seal = '$noKapal' WHERE id_kontainer = '$id'";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data kontainer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+       
+    }
+
+    function deleteKontainer($data){
+        global $conn;//untuk connect ke database
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM kontainer WHERE id_kontainer=$id";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data kontainer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
 ?>

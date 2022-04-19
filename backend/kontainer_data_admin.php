@@ -1,13 +1,54 @@
 <?php
 session_start();
+require 'function.php';
+
+$data = query("SELECT * FROM kontainer");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
   exit;
 }
+
+if (isset($_POST["submit"])) {
+  insertKontainer($_POST);
+} else if (isset($_POST["submitUpdate"])) {
+  updateKontainer($_POST);
+} else if (isset($_POST["submitDelete"])) {
+  deleteKontainer($_POST);
+}
+
 ?>
 
-
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Kontainer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nama Kontainer : </label>
+              <input type="text" class="form-control" name="namaKontainer" id="namaKontainer" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nomor Seal : </label>
+              <input type="text" class="form-control" name="nomorKontainer" id="nomorKontainer" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+          <button type="submit" id="submit" name="submit" class="btn btn-primary">Tambahkan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -256,28 +297,28 @@ if (!isset($_SESSION["admin"])) {
               </a>
             </li>
             <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Layout Options
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-                <a href="customer_payment_admin.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Customer Payments</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="supplier_payment_admin.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Supplier Payments</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Layout Options
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="customer_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Customer Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="supplier_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Supplier Payments</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a href="customer_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
@@ -340,7 +381,7 @@ if (!isset($_SESSION["admin"])) {
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="col-md-2">
-                    <a class="btn btn-primary" href="add_ship.php" role="button">Add Ship Data Data</a>
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
@@ -352,22 +393,113 @@ if (!isset($_SESSION["admin"])) {
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">Nama Kapal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Nomor Kapal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                              <th>Nama Kapal</th>
+                              <th>Nomor Kapal</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr role="row" class="even">
-                              <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                              <td>Internet
-                                Explorer 5.5
-                              </td>
-                              <td>
-                                <a class="btn btn-block btn-warning" href="add_supplier.php" role="button">Edit</a>
-                                <a class="btn btn-block btn-danger" href="#" role="button">Delete</a>
-                              </td>
-                            </tr>
+                            <form method="POST">
+                              <?php foreach ($data as $row) : ?>
+                                <tr role="row" class="even">
+                                  <td>
+                                    <?= $row["nama_kontainer"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["nomor_seal"] ?>
+                                  </td>
+                                  <td>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_kontainer"] ?>'>Edit</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_kontainer'] ?>">
+                                      Delete
+                                    </button>
+                                  </td>
+                                </tr>
+
+                                <div class="modal fade" id="exampleModalLong<?= $row['id_kontainer'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Hapus Data</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <form method="POST">
+                                        <div class="modal-body">
+                                          <?php
+                                          $id = $row['id_kontainer'];
+                                          $datas = query("SELECT * FROM kontainer where id_kontainer = $id");
+                                          ?>
+                                          <?php foreach ($datas as $rows) : ?>
+                                            <div class="card-body">
+                                              <div class="form-group">
+                                                <div class="form-group" hidden>
+                                                  <label for="exampleInputEmail1">ID: </label>
+                                                  <input type="text" class="form-control" id="idDelete" name="idDelete" value="<?= $rows['id_kontainer'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <p class="text-center">
+                                                    Apakah anda yakin ingin menghapus data ini ?
+                                                  </p>
+                                                </div>
+                                              </div>
+                                            <?php endforeach; ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                              <button type="submit" id="sumbitDelete" name="submitDelete" class="btn btn-primary">Hapus</button>
+                                            </div>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id_kontainer'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data User</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <form method="POST">
+                                        <div class="modal-body">
+                                          <?php
+                                          $id = $row['id_kontainer'];
+                                          $datas = query("SELECT * FROM kontainer where id_kontainer = $id");
+                                          ?>
+                                          <?php foreach ($datas as $rows) : ?>
+                                            <div class="card-body">
+                                              <div class="form-group">
+                                                <div class="form-group" hidden>
+                                                  <label for="exampleInputEmail1">ID: </label>
+                                                  <input type="text" class="form-control" id="idUpdate" name="idUpdate" value="<?= $rows['id_kontainer'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="exampleInputEmail1">Nama Kontainer : </label>
+                                                  <input type="text" class="form-control" name="namaKontainer" id="namaKontainer" value="<?= $rows['nama_kontainer'] ?>" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="exampleInputEmail1">Nomor Seal : </label>
+                                                  <input class="form-control" name="nomorSeal" id="nomorSeal" value="<?= $rows['nomor_seal'] ?>" required>
+                                                </div>
+                                              </div>
+                                            <?php endforeach; ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+                                              <button type="submit" id="submitUpdate" name="submitUpdate" class="btn btn-primary">Update Data</button>
+                                            </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              <?php endforeach; ?>
+                            </form>
                           </tbody>
                         </table>
                       </div>
@@ -442,6 +574,7 @@ if (!isset($_SESSION["admin"])) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+  <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 </body>
 
 </html>
