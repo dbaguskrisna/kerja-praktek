@@ -608,4 +608,84 @@
         }
     }
 
+    function insertCustomerData($data){
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        $nama = $_POST['nama'];
+        $alamat = $_POST['alamat'];
+        $nomor_telp = $_POST['nomor'];
+        $negara = $_POST['negara'];
+        $kodePos = $_POST['kodePos'];
+        $email = $_POST['email'];
+
+        $sql = "INSERT INTO customer (nama,alamat,nomor_telp,negara,kodepos,email) VALUES ('$nama', '$alamat', '$nomor_telp','$negara','$kodePos','$email')";
+    
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Tambah data customer 
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
+    function updateCustomerData($data){
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        
+        $idUpdate = $_POST['idUpdate'];
+        $nama = $_POST['nama'];
+        $alamat = $_POST['alamat'];
+        $nomor_telp = $_POST['nomor'];
+        $negara = $_POST['negara'];
+        $kodePos = $_POST['kodePos'];
+        $email = $_POST['email'];
+
+        $sql = "UPDATE customer SET nama = '$nama', alamat = '$alamat', nomor_telp='$nomor_telp', negara='$negara', kodepos='$kodePos', email='$email' WHERE id_customer = '$idUpdate'";
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data customer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
+    function deleteCustomerData($data){
+        global $conn;//untuk connect ke database
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM customer WHERE id_customer=$id";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data customer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
 ?>
