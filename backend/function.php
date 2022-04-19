@@ -24,89 +24,74 @@
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        $namaSupp = $_POST['namaSupplier'];
-        $alamat =$_POST['alamat'];
-        $noHp = $_POST['noTelp'];
 
-        $sql = "INSERT INTO supplier (nama_supplier, alamat, no_hp)VALUES ('$namaSupp', '$alamat', '$noHp')";
-    
-    
+        $namaSupplier = $_POST['namaSupplier'];
+        $alamat = $_POST['alamat'];
+        $noHP = $_POST['noHp'];
+
+        $sql = "INSERT INTO supplier (nama_supplier, alamat, no_hp)VALUES('$namaSupplier', '$alamat', '$noHP')";
+        
         if (mysqli_query($conn, $sql)) {
-            header("Refresh:3");
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Update data user sukses
-            </div>
-                ";
+                <div class='alert alert-success text-center' role='alert'>
+                    Menambahkan data supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
         } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Delete data user gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            header("refresh: 3;");
         }
     }
 
     function updateSupplier($data){
+        
         global $conn;//untuk connect ke database
         $id = $_POST['idSupplier'];
-        $namaSupp = $_POST['namaUpdate'];
-        $alamat =$_POST['alamatUpdate'];
-        $noHp = $_POST['noHp'];
+        $namaSupp = $_POST['namaSupplier'];
+        $alamat =$_POST['alamat'];
+        $noHp = $_POST['nomorHP'];
 
         $sql = "UPDATE supplier SET nama_supplier = '$namaSupp', alamat = '$alamat', no_hp='$noHp' WHERE id_supplier = '$id'";
-        $data = mysqli_query($conn,$sql);
 
-        if ($data == true) {
-            header("Refresh:3");
-
+        if (mysqli_query($conn, $sql)) {
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Update data user sukses
-            </div>
-                ";
-         
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
         } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Gagal update data user sukses
-            </div>
-                ";     
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            header("refresh: 3;");
         }
     }
 
     function deleteSupplier($data){
         global $conn;//untuk connect ke database
         $id = $_POST['idSupplier'];
-        var_dump($id);
         $sql = "DELETE FROM supplier WHERE id_supplier=$id";
 
-        if(mysqli_query($conn,$sql)){
-            header("Refresh:3");
-            echo "<p 
-            style='padding: 10px;
-            background-color: green;
-            color: white;
-            text-align:center;
-            '>
-            
-            Delete data success
-    
-            </p>";
-        }else {
-            header("Refresh:3");
-            echo "<p 
-            style='padding: 10px;
-            background-color: red;
-            color: white;
-            text-align:center;
-            '>
-            
-            Delete data fail
-            
-            </p>";   
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            header("refresh: 3;");
         }
-       
     }
 
     function insertUser($user){
@@ -164,10 +149,9 @@
     }
 
     function deleteUser($data){
-        
         global $conn;//untuk connect ke database
-        $id = $_POST["idDelete"];
-        $sql = "DELETE FROM user WHERE id_user=$id";
+        $id = $_POST["idSupplier"];
+        $sql = "DELETE FROM supplier WHERE id_user=$id";
 
         if (mysqli_query($conn, $sql)) {
             echo "
@@ -608,7 +592,7 @@
         global $conn;//untuk connect ke database
         $id = $_POST["idDelete"];
         $sql = "DELETE FROM kontainer WHERE id_kontainer=$id";
-        
+
         if (mysqli_query($conn, $sql)) {
             echo "
                 <div class='alert alert-success text-center' role='alert'>
