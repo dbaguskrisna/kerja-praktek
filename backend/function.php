@@ -782,4 +782,16 @@
         }
     }
 
+    function insertCustomerPayment(){
+        //Isi kodingan disini bisa copas kodingan dari function insert pembayaran supplier (tinggal di edit)
+    }
+
+    function updateCustomerPayment(){
+        //Isi kodingan disini bisa copas kodingan dari function update pembayaran supplier (tinggal di edit)
+    }
+
+    function deleteCustomerPayment(){
+        //Isi kodingan disini bisa copas kodingan dari function delete pembayaran supplier (tinggal di edit)
+    }
+
 ?>

@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT * FROM pembayaran_supplier INNER JOIN supplier ON pembayaran_supplier.supplier_id_supplier = supplier.id_supplier");
+$data = query("SELECT * FROM pembayaran_customer INNER JOIN customer ON pembayaran_customer.customer_id = customer.id_customer");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
@@ -19,6 +19,7 @@ if (isset($_POST["submit"])) {
 
 ?>
 
+<!-- Ini nanti di edit dan disesuaikan bisa lihat contoh supplier payment admin -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -33,6 +34,7 @@ if (isset($_POST["submit"])) {
           <div class="card-body">
             <div class="form-row">
               <div class="form-group col-md-3">
+                <!-- MINTA TOLONG EDIT DISINI -->
                 <label for="inputPassword4">Nomor Nota</label>
                 <input type="text" class="form-control" name="nomorNota" id="nomorNota" placeholder="Masukkan Nomor Nota" required>
               </div>
@@ -412,7 +414,7 @@ if (isset($_POST["submit"])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Supplier Payment Admin</h1>
+              <h1 class="m-0">Customer Payment Admin</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -448,18 +450,16 @@ if (isset($_POST["submit"])) {
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th>Nomor Nota</th>
                               <th>Tanggal</th>
+                              <th>Nomer Nota</th>
                               <th>Jumlah Pembayaran</th>
                               <th>Total Barang</th>
-                              <th>Status Pembayaran</th>
                               <th>Bank</th>
-                              <th>Supplier</th>
+                              <th>Status Pembayaran</th>
+                              <th>Customer</th>
                               <th>Nama Barang</th>
                               <th>Jenis Barang</th>
                               <th>Grade</th>
-                              <th>Asal</th>
-                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -467,28 +467,29 @@ if (isset($_POST["submit"])) {
                               <?php foreach ($data as $row) : ?>
                                 <tr role="row" class="even">
                                   <td>
-                                    <?= $row["nomor_nota"] ?>
+                                    <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["tanggal"] ?>
+                                    <?= $row["nomor_nota"] ?>
                                   </td>
                                   <td>
                                     <?= $row["jumlah_pembayaran"] ?>
                                   </td>
+                               
                                   <td>
                                     <?= $row["total_barang"] ?>
-                                  </td>
-                                  <td>
-                                    <?= $row["status_pembayaran"] ?>
                                   </td>
                                   <td>
                                     <?= $row["bank"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["nama_supplier"] ?>
+                                    <?= $row["status_pembayaran"] ?>
                                   </td>
                                   <td>
                                     <?= $row["nama"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["nama_barang"] ?>
                                   </td>
                                   <td>
                                     <?= $row["jenis_barang"] ?>
@@ -497,16 +498,13 @@ if (isset($_POST["submit"])) {
                                     <?= $row["grade"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["asal"] ?>
-                                  </td>
-                                  <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>'>Edit</button>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_pembayaran'] ?>">
                                       Delete
                                     </button>
                                   </td>
                                 </tr>
-
+                              <!-- Ini nanti di edit dan disesuaikan bisa lihat contoh supplier payment admin -->
                                 <div class="modal fade" id="exampleModalLong<?= $row['id_pembayaran'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -546,7 +544,7 @@ if (isset($_POST["submit"])) {
                                     </div>
                                   </div>
                                 </div>
-
+                                <!-- Ini nanti di edit dan disesuaikan bisa lihat contoh supplier payment admin -->
                                 <div class="modal fade bd-example-modal-lg-edit<?= $row['id_pembayaran'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
