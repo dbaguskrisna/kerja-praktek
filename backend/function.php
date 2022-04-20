@@ -782,16 +782,97 @@
         }
     }
 
-    function insertCustomerPayment(){
+    function insertCustomerPayment($user){
         //Isi kodingan disini bisa copas kodingan dari function insert pembayaran supplier (tinggal di edit)
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $jumlah_pembayaran = $_POST['jumlahPembayaran'];
+        $tanggal = $_POST['tanggal'];
+        $total_barang = $_POST['totalBarang'];
+        $bank = $_POST['bank'];
+        $status_pembayaran = $_POST['statusPembayaran'];
+        $customer = $_POST['customer'];
+        $nomor_nota = $_POST['nomorNota'];
+        $nama_barang = $_POST['namaBarang'];
+        $jenis_barang = $_POST['jenisBarang'];
+        $grade = $_POST['grade'];
+
+        $sql = "INSERT INTO pembayaran_customer (jumlah_pembayaran, tanggal, total_barang,bank,status_pembayaran,customer_id,nomor_nota,nama_barang,jenis_barang,grade)VALUES('$jumlah_pembayaran', '$tanggal', '$total_barang','$bank','$status_pembayaran','$customer','$nomor_nota', '$nama_barang','$jenis_barang','$grade')";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Menambahkan data pembayaran customer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            
+        }
     }
 
-    function updateCustomerPayment(){
+    function updateCustomerPayment($user){
         //Isi kodingan disini bisa copas kodingan dari function update pembayaran supplier (tinggal di edit)
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $id_pembayaran = $_POST['idPembayaran'];
+        $jumlah_pembayaran = $_POST['jumlahPembayaran'];
+        $tanggal = $_POST['tanggal'];
+        $total_barang = $_POST['totalBarang'];
+        $bank = $_POST['bank'];
+        $status_pembayaran = $_POST['statusPembayaran'];
+        $customer = $_POST['customer'];
+        $nomor_nota = $_POST['nomorNota'];
+        $nama_barang = $_POST['namaBarang'];
+        $jenis_barang = $_POST['jenisBarang'];
+        $grade = $_POST['grade'];
+
+        $sql = "UPDATE pembayaran_customer SET jumlah_pembayaran='$jumlah_pembayaran',tanggal = '$tanggal', total_barang='$total_barang', bank='$bank', status_pembayaran='$status_pembayaran', customer_id  = '$customer', nomor_nota = '$nomor_nota',nama_barang='$nama_barang', jenis_barang='$jenis_barang', grade='$grade' WHERE id_pembayaran = '$id_pembayaran'";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data pembayaran costumer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
     }
 
-    function deleteCustomerPayment(){
+    function deleteCustomerPayment($data){
         //Isi kodingan disini bisa copas kodingan dari function delete pembayaran supplier (tinggal di edit)
+        global $conn;//untuk connect ke database
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM pembayaran_customer WHERE id_pembayaran=$id";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data pembayaran customer sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
     }
 
 ?>
