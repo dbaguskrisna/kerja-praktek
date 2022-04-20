@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT * FROM user");
+$data = query("SELECT * FROM pembayaran_supplier INNER JOIN supplier ON pembayaran_supplier.supplier_id_supplier = supplier.id_supplier");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
@@ -390,7 +390,7 @@ if (isset($_POST["submitDelete"])){
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -407,10 +407,18 @@ if (isset($_POST["submitDelete"])){
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Username</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">password</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Jabatan</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                              <th>Nomor Nota</th>
+                              <th>Tanggal</th>
+                              <th>Jumlah Pembayaran</th>
+                              <th>Total Barang</th>
+                              <th>Status Pembayaran</th>
+                              <th>Bank</th>
+                              <th>Supplier</th>
+                              <th>Nama Barang</th>
+                              <th>Jenis Barang</th>
+                              <th>Grade</th>
+                              <th>Asal</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -418,20 +426,82 @@ if (isset($_POST["submitDelete"])){
                               <?php foreach ($data as $row) : ?>
                                 <tr role="row" class="even">
                                   <td>
-                                    <?= $row["email"] ?>
+                                    <?= $row["nomor_nota"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["password"] ?>
+                                    <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["jabatan"] ?>
+                                    <?= $row["jumlah_pembayaran"] ?>
                                   </td>
                                   <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id"] ?>'>Edit</button>
+                                    <?= $row["total_barang"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["status_pembayaran"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["bank"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["nama"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["jenis"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["grade"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["asal"] ?>
+                                  </td>
+                                  <td>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>'>Edit</button>
                                     <button type="submit" id="submitDelete" name="submitDelete" class="btn btn-danger">Hapus Data</button>
                                   </td>
                                 </tr>
-                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+                                <div class="modal fade" id="exampleModalLong<?= $row['id_pembayaran'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Hapus Data</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <form method="POST">
+                                        <div class="modal-body">
+                                          <?php
+                                          $id = $row['id_user'];
+                                          $datas = query("SELECT * FROM user where id_user = $id");
+                                          ?>
+                                          <?php foreach ($datas as $rows) : ?>
+                                            <div class="card-body">
+                                              <div class="form-group">
+                                                <div class="form-group" hidden>
+                                                  <label for="exampleInputEmail1">ID: </label>
+                                                  <input type="text" class="form-control" id="idDelete" name="idDelete" value="<?= $rows['id_user'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <p class="text-center">
+                                                    Apakah anda yakin ingin menghapus data ini ?
+                                                  </p>
+                                                </div>
+                                              </div>
+                                            <?php endforeach; ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                              <button type="submit" id="sumbitDelete" name="submitDelete" class="btn btn-primary">Hapus</button>
+                                            </div>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id_pembayaran'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">

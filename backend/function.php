@@ -688,4 +688,98 @@
         }
     }
 
+    function insertPembayaranSupplier($user){
+
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $nomor_nota = $_POST['nomorNota'];
+        $tanggal = $_POST['tanggal'];
+        $jumlah_pembayaran = $_POST['jumlahPembayaran'];
+        $total_barang = $_POST['totalBarang'];
+        $status_pembayaran = $_POST['statusPembayaran'];
+        $bank = $_POST['bank'];
+        $supplier = $_POST['supplier'];
+        $nama_barang = $_POST['namaBarang'];
+        $jenis_barang = $_POST['jenisBarang'];
+        $grade_barang = $_POST['gradeBarang'];
+        $asal = $_POST['asalBarang'];
+
+        $sql = "INSERT INTO pembayaran_supplier (nomor_nota, tanggal, jumlah_pembayaran, total_barang,status_pembayaran,bank,supplier_id_supplier,nama,jenis_barang,grade,asal)VALUES('$nomor_nota', '$tanggal', '$jumlah_pembayaran', '$total_barang','$status_pembayaran','$bank','$supplier', '$nama_barang','$jenis_barang','$grade_barang','$asal')";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Menambahkan data pembayaran supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            
+        }
+    }
+
+    function updatePembayaranSupplier($user){
+
+        global $conn; 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $id_pembayaran = $_POST['idPembayaran'];
+        $nomor_nota = $_POST['nomorNota'];
+        $tanggal = $_POST['tanggal'];
+        $jumlah_pembayaran = $_POST['jumlahPembayaran'];
+        $total_barang = $_POST['totalBarang'];
+        $status_pembayaran = $_POST['statusPembayaran'];
+        $bank = $_POST['bank'];
+        $supplier = $_POST['supplier'];
+        $nama_barang = $_POST['namaBarang'];
+        $jenis_barang = $_POST['jenisBarang'];
+        $grade_barang = $_POST['grade'];
+        $asal = $_POST['asalBarang'];
+
+        $sql = "UPDATE pembayaran_supplier SET nomor_nota = '$nomor_nota', tanggal = '$tanggal', jumlah_pembayaran='$jumlah_pembayaran', total_barang='$total_barang', status_pembayaran='$status_pembayaran', bank='$bank', supplier_id_supplier = '$supplier', nama='$nama_barang', jenis_barang='$jenis_barang', grade='$grade_barang', asal='$asal' WHERE id_pembayaran = '$id_pembayaran'";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data pembayaran supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
+    function deletePembayaranSupplier($data){
+        global $conn;//untuk connect ke database
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM pembayaran_supplier WHERE id_pembayaran=$id";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data pembayaran supplier sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+        }
+    }
+
 ?>
