@@ -185,7 +185,6 @@
 
         $sql = "INSERT INTO pembayaran_supplier (jumlah_pembayaran, tanggal, total_barang,status_pembayaran,grade_barang,bank,supplier_id_supplier)VALUES ('$jumlahTransfer', '$tanggal', '$totalBarang', '$statusPembayaran', '$gradeBarang','$bank','$namaSupplier')";
     
-    
         if (mysqli_query($conn, $sql)) {
             header("Refresh:3");
             echo "
@@ -336,36 +335,32 @@
             die("Connection failed: " . mysqli_connect_error());
         }
         
-        $container = $_POST['container'];
+        $noNota = $_POST['noNota'];
         $tanggal = $_POST['tanggal'];
-        $namaBarang = $_POST['nama_barang'];
-        $jenisBarang = $_POST['jenis_barang'];
-        $gradeBarang = $_POST['grade_barang'];
         $truck = $_POST['truck'];
-        $nomorSeal = $_POST ['nomor_seal'];
-        $asalBarang = $_POST['asal_barang'];
+        $namaBarang = $_POST['namaBarang'];
+        $jenisBarang = $_POST['jenis'];
         $coly=$_POST['coly'];
         $gross=$_POST['gross'];
         $netto=$_POST['netto'];
-        $supplier=$_POST['supplier'];
-        
+        $kontainer = $_POST['kontainer'];
+        $grade = $_POST['gradeBarang'];
+        $asal = $_POST['asalBarang'];
 
-        $sql = "INSERT INTO barang_masuk (container,tanggal,nama_barang,jenis_barang,grade_barang,truck,nomor_seal,asal_barang,coly,gross,netto,supplier_id_supplier) VALUES ('$container', '$tanggal', '$namaBarang', '$jenisBarang', '$gradeBarang', '$truck', '$nomorSeal', '$asalBarang', '$coly', '$gross', '$netto','$supplier')";
-        var_dump($sql);
+        $sql = "INSERT INTO barang_masuk (tanggal,truck,coly,gross,netto,id_pembayaran_supplier,id_kontainer,nama,jenis_barang,grade,asal) VALUES ('$tanggal', '$truck', '$coly', '$gross', '$netto', '$noNota', '$kontainer', '$namaBarang', '$jenisBarang','$grade','$asal')";
+
         if (mysqli_query($conn, $sql)) {
-            header("Refresh:3");
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Tambah data Stock in sukses
-            </div>
+                <div class='alert alert-success text-center' role='alert'>
+                    Menambahk data stok sukses
+                </div>
             ";
+            header("refresh: 3;");
         } else {
-            
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Tambah data Stock in gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
         }
     }
 
@@ -375,56 +370,56 @@
             die("Connection failed: " . mysqli_connect_error());
         }
         
-        $id=$_POST['id'];
-        $supplier=$_POST['id_supplier'];
-        $conatiner = $_POST['container'];
+        $idEdit = $_POST['idUpdate'];
+        $noNota = $_POST['noNota'];
         $tanggal = $_POST['tanggal'];
-        $namaBarang = $_POST['nama_barang'];
-        $jenisBarang = $_POST['jenis_barang'];
-        $gradeBarang = $_POST['grade_barang'];
         $truck = $_POST['truck'];
-        $nomorSeal = $_POST ['nomor_seal'];
-        $asalBarang = $_POST['asal_barang'];
+        $namaBarang = $_POST['namaBarang'];
+        $jenisBarang = $_POST['jenis'];
         $coly=$_POST['coly'];
         $gross=$_POST['gross'];
         $netto=$_POST['netto'];
+        $kontainer = $_POST['kontainer'];
+        $grade = $_POST['grade'];
+        $asal = $_POST['asalBarang'];
 
-        $sql = "UPDATE barang_masuk SET supplier_id_supplier = '$supplier', container = '$conatiner', tanggal = '$tanggal',nama_barang = '$namaBarang', jenis_barang = '$jenisBarang',grade_barang = '$gradeBarang', truck = '$truck',nomor_seal = '$nomorSeal', asal_barang = '$asalBarang',coly = '$coly', gross = '$gross',netto = '$netto' WHERE id = '$id'";
+        $sql = "UPDATE barang_masuk SET tanggal = '$tanggal', truck = '$truck', coly = '$coly',gross = '$gross', netto = '$netto',id_pembayaran_supplier = '$noNota', id_kontainer = '$kontainer',nama = '$namaBarang', jenis_barang = '$jenisBarang',grade = '$grade', asal='$asal' WHERE id_barang_masuk = '$idEdit'";
+
         if (mysqli_query($conn, $sql)) {
-            header("Refresh:3");
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Update data stock in sukses
-            </div>
-                ";
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data barang sukses
+                </div>
+            ";
+            var_dump($sql);
         } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Update data stock in gagal
-            </div>
-            ";    
+                <div class='alert alert-danger text-center' role='alert'>".
+                    $sql . "<br>" . mysqli_error($conn)
+                ."</div>";
+            header("refresh: 3;");
         }
        
     }
 
     function deleteStockin($data){
         global $conn;//untuk connect ke database
-        $id = $_POST["id"];
-        $sql = "DELETE FROM barang_masuk WHERE id=$id";
+        $id = $_POST['idDelete'];
+        $sql = "DELETE FROM barang_masuk WHERE id_barang_masuk=$id";
 
-        if(mysqli_query($conn,$sql)){
-            header("Refresh:2");
+        if (mysqli_query($conn, $sql)) {
             echo "
-            <div class='alert alert-success text-center' role='alert'>
-                Delete data Stock in sukses
-            </div>
-                ";
-        }else {
+                <div class='alert alert-success text-center' role='alert'>
+                    Delete data barang masuk sukses
+                </div>
+            ";
+            header("refresh: 3;");
+        } else {
             echo "
-            <div class='alert alert-danger text-center' role='alert'>
-                Delete data Stock in gagal
-            </div>
-            ";    
+            <div class='alert alert-danger text-center' role='alert'>".
+                $sql . "<br>" . mysqli_error($conn)
+            ."</div>";
+            header("refresh: 3;");
         }
     }
 

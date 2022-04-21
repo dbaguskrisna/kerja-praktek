@@ -441,10 +441,10 @@ if (isset($_POST["submitPembayaran"])) {
                                             </div>
                                         </div>
                                       <?php endforeach; ?>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-                                        <button type="submit" id='submitUpdate' name='submitUpdate' class="btn btn-primary">Update Pembayaran</button>
-                                      </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+                                          <button type="submit" id='submitUpdate' name='submitUpdate' class="btn btn-primary">Update Pembayaran</button>
+                                        </div>
                                       </form>
                                     </div>
                                   </div>

@@ -24,7 +24,7 @@ if (isset($_POST["submit"])) {
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Customer Payment</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -34,7 +34,7 @@ if (isset($_POST["submit"])) {
           <div class="card-body">
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Pembayaran Customer :</label>
+                <label for="inputPassword4">Jumlah Pembayaran: </label>
                 <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
               </div>
               <div class="form-group col-md-4">
@@ -68,8 +68,13 @@ if (isset($_POST["submit"])) {
                 </select>
               </div>
               <div class="form-group col-md-3">
-                <label for="inputPassword4">Nomor Nota</label>
-                <input type="text" class="form-control" name="nomorNota" id="nomorNota" placeholder="Masukkan Nomor Nota" required>
+                <label for="jabatan">Nomor Nota : </label>
+                <select class="form-control" name="nomorNota" id="nomorNota">
+                  <?php $dataCustomer = query("SELECT * FROM pembayaran_customer"); ?>
+                  <?php foreach ($dataCustomer as $rowCustomer) : ?>
+                    <option value="<?= $rowCustomer['id_pembayaran'] ?>"><?= $rowCustomer['nomor_nota'] ?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
             </div>
             <div class="form-row">

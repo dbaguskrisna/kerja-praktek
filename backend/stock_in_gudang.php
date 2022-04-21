@@ -55,7 +55,6 @@ if (isset($_POST["submitStockin"])) {
             <label for="exampleInputEmail1">Nama Barang</label>
             <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="masukkan Nama Barang">
           </div>
-
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="exampleInputEmail1">Jenis Barang</label>
@@ -460,7 +459,6 @@ if (isset($_POST["submitStockin"])) {
                                               <label for="exampleInputEmail1">Nama Barang</label>
                                               <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="masukkan Nama Barang" value="<?= $row['nama_barang'] ?>">
                                             </div>
-
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Jenis Barang</label>
@@ -468,44 +466,42 @@ if (isset($_POST["submitStockin"])) {
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Grade Barang</label>
-                                                <input type="text" class="form-control" id="grade_barang" name="grade_barang" placeholder="masukkan Nama Barang"  value="<?= $row['grade_barang'] ?>">
+                                                <input type="text" class="form-control" id="grade_barang" name="grade_barang" placeholder="masukkan Nama Barang" value="<?= $row['grade_barang'] ?>">
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Supplier</label>
-                                                <input type="text" class="form-control" id="supplier" name="supplier" placeholder="masukkan Nama Barang"  value="<?= $row['nama_supplier'] ?>" readonly>
+                                                <input type="text" class="form-control" id="supplier" name="supplier" placeholder="masukkan Nama Barang" value="<?= $row['nama_supplier'] ?>" readonly>
                                               </div>
                                               <div class="form-group col-md-4" hidden>
                                                 <label for="exampleInputEmail1">Supplier</label>
-                                                <input type="text" class="form-control" id="id_supplier" name="id_supplier" placeholder="masukkan Nama Barang"  value="<?= $row['id_supplier'] ?>" readonly>
+                                                <input type="text" class="form-control" id="id_supplier" name="id_supplier" placeholder="masukkan Nama Barang" value="<?= $row['id_supplier'] ?>" readonly>
                                               </div>
                                             </div>
-
                                             <div class="form-group">
                                               <label for="exampleInputEmail1">Asal Barang</label>
                                               <input type="text" class="form-control" id="asal_barang" name="asal_barang" placeholder="masukkan Nama Barang" value="<?= $row['asal_barang'] ?>">
                                             </div>
-
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Coly</label>
-                                                <input type="text" class="form-control" id="coly" name="coly" placeholder="masukkan Jumlah Coly"  value="<?= $row['coly'] ?>">
+                                                <input type="text" class="form-control" id="coly" name="coly" placeholder="masukkan Jumlah Coly" value="<?= $row['coly'] ?>">
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Gross</label>
-                                                <input type="text" class="form-control" id="gross" name="gross" placeholder="masukkan Jumlah Gross"  value="<?= $row['gross'] ?>">
+                                                <input type="text" class="form-control" id="gross" name="gross" placeholder="masukkan Jumlah Gross" value="<?= $row['gross'] ?>">
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="exampleInputEmail1">Netto</label>
-                                                <input type="text" class="form-control" id="netto" name="netto" placeholder="masukkan Jumlah Netto"  value="<?= $row['netto'] ?>">
+                                                <input type="text" class="form-control" id="netto" name="netto" placeholder="masukkan Jumlah Netto" value="<?= $row['netto'] ?>">
                                               </div>
                                             </div>
                                         </div>
-                                      <?php endforeach; ?>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-                                        <button type="submit" id='submitUpdate' name='submitUpdate' class="btn btn-primary">Update Stockin</button>
-                                      </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                          <button type="submit" id="submitUpdate" name="submitDelete" class="btn btn-primary">Hapus</button>
+                                        </div>
                                       </form>
+                                    <?php endforeach; ?>
                                     </div>
                                   </div>
                                 </div>
