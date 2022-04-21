@@ -11,7 +11,6 @@ if (!isset($_SESSION["admin"])) {
 
 if (isset($_POST["submit"])) {
   insertUser($_POST);
-  var_dump($_POST);
 } else if (isset($_POST["submitUpdate"])) {
   updateUser($_POST);
 } else if (isset($_POST["submitDelete"])) {

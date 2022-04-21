@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT * FROM user");
+$data = query("SELECT * FROM barang_masuk");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
@@ -407,10 +407,18 @@ if (isset($_POST["submitDelete"])){
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Username</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">password</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Jabatan</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                              <th>Tanggal</th>
+                              <th>Truck</th>
+                              <th>Coly</th>
+                              <th>Gross</th>
+                              <th>Netto</th>
+                              <th>Status</th>
+                              <th>Nomor Nota</th>
+                              <th>Kontainer</th>
+                              <th>Nama Barang</th>
+                              <th>Jenis Barang</th>
+                              <th>Grade Barang</th>
+                              <th>Asal Barang</th>
                             </tr>
                           </thead>
                           <tbody>

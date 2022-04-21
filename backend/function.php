@@ -150,8 +150,8 @@
 
     function deleteUser($data){
         global $conn;//untuk connect ke database
-        $id = $_POST["idSupplier"];
-        $sql = "DELETE FROM supplier WHERE id_user=$id";
+        $id = $_POST["idDelete"];
+        $sql = "DELETE FROM user WHERE id_user=$id";
 
         if (mysqli_query($conn, $sql)) {
             echo "
