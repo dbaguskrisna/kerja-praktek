@@ -34,7 +34,7 @@ if (isset($_POST["submit"])) {
           <div class="card-body">
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Halo Dani</label>
+                <label for="inputPassword4">Pembayaran Customer :</label>
                 <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
               </div>
               <div class="form-group col-md-4">
