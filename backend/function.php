@@ -440,16 +440,15 @@
         $destination = $_POST['destination'];
         $description = $_POST['description'];
         $packing= $_POST['packing'];
-        $namaBarang=$_POST['nama_barang'];
-        $jenisBarang=$_POST['jenis_barang'];
-        $gradeBarang = $_POST['grade_barang'];
         $freight = $_POST['freight'];
+        $id_barang =$_POST['barang_id'];
         $id_kapal= $_POST['kapal_id'];
         $pembayaranCustomer= $_POST['pembayaran_customer_id'];
+        $kontainer = $_POST['kontainer_id'];
 
 
 
-        $sql = "INSERT INTO barang_keluar (tanggal,contract_no,consigne,notify_party,port_of_loading,country_of_origin,destination,description,packing,nama_barang,jenis_barang,jenis_barang,supplier_id_supplier,grade_barang,freight,kapal_id,pembayaran_customer_id) VALUES ('$tanggal', '$contractno', '$consigne', '$notifyParty', '$portofloading', '$countryoforigin', '$destination', '$description', '$packing', '$namaBarang', '$jenisBarang',$gradeBarang, '$freight', '$id_kapal', '$pembayaranCustomer')";
+        $sql = "INSERT INTO barang_keluar (tanggal,contract_no,consigne,notify_party,port_of_loading,country_of_origin,destination,description,packing,freight,id_barang,id_kapal ,id_pembayaran_customer ,id_kontainer ) VALUES ('$tanggal', '$contractno', '$consigne', '$notifyParty', '$portofloading', '$countryoforigin', '$destination', '$description', '$packing','$freight','$id_barang', '$id_kapal', '$pembayaranCustomer'$kontainer)";
     
         if (mysqli_query($conn, $sql)) {
             header("Refresh:3");
@@ -482,14 +481,13 @@
         $destination = $_POST['destination'];
         $description = $_POST['description'];
         $packing= $_POST['packing'];
-        $namaBarang=$_POST['nama_barang'];
-        $jenisBarang=$_POST['jenis_barang'];
-        $alamatTujuan = $_POST['alamat_tujuan'];
+        $id_barang=$_POST['barang_id'];
         $freight = $_POST['freight'];
         $id_kapal= $_POST['kapal_id'];
         $pembayaranCustomer= $_POST['pembayaran_customer_id'];
+        $id_kontainer = $_POST['kontainer_id'];
 
-        $sql = "UPDATE barang_keluar SET tanggal = '$tanggal', contract_no = '$consigne',consigne = '$notifyParty', jenis_barang = '$portofloading',grade_barang = '$countryoforigin', truck = '$destination',nomorSeal = '$description', asal_barang = '$packing',coly = '$namaBarang', gross = '$jenisBarang',netto = '$alamatTujuan',coly = '$freight', gross = '$id_kapal',netto = '$pembayaranCustomer', WHERE id = '$id'";
+        $sql = "UPDATE barang_keluar SET tanggal = '$tanggal', contract_no = '$contractno',consigne ='$consigne',notify_party='$notifyParty', port_of_loading = '$portofloading',country_of_origin = '$countryoforigin', destination = '$destination',description = '$description', packing = '$packing',freight = '$freight',id_barang  = '$id_barang', id_kapal  = '$id_kapal',id_pembayaran_customer  = '$pembayaranCustomer',id_kontainer ='$id_kontainer' WHERE id = '$id'";
         
         if (mysqli_query($conn, $sql)) {
             header("Refresh:3");
