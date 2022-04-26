@@ -20,8 +20,6 @@ if (isset($_POST["submitStockout"])) {
 
 ?>
 
-
-
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -100,8 +98,6 @@ if (isset($_POST["submitStockout"])) {
               <textarea  type="text" class="form-control" id="description" name="description" placeholder="masukkan Nama Barang"></textarea>
             </div>
           </div>
-
-
         </div>
     </div>
     <div class="modal-footer">
@@ -186,7 +182,6 @@ if (isset($_POST["submitStockout"])) {
             </div>
           </div>
           <div class="form-group">
-
             <div class="form-group col-md-4">
               <label for="exampleInputEmail1">Deskripsi</label>
               <textarea  type="text" class="form-control" id="description" name="description" placeholder="masukkan Deskripsi"></textarea>
@@ -475,16 +470,16 @@ if (isset($_POST["submitStockout"])) {
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">Tanggal </th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Nama Truk</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Nomor Kontainer</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Nomor Seal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Tujuan Export</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Jumlah Karung</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Berat Bersih</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Nama Kapal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Nomor Kapal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                              <th>Tanggal </th>
+                              <th>Nama Truk</th>
+                              <th>Nomor Kontainer</th>
+                              <th>Nomor Seal</th>
+                              <th>Tujuan Export</th>
+                              <th>Jumlah Karung</th>
+                              <th>Berat Bersih</th>
+                              <th>Nama Kapal</th>
+                              <th>Nomor Kapal</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>

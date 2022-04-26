@@ -18,7 +18,6 @@ function login ($submitdata){
     $checkUsers = mysqli_query($conn, "SELECT * FROM user WHERE email = '$email'");
 
     if ( mysqli_num_rows($checkUsers) === 1 ){
-       
         $row = mysqli_fetch_assoc( $checkUsers ); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan dimasukkan ke dalam $row
         if($pass == $row["password"]){// Berguna untuk mengecek password jika sama
            if($row["jabatan"] == "admin"){
@@ -34,8 +33,6 @@ function login ($submitdata){
                 $_SESSION["user"] = $row['email'];
                 header("location: ../backend/staff_kantor.php");
            };
-         
-          
         } else {
             echo "<p 
             style='padding: 10px;
