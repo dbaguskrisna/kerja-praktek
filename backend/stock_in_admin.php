@@ -443,8 +443,15 @@ if (isset($_POST["submit"])) {
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                  <div class="row">
+                    <div class="col-sm">
+                      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                    </div>
+                    <div class="col-sm d-flex justify-content-end">
+                      <a href="cetak_stock_in.php">
+                        <button type="button" class="btn btn-success mb-2 ">Cetak Laporan</button>
+                      </a>
+                    </div>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
