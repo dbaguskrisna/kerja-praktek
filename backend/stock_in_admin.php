@@ -608,10 +608,10 @@ if (isset($_POST["submit"])) {
                                                 <div class="form-group col-md-3">
                                                   <label for="status_pembayaran">Grade : </label>
                                                   <select class="form-control" name="grade" id="grade">
-                                                    <option value="A" <?= ($rows['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
-                                                    <option value="B" <?= ($rows['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
-                                                    <option value="C" <?= ($rows['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
-                                                    <option value="D" <?= ($rows['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
+                                                    <option value="A" <?= ($rowEdit['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
+                                                    <option value="B" <?= ($rowEdit['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
+                                                    <option value="C" <?= ($rowEdit['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
+                                                    <option value="D" <?= ($rowEdit['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
                                                   </select>
                                                 </div>
                                               </div>
@@ -627,6 +627,10 @@ if (isset($_POST["submit"])) {
                                                 <div class="form-group col-md-4">
                                                   <label for="exampleInputEmail1">Netto : </label>
                                                   <input type="text" class="form-control" name="netto" id="netto" value="<?= $rowEdit['netto'] ?>" required>
+                                                </div>
+                                                <div class="form-group col-md-4" hidden>
+                                                  <label for="exampleInputEmail1">Netto : </label>
+                                                  <input type="text" class="form-control" name="netto2" id="netto2" value="<?= $rowEdit['netto'] ?>" required>
                                                 </div>
                                               </div>
                                               <div class="form-row">
