@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT * FROM user");
+$data = query("SELECT * FROM master_barang");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
@@ -407,10 +407,11 @@ if (isset($_POST["submitDelete"])){
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Username</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">password</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Jabatan</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Action</th>
+                              <th>Nama</th>
+                              <th>Jenis Barang</th>
+                              <th>Grade</th>
+                              <th>Asal</th>
+                              <th>Stok</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -418,70 +419,21 @@ if (isset($_POST["submitDelete"])){
                               <?php foreach ($data as $row) : ?>
                                 <tr role="row" class="even">
                                   <td>
-                                    <?= $row["email"] ?>
+                                    <?= $row["nama"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["password"] ?>
+                                    <?= $row["jenis_barang"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["jabatan"] ?>
+                                    <?= $row["grade"] ?>
                                   </td>
                                   <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id"] ?>'>Edit</button>
-                                    <button type="submit" id="submitDelete" name="submitDelete" class="btn btn-danger">Hapus Data</button>
+                                    <?= $row["asal"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["stok"] ?>
                                   </td>
                                 </tr>
-                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data User</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <form method="POST">
-                                        <div class="modal-body">
-                                          <?php
-                                            $id = $row['id'];
-                                            $datas = query("SELECT * FROM user where id = $id");
-                                          ?>
-                                          <?php foreach ($datas as $rows) : ?>
-                                          <div class="card-body">
-                                          <div class="form-group">
-                                            <div class="form-group">
-                                              <label for="exampleInputEmail1">ID: </label>
-                                              <input type="text" class="form-control" id="idUpdate" name="idUpdate" value="<?= $rows['id'] ?>" readonly="true">
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="exampleInputEmail1">Username : </label>
-                                              <input type="text" class="form-control" name="usernameUpdate" id="username" value="<?= $row['email'] ?>">
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="exampleInputEmail1">Password : </label>
-                                              <p style="font-size:12px"><i>untuk mengganti password. silahkan masukkan password seperti biasa</i></p>
-                                              <input type="text" class="form-control" name="passwordUpdate" id="password"  value="<?= $row['password'] ?>">
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="jabatan">Jabatan : </label>
-                                              <select class="form-control" name="jabatanUpdate" id="jabatanUpdate">
-                                                <option value="admin" <?=($row['jabatan']=='admin')?'selected="selected"':''?>>admin</option>
-                                                <option value="staff_gudang" <?=($row['jabatan']=='staff_gudang')?'selected="selected"':''?>>staff gudang</option>
-                                                <option value="staff_kantor" <?=($row['jabatan']=='staff_kantor')?'selected="selected"':''?>>staff kantor</option>
-                                              </select>
-                                            </div>
-                                          </div>
-                                          <?php endforeach; ?>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-                                          <button type="submit" id="submitUpdate" name="submitUpdate" class="btn btn-primary">Update Data</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                    
                               <?php endforeach; ?>
                             </form>
                           </tbody>
