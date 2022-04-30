@@ -7,11 +7,11 @@ if (!isset($_SESSION["admin"])) {
   exit;
 }
 
-
-$data = query("SELECT * FROM master_barang");
+$data = query("SELECT nama,jenis_barang,grade, MAX(master_barang.stok) as stok FROM master_barang WHERE master_barang.stok > 100 GROUP BY stok DESC LIMIT 4;");
+$dataSupplier = query("SELECT count(supplier.id_supplier) AS supplier FROM supplier;");
+$pembayaranCustomer = query("SELECT count(pembayaran_customer.id_pembayaran) AS pembayaran_customer FROM pembayaran_customer;");
+$under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -341,28 +341,20 @@ $data = query("SELECT * FROM master_barang");
       <!-- Main content -->
       <section class="content">
         <div class="row">
-          <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-
-                <p>Stock In</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
           <!-- ./col -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>
+                  <?php foreach ($pembayaranCustomer as $rows) : ?>
+                    <tr>
+                      <td> <?= $rows["pembayaran_customer"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
 
-                <p>Stock Out</p>
+                </h3>
+                <p>Data Pembayaran Customer</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -371,11 +363,18 @@ $data = query("SELECT * FROM master_barang");
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>
+                  <?php foreach ($dataSupplier as $row) : ?>
+                    <tr>
+                      <td> <?= $row["supplier"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+
+                </h3>
 
                 <p>Supplier</p>
               </div>
@@ -390,61 +389,65 @@ $data = query("SELECT * FROM master_barang");
           <!-- ./col -->
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-lg-6 col-6">
             <div class="card">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline collapsed" role="grid" aria-describedby="example1_info">
-                          <thead>
-                            <tr role="row">
-                              <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Nama</th>
-                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Jenis Barang</th>
-                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="display: none;">Grade</th>
-                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="display: none;">Asal</th>
-                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="display: none;">Stok</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php foreach ($data as $row) : ?>
-                              <tr role="row" class="odd">
-                                <td>
-                                  <?= $row["nama"] ?>
-                                </td>
-                                <td>
-                                  <?= $row["jenis_barang"] ?>
-                                </td>
-                                <td>
-                                  <?= $row["grade"] ?>
-                                </td>
-                                <td>
-                                  <?= $row["asal"] ?>
-                                </td>
-                                <td>
-                                  <?= $row["stok"] ?>
-                                </td>
-                              </tr>
-                            <?php endforeach; ?>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-7">
-                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                        </div>
-                      </div>
-                    </div>
+              <div class="card-header">
+                <h3 class="card-title">
+                  <b>Data Barang dengan Stok Terbanyak</b>
+                </h3>
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+
                   </div>
                 </div>
-                <!-- /.card-body -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <tbody>
+                    <?php foreach ($data as $row) : ?>
+                      <tr>
+                        <td> <?= $row["nama"] ?></td>
+                        <td> <?= $row["jenis_barang"] ?></td>
+                        <td> <?= $row["grade"] ?></td>
+                        <td> <?= $row["stok"] ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
               </div>
               <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+          </div>
+          <div class="col-lg-6 col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <b>Data Barang yang telah mencapai stok minimum</b>
+                </h3>
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <tbody>
+                    <?php foreach ($under_100 as $row) : ?>
+                      <tr>
+                        <td> <?= $row["nama"] ?></td>
+                        <td> <?= $row["jenis_barang"] ?></td>
+                        <td> <?= $row["grade"] ?></td>
+                        <td> <?= $row["stok"] ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
           </div>
         </div>
       </section>
@@ -515,23 +518,7 @@ $data = query("SELECT * FROM master_barang");
   <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <script>
-    $(function() {
-      $("#example1").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
-    });
+
   </script>
 </body>
 
