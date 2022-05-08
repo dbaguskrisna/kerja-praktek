@@ -289,7 +289,7 @@ if (isset($_POST["submitPembayaran"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="supplier_data.php" class="nav-link">
+              <a href="supplier_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Supplier Data
@@ -297,22 +297,52 @@ if (isset($_POST["submitPembayaran"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="supplier_payment_kantor.php" class="nav-link">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Payments
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="customer_payment_kantor.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Customer Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="supplier_payment_kantor.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Supplier Payments</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="customer_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
-                  Supplier Payments
+                  Customer Data
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="ship_data_gudang.php" class="nav-link">
-                <i class="nav-icon fas fa-dollar-sign"></i>
+              <a href="ship_data_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-ship"></i>
                 <p>
                   Ship Data
                 </p>
               </a>
             </li>
-
+            <li class="nav-item">
+              <a href="kontainer_data_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Kontainer Data
+                </p>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -382,14 +412,14 @@ if (isset($_POST["submitPembayaran"])) {
                                   <td><?= $row["total_barang"] ?></td>
                                   <td><?= $row["status_pembayaran"] ?></td>
                                   <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg-edit<?= $row["id"] ?>">Edit</button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?= $row["id"] ?>">
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>">Edit</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?= $row["id_pembayaran"] ?>">
                                       Delete
                                     </button>
                                   </td>
                                 </tr>
 
-                                <div class="modal fade bd-example-modal-lg-edit<?= $row["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal fade bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <form method="POST">
@@ -401,15 +431,15 @@ if (isset($_POST["submitPembayaran"])) {
                                         </div>
                                         <div class="card-body">
                                           <?php
-                                          $id = $row["id"];
+                                          $id = $row["id_pembayaran"];
                                           $datas = query("SELECT *
                                           FROM pembayaran_supplier
-                                          INNER JOIN supplier ON supplier_id_supplier = id_supplier WHERE id = $id");
+                                          INNER JOIN supplier ON supplier_id_supplier = id_supplier WHERE id_pembayaran = $id");
                                           ?>
                                           <?php foreach ($datas as $rows) : ?>
                                             <div class="form-group">
                                               <label for="exampleInputEmail1">Nama Supplier</label>
-                                              <input type="text" class="form-control" name="id" id="id" value="<?= $rows['id'] ?>" readonly="true" hidden>
+                                              <input type="text" class="form-control" name="id" id="id" value="<?= $rows['id_pembayaran'] ?>" readonly="true" hidden>
                                             </div>
                                             <div class="form-group">
                                               <label>Tanggal: </label>
@@ -433,7 +463,7 @@ if (isset($_POST["submitPembayaran"])) {
                                             </div>
                                             <div class="form-group">
                                               <label for="exampleInputEmail1">Grade Barang</label>
-                                              <input type="text" class="form-control" id="gradeBarang" name="gradeBarang" value="<?= $rows['grade_barang'] ?>">
+                                              <input type="text" class="form-control" id="gradeBarang" name="gradeBarang" value="<?= $rows['grade'] ?>">
                                             </div>
                                             <div class="form-group">
                                               <label for="exampleInputEmail1">Status Pembayaran</label>
@@ -450,7 +480,7 @@ if (isset($_POST["submitPembayaran"])) {
                                   </div>
                                 </div>
 
-                                <div class="modal fade" id="exampleModal<?= $row["id"] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal<?= $row["id_pembayaran"] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <form method="POST">
@@ -463,7 +493,7 @@ if (isset($_POST["submitPembayaran"])) {
                                       <div class="modal-body">
                                         <p style="text-align:center">Apakah anda yakin ingin menghapus data ini ?</p>
                                         <div class="form-group">
-                                          <input type="text" class="form-control" name="id" id="id" value="<?= $rows['id'] ?>" readonly="true" hidden>
+                                          <input type="text" class="form-control" name="id" id="id" value="<?= $rows['id_pembayaran'] ?>" readonly="true" hidden>
                                         </div>
                                       </div>
                                       <div class="modal-footer">

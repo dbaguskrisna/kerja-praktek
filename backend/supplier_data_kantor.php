@@ -2,19 +2,19 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT * FROM customer");
+$data = query("SELECT * FROM supplier");
 
-if (!isset($_SESSION["admin"])) {
+if (!isset($_SESSION["staffKantor"])) {
   header("Location: ../login/index.php");
   exit;
 }
 
 if (isset($_POST["submit"])) {
-  insertCustomerData($_POST);
-} else if (isset($_POST["submitUpdate"])) {
-  updateCustomerData($_POST);
-} else if (isset($_POST["submitDelete"])) {
-  deleteCustomerData($_POST);
+  insertSupplier($_POST);
+} else if (isset($_POST["submitUpdate"])){
+  updateSupplier($_POST);
+} else if (isset($_POST["submitDelete"])){
+  deleteSupplier($_POST);
 }
 
 ?>
@@ -32,28 +32,16 @@ if (isset($_POST["submit"])) {
         <div class="modal-body">
           <div class="card-body">
             <div class="form-group">
-              <label for="exampleInputEmail1">Nama : </label>
-              <input type="text" class="form-control" name="nama" id="nama" required>
+              <label for="exampleInputEmail1">Nama Supplier : </label>
+              <input type="text" class="form-control" name="namaSupplier" id="namaSupplier">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Alamat : </label>
-              <input type="text" class="form-control" name="alamat" id="alamat" required>
+              <input type="text" class="form-control" name="alamat" id="alamat">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail1">Nomor Telp : </label>
-              <input type="text" class="form-control" name="nomor" id="nomor " required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Negara : </label>
-              <input type="text" class="form-control" name="negara" id="negara" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Kode Pos : </label>
-              <input type="text" class="form-control" name="kodePos" id="kodePos" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email : </label>
-              <input type="text" class="form-control" name="email" id="email" required>
+              <label for="exampleInputEmail1">No Hp : </label>
+              <input type="text" class="form-control" name="noHp" id="noHp">
             </div>
           </div>
         </div>
@@ -102,122 +90,16 @@ if (isset($_POST["submit"])) {
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-      </ul>
+    
 
-      <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+    
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li>
+
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -231,8 +113,8 @@ if (isset($_POST["submit"])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <img src="dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">PT. Alfian Putra Jaya</span>
       </a>
 
       <!-- Sidebar -->
@@ -243,7 +125,11 @@ if (isset($_POST["submit"])) {
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="#" class="d-block">
+              <?php 
+                echo $_SESSION['user'];
+              ?>
+            </a>
           </div>
         </div>
 
@@ -265,7 +151,7 @@ if (isset($_POST["submit"])) {
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="admin.php" class="nav-link">
+              <a href="staff_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
@@ -273,40 +159,8 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="employee_data.php" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                  User Data
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="stock_in_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-in-alt"></i>
-                <p>
-                  Stock Going In
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="stock_out_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>
-                  Stock Going Out
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="master_barang_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-folder"></i>
-                <p>
-                  Master Barang
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="supplier_data_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
+              <a href="supplier_data_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Supplier Data
                 </p>
@@ -316,19 +170,19 @@ if (isset($_POST["submit"])) {
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Layout Options
+                  Payments
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                  <a href="customer_payment_admin.php" class="nav-link">
+                  <a href="customer_payment_kantor.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Customer Payments</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="supplier_payment_admin.php" class="nav-link">
+                  <a href="supplier_payment_kantor.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Supplier Payments</p>
                   </a>
@@ -336,7 +190,7 @@ if (isset($_POST["submit"])) {
               </ul>
             </li>
             <li class="nav-item">
-              <a href="customer_data_admin.php" class="nav-link">
+              <a href="customer_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Customer Data
@@ -344,7 +198,7 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="ship_data_admin.php" class="nav-link">
+              <a href="ship_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-ship"></i>
                 <p>
                   Ship Data
@@ -355,7 +209,7 @@ if (isset($_POST["submit"])) {
               <a href="kontainer_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                  Container Data
+                  Kontainer Data
                 </p>
               </a>
             </li>
@@ -373,7 +227,7 @@ if (isset($_POST["submit"])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Customer Data</h1>
+              <h1 class="m-0">Supplier Data</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -392,12 +246,11 @@ if (isset($_POST["submit"])) {
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah Data</button>
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
@@ -411,10 +264,7 @@ if (isset($_POST["submit"])) {
                             <tr role="row">
                               <th>Nama</th>
                               <th>Alamat</th>
-                              <th>Nomor Telp</th>
-                              <th>Negara</th>
-                              <th>Kode Pos</th>
-                              <th>Email</th>
+                              <th>No HP</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -423,31 +273,23 @@ if (isset($_POST["submit"])) {
                               <?php foreach ($data as $row) : ?>
                                 <tr role="row" class="even">
                                   <td>
-                                    <?= $row["nama"] ?>
+                                    <?= $row["nama_supplier"] ?>
                                   </td>
                                   <td>
                                     <?= $row["alamat"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["nomor_telp"] ?>
+                                    <?= $row["no_hp"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["negara"] ?>
-                                  </td>
-                                  <td>
-                                    <?= $row["kodepos"] ?>
-                                  </td>
-                                  <td>
-                                    <?= $row["email"] ?>
-                                  </td>
-                                  <td>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_customer"] ?>'>Edit</button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_customer'] ?>">
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_supplier"] ?>'>Edit</button>
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_supplier'] ?>">
                                       Delete
                                     </button>
                                   </td>
                                 </tr>
-                                <div class="modal fade" id="exampleModalLong<?= $row['id_customer'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                               
+                                <div class="modal fade" id="exampleModalLong<?= $row['id_supplier'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -459,15 +301,15 @@ if (isset($_POST["submit"])) {
                                       <form method="POST">
                                         <div class="modal-body">
                                           <?php
-                                          $id = $row['id_customer'];
-                                          $datas = query("SELECT * FROM customer where id_customer = $id");
+                                          $id = $row['id_supplier'];
+                                          $datas = query("SELECT * FROM supplier where id_supplier = $id");
                                           ?>
                                           <?php foreach ($datas as $rows) : ?>
                                             <div class="card-body">
                                               <div class="form-group">
                                                 <div class="form-group" hidden>
                                                   <label for="exampleInputEmail1">ID: </label>
-                                                  <input type="text" class="form-control" id="idDelete" name="idDelete" value="<?= $rows['id_customer'] ?>" readonly="true" required>
+                                                  <input type="text" class="form-control" id="idSupplier" name="idSupplier" value="<?= $rows['id_supplier'] ?>" readonly="true" required>
                                                 </div>
                                                 <div class="form-group">
                                                   <p class="text-center">
@@ -486,8 +328,8 @@ if (isset($_POST["submit"])) {
                                     </div>
                                   </div>
                                 </div>
-
-                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id_customer'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                
+                                <div class="modal fade bd-example-modal-lg-edit<?= $row['id_supplier'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -499,38 +341,27 @@ if (isset($_POST["submit"])) {
                                       <form method="POST">
                                         <div class="modal-body">
                                           <?php
-                                          $id = $row['id_customer'];
-                                          $datas = query("SELECT * FROM customer where id_customer = $id");
+                                          $id = $row['id_supplier'];
+                                          $datas = query("SELECT * FROM supplier where id_supplier = $id");
                                           ?>
                                           <?php foreach ($datas as $rows) : ?>
-                                              <div class="card-body">
+                                            <div class="card-body">
+                                              <div class="form-group">
                                                 <div class="form-group" hidden>
-                                                  <label for="exampleInputEmail1"> : </label>
-                                                  <input type="text" class="form-control" name="idUpdate" id="idUpdate" value="<?= $rows['id_customer'] ?>" required>
+                                                  <label for="exampleInputEmail1">ID: </label>
+                                                  <input type="text" class="form-control" id="idSupplier" name="idSupplier" value="<?= $rows['id_supplier'] ?>" readonly="true" required>
                                                 </div>
                                                 <div class="form-group">
-                                                  <label for="exampleInputEmail1">Nama : </label>
-                                                  <input type="text" class="form-control" name="nama" id="nama" value="<?= $rows['nama'] ?>" required>
+                                                  <label for="exampleInputEmail1">Nama Supplier : </label>
+                                                  <input type="text" class="form-control" name="namaSupplier" id="namaSupplier" value="<?= $rows['nama_supplier'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
                                                   <label for="exampleInputEmail1">Alamat : </label>
-                                                  <input type="text" class="form-control" name="alamat" value="<?= $rows['alamat'] ?>" id="alamat" required>
+                                                  <input class="form-control" name="alamat" id="alamat" value="<?= $rows['alamat'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
-                                                  <label for="exampleInputEmail1">Nomor Telp : </label>
-                                                  <input type="text" class="form-control" name="nomor" value="<?= $rows['nomor_telp'] ?>" id="nomor " required>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="exampleInputEmail1">Negara : </label>
-                                                  <input type="text" class="form-control" name="negara" value="<?= $rows['negara'] ?>" id="negara" required>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="exampleInputEmail1">Kode Pos : </label>
-                                                  <input type="text" class="form-control" name="kodePos"  value="<?= $rows['kodepos'] ?>" id="kodePos" required>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="exampleInputEmail1">Email : </label>
-                                                  <input type="text" class="form-control" name="email" value="<?= $rows['email'] ?>" id="email" required>
+                                                  <label for="exampleInputEmail1">Nomor Handphone : </label>
+                                                  <input class="form-control" name="nomorHP" id="nomorHP" value="<?= $rows['no_hp'] ?>" required>
                                                 </div>
                                               </div>
                                             <?php endforeach; ?>
@@ -543,7 +374,6 @@ if (isset($_POST["submit"])) {
                                     </div>
                                   </div>
                                 </div>
-
                               <?php endforeach; ?>
                             </form>
                           </tbody>
@@ -620,7 +450,6 @@ if (isset($_POST["submit"])) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
-  <script src="https://unpkg.com/bootstrap-show-password@1.2.1/dist/bootstrap-show-password.min.js"></script>
 </body>
 
 </html>

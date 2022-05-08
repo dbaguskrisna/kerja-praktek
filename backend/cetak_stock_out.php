@@ -82,7 +82,7 @@ if (!$conn) {
           <tr>
                <td><img src='logo.png' height="100" width="100"></td>
                <td>
-                    <h1>Laporan Barang Masuk </h1>
+                    <h1>Laporan Barang Keluar </h1>
 
                     <h2>PT.Alvian Putra Jaya</h2>
                     <p style="font-size:14px;"><i> Jl. Perak Timur No. 266, Kelurahan Perak Timur,Kecamatan Pabean Cantikan, Kota Surabaya 60164, Jawa Timur</i></p>

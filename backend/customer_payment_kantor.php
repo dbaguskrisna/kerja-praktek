@@ -4,7 +4,7 @@ require 'function.php';
 
 $data = query("SELECT * FROM pembayaran_customer INNER JOIN customer ON pembayaran_customer.customer_id = customer.id_customer");
 
-if (!isset($_SESSION["admin"])) {
+if (!isset($_SESSION["staffKantor"])) {
   header("Location: ../login/index.php");
   exit;
 }
@@ -199,7 +199,7 @@ if (isset($_POST["submit"])) {
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="admin.php" class="nav-link">
+              <a href="staff_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
@@ -207,40 +207,8 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="employee_data.php" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                  User Data
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="stock_in_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-in-alt"></i>
-                <p>
-                  Stock Going In
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="stock_out_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
-                <p>
-                  Stock Going Out
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="master_barang_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-folder"></i>
-                <p>
-                  Master Barang
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="supplier_data_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
+              <a href="supplier_data_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Supplier Data
                 </p>
@@ -250,19 +218,19 @@ if (isset($_POST["submit"])) {
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Layout Options
+                  Payments
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview" style="display: none;">
                 <li class="nav-item">
-                  <a href="customer_payment_admin.php" class="nav-link">
+                  <a href="customer_payment_kantor.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Customer Payments</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="supplier_payment_admin.php" class="nav-link">
+                  <a href="supplier_payment_kantor.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Supplier Payments</p>
                   </a>
@@ -270,7 +238,7 @@ if (isset($_POST["submit"])) {
               </ul>
             </li>
             <li class="nav-item">
-              <a href="customer_data_admin.php" class="nav-link">
+              <a href="supplier_payment_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Customer Data
@@ -278,7 +246,7 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="ship_data_admin.php" class="nav-link">
+              <a href="ship_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-ship"></i>
                 <p>
                   Ship Data
@@ -289,7 +257,7 @@ if (isset($_POST["submit"])) {
               <a href="kontainer_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
-                  Container Data
+                  Kontainer Data
                 </p>
               </a>
             </li>
