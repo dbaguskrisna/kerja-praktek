@@ -1,11 +1,13 @@
 <?php
-  session_start();
+session_start();
+require 'function.php';
 
-  if(!isset($_SESSION["staffKantor"])){
-    header("Location: ../login/index.php");
-    exit;
-  }
-  
+if (!isset($_SESSION["staffKantor"])) {
+  header("Location: ../login/index.php");
+  exit;
+}
+$datapembayarancustomer = query("SELECT count(pembayaran_customer.id_pembayaran) AS pembayaran_customer FROM pembayaran_customer;");
+$datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran) AS pembayaran_supplier FROM pembayaran_supplier;");
 ?>
 
 
@@ -45,15 +47,15 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-  
+
       <!-- SEARCH FORM -->
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" role="button" href="logout.php">
-              <i class="fas fa-sign-out-alt"></i>
-            </a>
+          <a class="nav-link" role="button" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
         </li>
       </ul>
 
@@ -78,7 +80,7 @@
           <div class="info">
             <a href="#" class="d-block">
               <?php
-                echo $_SESSION['user'];
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -199,14 +201,21 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+              <h3>
+                  <?php foreach ($datapembayarancustomer as $rows) : ?>
+                    <tr>
+                      <td> <?= $rows["pembayran_customer"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
 
-                <p>Stock In</p>
+                </h3>
+
+                <p>jumlah pembayaran customer</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="customer_payment_kantor.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -214,9 +223,16 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>
+                  <?php foreach ($datapembayaransupplier as $rows) : ?>
+                    <tr>
+                      <td> <?= $rows["pembayran_supplier"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
 
-                <p>Stock Out</p>
+                </h3>
+
+                <p>jumlah pembayaran supplier</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -236,7 +252,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="supplier_payment_kantor.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -264,64 +280,7 @@
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th rowspan="2" class="align-middle">No</th>
-                      <th rowspan="2" class="align-middle">Date</th>
-                      <th rowspan="2" class="align-middle">CONTR</th>
-                      <th rowspan="2" class="align-middle">Place</th>
-                      <th colspan="2" class="text-center">Bags</th>
-                      <th colspan="2" class="text-center">Net weight</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center">In</th>
-                      <th class="text-center">Out</th>
-                      <th class="text-center">In</th>
-                      <th class="text-center">Out</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                  </tbody>
+                  
                 </table>
               </div>
               <!-- /.card-body -->

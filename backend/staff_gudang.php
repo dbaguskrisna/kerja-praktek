@@ -1,10 +1,15 @@
 <?php
-  session_start();
+session_start();
+require 'function.php';
 
-  if(!isset($_SESSION["staffGudang"])){
-    header("Location: ../login/index.php");
-    exit;
-  } 
+if (!isset($_SESSION["staffGudang"])) {
+  header("Location: ../login/index.php");
+  exit;
+}
+
+$databarangkeluar = query("SELECT count(barang_keluar.id_barang_keluar) AS barang_keluar FROM barang_keluar;");
+$databarangmasuk = query("SELECT count(barang_masuk.id_barang_masuk) AS barang_masuk FROM barang_masuk;");
+
 ?>
 
 <!DOCTYPE html>
@@ -43,19 +48,19 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-    
+
 
       <!-- SEARCH FORM -->
-      
+
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-       
+
         <li class="nav-item">
-            <a class="nav-link" role="button" href="logout.php">
-              <i class="fas fa-sign-out-alt"></i>
-            </a>
+          <a class="nav-link" role="button" href="logout.php">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
         </li>
       </ul>
     </nav>
@@ -165,14 +170,21 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+              <h3>
+                  <?php foreach ($databarangkeluar as $rows) : ?>
+                    <tr>
+                      <td> <?= $rows["barang_keluar"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
 
-                <p>Stock In</p>
+                </h3>
+
+                <p>Data Barang Keluar</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="stock_out_gudang.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -180,30 +192,27 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>
+                  <?php foreach ($databarangmasuk as $rows) : ?>
+                    <tr>
+                      <td> <?= $rows["barang_masuk"] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
 
-                <p>Stock Out</p>
+                </h3>
+
+                <p>Data Barang Masuk</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="stock_in_gudang.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
           <div class="col-lg-4 col-6">
             <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
 
-                <p>Supplier</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
           </div>
           <!-- ./col -->
 
@@ -230,64 +239,7 @@
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
-                  <thead>
-                    <tr>
-                      <th rowspan="2" class="align-middle">No</th>
-                      <th rowspan="2" class="align-middle">Date</th>
-                      <th rowspan="2" class="align-middle">CONTR</th>
-                      <th rowspan="2" class="align-middle">Place</th>
-                      <th colspan="2" class="text-center">Bags</th>
-                      <th colspan="2" class="text-center">Net weight</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center">In</th>
-                      <th class="text-center">Out</th>
-                      <th class="text-center">In</th>
-                      <th class="text-center">Out</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-success">Approved</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                      <td class="text-center">212</td>
-                    </tr>
-                  </tbody>
+                  
                 </table>
               </div>
               <!-- /.card-body -->
