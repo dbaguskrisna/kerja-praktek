@@ -254,7 +254,7 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="kontainer_data_admin.php" class="nav-link">
+              <a href="kontainer_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                   Kontainer Data

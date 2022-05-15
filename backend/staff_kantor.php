@@ -159,7 +159,7 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
               </a>
             </li>
             <li class="nav-item">
-              <a href="kontainer_data_admin.php" class="nav-link">
+              <a href="kontainer_data_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                   Kontainer Data
@@ -204,12 +204,10 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
               <h3>
                   <?php foreach ($datapembayarancustomer as $rows) : ?>
                     <tr>
-                      <td> <?= $rows["pembayran_customer"] ?></td>
+                    <td> <?= $rows["pembayaran_customer"] ?></td>
                     </tr>
                   <?php endforeach; ?>
-
                 </h3>
-
                 <p>jumlah pembayaran customer</p>
               </div>
               <div class="icon">
@@ -226,7 +224,7 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
               <h3>
                   <?php foreach ($datapembayaransupplier as $rows) : ?>
                     <tr>
-                      <td> <?= $rows["pembayran_supplier"] ?></td>
+                      <td> <?= $rows["pembayaran_supplier"] ?></td>
                     </tr>
                   <?php endforeach; ?>
 

@@ -70,7 +70,7 @@ $databarangmasuk = query("SELECT count(barang_masuk.id_barang_masuk) AS barang_m
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
       </a>
 
@@ -166,7 +166,7 @@ $databarangmasuk = query("SELECT count(barang_masuk.id_barang_masuk) AS barang_m
       <!-- Main content -->
       <section class="content">
         <div class="row">
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -188,7 +188,7 @@ $databarangmasuk = query("SELECT count(barang_masuk.id_barang_masuk) AS barang_m
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-6 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
