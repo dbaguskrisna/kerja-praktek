@@ -516,22 +516,29 @@ function insertStockout($data)
         if (mysqli_num_rows($checkBarang) === 1) {
             $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
             $stok = intval($row['stok']);
-            $stok = $stok - $netWeight;
-            $update = "UPDATE master_barang SET stok = '$stok' WHERE id_barang = $id_barang";
-
-            if (mysqli_query($conn, $update)) {
-                
+            if( $netWeight >= $stok){
                 echo "
-                    <div class='alert alert-success text-center' role='alert'>
-                        Update stok barang berhasil
+                    <div class='alert alert-warning text-center' role='alert'>
+                        Tidak dapat melakukan pengiriman karena pengiriman melibihi stock gudang
                     </div>
-                        ";
-                header("Refresh:3");
+                    "; 
             } else {
-                echo "
-                    <div class='alert alert-danger text-center' role='alert'>" .
-                    $update . "<br>" . mysqli_error($conn)
-                    . "</div>";
+                $stok = $stok - $netWeight;
+                $update = "UPDATE master_barang SET stok = '$stok' WHERE id_barang = $id_barang";
+    
+                if (mysqli_query($conn, $update)) {
+                    echo "
+                        <div class='alert alert-success text-center' role='alert'>
+                            Stock Out Berhasil barang berhasil
+                        </div>
+                            ";
+                    header("Refresh:3");
+                } else {
+                    echo "
+                        <div class='alert alert-danger text-center' role='alert'>" .
+                        $update . "<br>" . mysqli_error($conn)
+                        . "</div>";
+                }
             }
         } else {
             echo "

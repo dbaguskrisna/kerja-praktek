@@ -126,7 +126,11 @@ if (isset($_POST["submit"])) {
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="#" class="d-block">
+              <?php 
+                echo $_SESSION['user'];
+              ?>
+            </a>
           </div>
         </div>
 
@@ -391,7 +395,7 @@ if (isset($_POST["submit"])) {
                                                 <div class="form-group">
                                                   <label for="jabatan">Jabatan : </label>
                                                   <select class="form-control" name="jabatanUpdate" id="jabatanUpdate">
-                                                    <option value="admin" <?= ($rows['jabatan'] == 'admin') ? 'selected="selected"' : '' ?>>admin</option>
+                                                    <option value="admin" <?= ($rows['jabatan'] == 'manager') ? 'selected="selected"' : '' ?>>manager</option>
                                                     <option value="staff_gudang" <?= ($rows['jabatan'] == 'staff_gudang') ? 'selected="selected"' : '' ?>>staff gudang</option>
                                                     <option value="staff_kantor" <?= ($rows['jabatan'] == 'staff_kantor') ? 'selected="selected"' : '' ?>>staff kantor</option>
                                                   </select>

@@ -45,25 +45,25 @@ if (isset($_POST["submit"])) {
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Tanggal : </label>
-                <input type="date" class="form-control" name="tanggal" id="tanggal">
+                <input type="date" class="form-control" name="tanggal" id="tanggal" >
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Truck : </label>
-                <input type="text" class="form-control" name="truck" id="truck">
+                <input type="text" class="form-control" name="truck" id="truck" placeholder="masukkan nomor truck">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Nama Barang : </label>
-                <input type="text" class="form-control" name="namaBarang" id="namaBarang">
+                <input type="text" class="form-control" name="namaBarang" id="namaBarang" placeholder="masukkan nama barang">
               </div>
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Jenis : </label>
-                <input type="text" class="form-control" name="jenis" id="jenis">
+                <label for="exampleInputEmail1">Jenis Barang: </label>
+                <input type="text" class="form-control" name="jenis" id="jenis" placeholder="jenis barang">
               </div>
               <div class="form-group col-md-4">
                 <label for="jabatan">Grade Barang : </label>
-                <select class="form-control" name="gradeBarang" id="gradeBarang">
+                <select class="form-control" name="gradeBarang" id="gradeBarang" >
                   <option value="A">A</option>
                   <option value="B">B</option>
                   <option value="C">C</option>
@@ -74,21 +74,21 @@ if (isset($_POST["submit"])) {
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Coly : </label>
-                <input type="text" class="form-control" name="coly" id="coly">
+                <input type="text" class="form-control" name="coly" id="coly" placeholder="masukkan jumlah coly">
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Gross : </label>
-                <input type="text" class="form-control" name="gross" id="gross">
+                <input type="text" class="form-control" name="gross" id="gross" placeholder="masukkan jumlah gross">
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Netto : </label>
-                <input type="text" class="form-control" name="netto" id="netto">
+                <input type="text" class="form-control" name="netto" id="netto" placeholder="masukkan jumlah netto">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Asal Barang : </label>
-                <input type="text" class="form-control" name="asalBarang" id="asalBarang">
+                <input type="text" class="form-control" name="asalBarang" id="asalBarang" placeholder="masukkan asal barang">
               </div>
               <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Kontainer</label>

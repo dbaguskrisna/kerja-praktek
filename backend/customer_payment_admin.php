@@ -49,13 +49,14 @@ if (isset($_POST["submit"])) {
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label for="inputEmail4">Bank</label>
-                <input type="text" class="form-control" id="bank" name="bank" required>
+                <input type="text" class="form-control" id="bank" name="bank" placeholder="Masukkan Nama Bank" required>
               </div>
               <div class="form-group col-md-3">
                 <label for="jabatan">Status Pembayaran : </label>
                 <select class="form-control" name="statusPembayaran" id="statusPembayaran">
                   <option value="Lunas">Lunas</option>
                   <option value="Bayar di Muka">Bayar di Muka</option>
+                  <option value="Dikembalikan">Dikembalikan</option>
                 </select>
               </div>
               <div class="form-group col-md-3">
@@ -68,13 +69,8 @@ if (isset($_POST["submit"])) {
                 </select>
               </div>
               <div class="form-group col-md-3">
-                <label for="jabatan">Nomor Nota : </label>
-                <select class="form-control" name="nomorNota" id="nomorNota">
-                  <?php $dataCustomer = query("SELECT * FROM pembayaran_customer"); ?>
-                  <?php foreach ($dataCustomer as $rowCustomer) : ?>
-                    <option value="<?= $rowCustomer['id_pembayaran'] ?>"><?= $rowCustomer['nomor_nota'] ?></option>
-                  <?php endforeach; ?>
-                </select>
+                <label for="inputPassword4">No Nota: </label>
+                <input type="text" class="form-control" id="nomorNota" name="nomorNota" placeholder="Masukkan Nomor Nota" required>
               </div>
             </div>
             <div class="form-row">

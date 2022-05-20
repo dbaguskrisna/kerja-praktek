@@ -55,6 +55,7 @@ if (isset($_POST["submit"])) {
                 <select class="form-control" name="statusPembayaran" id="statusPembayaran">
                   <option value="Lunas">Lunas</option>
                   <option value="Bayar di Muka">Bayar di Muka</option>
+                  <option value="Dikembalikan">Dikembalikan</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
@@ -486,6 +487,7 @@ if (isset($_POST["submit"])) {
                                                 <select class="form-control" name="statusPembayaran" id="statusPembayaran">
                                                   <option value="Lunas" <?= ($rows['status_pembayaran'] == 'Lunas') ? 'selected="selected"' : '' ?>>Lunas</option>
                                                   <option value="Bayar di Muka" <?= ($rows['status_pembayaran'] == 'Bayar di Muka') ? 'selected="selected"' : '' ?>>Bayar di Awal</option>
+                                                  <option value="Dikembalikan" <?= ($rows['status_pembayaran'] == 'Dikembalikan') ? 'selected="selected"' : '' ?>>Dikembalikan</option>
                                                 </select>
                                               </div>
                                               <div class="form-group col-md-4">

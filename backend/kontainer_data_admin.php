@@ -284,7 +284,7 @@ if (isset($_POST["submit"])) {
                         <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                           <thead>
                             <tr role="row">
-                              <th>Nama Kapal</th>
+                              <th>Nama Kontainer</th>
                               <th>Nomor Kapal</th>
                               <th>Action</th>
                             </tr>

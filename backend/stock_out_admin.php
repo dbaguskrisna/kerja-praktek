@@ -35,54 +35,54 @@ if (isset($_POST["submit"])) {
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Tanggal : </label>
-                <input type="date" class="form-control" name="tanggal" id="tanggal">
+                <input type="date" class="form-control" name="tanggal" id="tanggal" required>
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Nomor Kontrak : </label>
-                <input type="text" class="form-control" name="contract_no" id="contract_no">
+                <input type="text" class="form-control" name="contract_no" id="contract_no" placeholder="masukkan nomor nota" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Consigne : </label>
-                <input type="text" class="form-control" name="consigne" id="consigne">
+                <label for="exampleInputEmail1">Penerima Barang : </label>
+                <input type="text" class="form-control" name="consigne" id="consigne" placeholder="masukkan penerima barang" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Notify Party : </label>
-                <input type="text" class="form-control" name="notify_party" id="notify_party">
+                <label for="exampleInputEmail1">Pihak Kedua : </label>
+                <input type="text" class="form-control" name="notify_party" id="notify_party" placeholder="masukkan pihak kedua" required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Port Of Loading : </label>
-                <input type="text" class="form-control" name="port_of_loading" id="port_of_loading">
+                <label for="exampleInputEmail1">Pelabuhan Muat: </label>
+                <input type="text" class="form-control" name="port_of_loading" id="port_of_loading" placeholder="masukkan pelabuhan muat" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Country Of Origin : </label>
-                <input type="text" class="form-control" name="country_of_origin" id="country_of_origin">
+                <label for="exampleInputEmail1">Negara Asal : </label>
+                <input type="text" class="form-control" name="country_of_origin" id="country_of_origin" placeholder="masukkan negara asal" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Destination : </label>
-                <input type="text" class="form-control" name="destination" id="destination">
+                <label for="exampleInputEmail1">Tujuan : </label>
+                <input type="text" class="form-control" name="destination" id="destination" placeholder="destination" placeholder="masukkan tujuan" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="exampleInputEmail1">Freight : </label>
-                <input type="text" class="form-control" name="freight" id="freight">
+                <label for="exampleInputEmail1">Transportasi : </label>
+                <input type="text" class="form-control" name="freight" id="freight" placeholder="freight" placeholder="masukkan transportasi" required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Description : </label>
-                <input type="text" class="form-control" name="description" id="description">
+                <label for="exampleInputEmail1">Deskripsi Barang : </label>
+                <input type="text" class="form-control" name="description" id="description" placeholder="masukkan deskripsi barang" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Packing : </label>
-                <input type="text" class="form-control" name="packing" id="packing">
+                <input type="text" class="form-control" name="packing" id="packing" placeholder="masukkan jenis packing" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">Nama Barang :</label>
                 <?php
                 $datas = query("SELECT * FROM master_barang");
                 ?>
-                <select name="nama_barang" class="form-control" id="nama_barang">
+                <select name="nama_barang" class="form-control" id="nama_barang" required>
                   <?php foreach ($datas as $rows) : ?>
                     <option value="<?= $rows['id_barang'] ?>"><?= $rows['nama'] ?> Grade <?= $rows['grade'] ?></option>
                   <?php endforeach; ?>
@@ -91,16 +91,16 @@ if (isset($_POST["submit"])) {
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Gross Of Weight : </label>
-                <input type="text" class="form-control" name="grossWeight" id="grossWeight">
+                <label for="exampleInputEmail1">Berat Kotor : </label>
+                <input type="text" class="form-control" name="grossWeight" id="grossWeight" placeholder="masukkan berat kotor" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">No Of Bags : </label>
-                <input type="text" class="form-control" name="noOfBags" id="noOfBags">
+                <label for="exampleInputEmail1">Jumlah Kemasan: </label>
+                <input type="text" class="form-control" name="noOfBags" id="noOfBags" placeholder="masukkan jumlah kemasan" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Net Weight : </label>
-                <input type="text" class="form-control" name="netWeight" id="netWeight">
+                <label for="exampleInputEmail1">Berat Bersih : </label>
+                <input type="text" class="form-control" name="netWeight" id="netWeight" placeholder="masukkan berat bersih" required> 
               </div>
             </div>
             <div class="form-row">
@@ -109,14 +109,14 @@ if (isset($_POST["submit"])) {
                 <?php
                 $datas = query("SELECT * FROM pembayaran_customer");
                 ?>
-                <select name="nota_pembayaran" class="form-control" id="nota_pembayaran">
+                <select name="nota_pembayaran" class="form-control" id="nota_pembayaran" required>
                   <?php foreach ($datas as $rows) : ?>
                     <option value="<?= $rows['id_pembayaran'] ?>"><?= $rows['nomor_nota'] ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
               <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">kapal</label>
+                <label for="exampleInputEmail1">Kapal</label>
                 <?php
                 $datas = query("SELECT * FROM kapal");
                 ?>
