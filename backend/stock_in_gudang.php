@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT barang_masuk.id_barang_masuk ,pembayaran_supplier.nomor_nota, barang_masuk.tanggal, barang_masuk.truck, barang_masuk.coly, barang_masuk.gross, barang_masuk.netto, barang_masuk.nama, barang_masuk.jenis_barang, barang_masuk.grade, barang_masuk.asal, kontainer.nama_kontainer FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran INNER JOIN kontainer ON barang_masuk.id_kontainer = kontainer.id_kontainer;");
+$data = query("SELECT barang_keluar.id_barang_keluar,barang_keluar.tanggal,barang_keluar.contract_no,barang_keluar.consigne,barang_keluar.notify_party,barang_keluar.port_of_loading,barang_keluar.country_of_origin,barang_keluar.destination,barang_keluar.description,barang_keluar.packing,barang_keluar.freight,barang_keluar.gross_weight,barang_keluar.no_of_bags,barang_keluar.net_weight,master_barang.nama,master_barang.jenis_barang,master_barang.grade,kapal.nama_kapal,pembayaran_customer.nomor_nota,kontainer.nama_kontainer FROM barang_keluar INNER JOIN master_barang ON barang_keluar.id_barang = master_barang.id_barang INNER JOIN kapal ON barang_keluar.id_kapal = kapal.id_kapal INNER JOIN pembayaran_customer ON barang_keluar.id_pembayaran_customer = pembayaran_customer.id_pembayaran INNER JOIN kontainer ON barang_keluar.id_kontainer = kontainer.id_kontainer WHERE barang_keluar.status =1;");
 
 if (!isset($_SESSION["staffGudang"])) {
   header("Location: ../login/index.php");
@@ -482,7 +482,7 @@ if (isset($_POST["submit"])) {
                                                 <div class="form-group col-md-6">
                                                   <label for="exampleInputEmail1">Kontainer</label>
                                                   <?php
-                                                  $datas = query("SELECT * FROM kontainer");
+                                                    $datas = query("SELECT * FROM kontainer");
                                                   ?>
                                                   <select name="kontainer" class="form-control" id="kontainer">
                                                     <?php foreach ($datas as $rows) : ?>

@@ -336,7 +336,6 @@ function deleteKapal($data)
 
 function insertStockin($data)
 {
-
     global $conn;
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
@@ -354,7 +353,7 @@ function insertStockin($data)
     $grade = $_POST['gradeBarang'];
     $asal = $_POST['asalBarang'];
 
-    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$grade'");
+    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$grade' AND jenis_barang ='$jenisBarang'");
 
     $sql = "INSERT INTO barang_masuk (tanggal,truck,coly,gross,netto,id_pembayaran_supplier,id_kontainer,nama,jenis_barang,grade,asal) VALUES ('$tanggal', '$truck', '$coly', '$gross', '$netto', '$noNota', '$kontainer', '$namaBarang', '$jenisBarang','$grade','$asal')";
 
@@ -364,12 +363,12 @@ function insertStockin($data)
             $stok = intval($row['stok']);
             $stok = $stok + $netto;
             $update = "UPDATE master_barang SET stok = '$stok'  WHERE nama = '$namaBarang' AND grade = '$grade'";
-
+            
             if (mysqli_query($conn, $update)) {
                 header("Refresh:3");
                 echo "
                     <div class='alert alert-success text-center' role='alert'>
-                        Update stok barang berhasil
+                        Tambah Stok Berhasil
                     </div>
                         ";
             } else {
@@ -633,7 +632,7 @@ function deleteStockout($data)
             <div class='alert alert-success text-center' role='alert'>
                 Delete data Stock in sukses
             </div>
-                ";
+            ";
     } else {
         echo "
             <div class='alert alert-danger text-center' role='alert'>
@@ -641,6 +640,84 @@ function deleteStockout($data)
             </div>
             ";
     }
+}
+
+function returnStockout($data)
+{
+    global $conn; //untuk connect ke database
+    $id = $_POST["idReturn"];
+    $id_barang = $_POST['idMasterBarang'];
+    $stok = $_POST['netBarangReturn'];
+    $updateStatus = "UPDATE barang_keluar SET status = '1' WHERE id_barang_keluar = '$id'";
+    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE id_barang = '$id_barang'");
+
+    if (mysqli_query($conn, $updateStatus)) {
+        $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
+        $stokMaster = intval($row['stok']);
+        $IntStok = intval($stok);
+        $stokBaru = $IntStok + $stokMaster; 
+
+        $update = "UPDATE master_barang SET stok = '$stokBaru' WHERE id_barang = $id_barang";
+        if (mysqli_query($conn, $update)) {
+            header("Refresh:3");
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Return data berhasil
+                </div>
+                    ";
+        } else {
+            echo "
+                <div class='alert alert-danger text-center' role='alert'>
+                    Return data stock gagal
+                </div>
+                ";
+        }
+    } else {
+        echo "
+            <div class='alert alert-danger text-center' role='alert'>" .
+            $checkBarang . "<br>" . mysqli_error($conn)
+            . "</div>";
+        header("refresh: 3;");
+    }   
+}
+
+function cancelStockOut($data)
+{
+    global $conn; //untuk connect ke database
+    $id = $_POST["idReturn"];
+    $id_barang = $_POST['idMasterBarang'];
+    $stok = $_POST['netBarangReturn'];
+    $updateStatus = "UPDATE barang_keluar SET status = '0' WHERE id_barang_keluar = '$id'";
+    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE id_barang = '$id_barang'");
+
+    if (mysqli_query($conn, $updateStatus)) {
+        $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
+        $stokMaster = intval($row['stok']);
+        $IntStok = intval($stok);
+        $stokBaru = $stokMaster - $IntStok; 
+
+        $update = "UPDATE master_barang SET stok = '$stokBaru' WHERE id_barang = $id_barang";
+        if (mysqli_query($conn, $update)) {
+            header("Refresh:3");
+            echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Return data berhasil
+                </div>
+                    ";
+        } else {
+            echo "
+                <div class='alert alert-danger text-center' role='alert'>
+                    Return data stock gagal
+                </div>
+                ";
+        }
+    } else {
+        echo "
+            <div class='alert alert-danger text-center' role='alert'>" .
+            $checkBarang . "<br>" . mysqli_error($conn)
+            . "</div>";
+        header("refresh: 3;");
+    }  
 }
 
 function insertKontainer($data)

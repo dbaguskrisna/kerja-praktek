@@ -147,6 +147,14 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>

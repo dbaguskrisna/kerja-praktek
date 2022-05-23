@@ -2,7 +2,7 @@
 session_start();
 require 'function.php';
 
-$data = query("SELECT barang_keluar.id_barang_keluar,barang_keluar.tanggal,barang_keluar.contract_no,barang_keluar.consigne,barang_keluar.notify_party,barang_keluar.port_of_loading,barang_keluar.country_of_origin,barang_keluar.destination,barang_keluar.description,barang_keluar.packing,barang_keluar.freight,barang_keluar.gross_weight,barang_keluar.no_of_bags,barang_keluar.net_weight,master_barang.nama,master_barang.jenis_barang,master_barang.grade,kapal.nama_kapal,pembayaran_customer.nomor_nota,kontainer.nama_kontainer FROM barang_keluar INNER JOIN master_barang ON barang_keluar.id_barang = master_barang.id_barang INNER JOIN kapal ON barang_keluar.id_kapal = kapal.id_kapal INNER JOIN pembayaran_customer ON barang_keluar.id_pembayaran_customer = pembayaran_customer.id_pembayaran INNER JOIN kontainer ON barang_keluar.id_kontainer = kontainer.id_kontainer");
+$data = query("SELECT barang_keluar.id_barang_keluar,barang_keluar.tanggal,barang_keluar.contract_no,barang_keluar.consigne,barang_keluar.notify_party,barang_keluar.port_of_loading,barang_keluar.country_of_origin,barang_keluar.destination,barang_keluar.description,barang_keluar.packing,barang_keluar.freight,barang_keluar.gross_weight,barang_keluar.no_of_bags,barang_keluar.net_weight,master_barang.nama,master_barang.jenis_barang,master_barang.grade,kapal.nama_kapal,pembayaran_customer.nomor_nota,kontainer.nama_kontainer FROM barang_keluar INNER JOIN master_barang ON barang_keluar.id_barang = master_barang.id_barang INNER JOIN kapal ON barang_keluar.id_kapal = kapal.id_kapal INNER JOIN pembayaran_customer ON barang_keluar.id_pembayaran_customer = pembayaran_customer.id_pembayaran INNER JOIN kontainer ON barang_keluar.id_kontainer = kontainer.id_kontainer WHERE barang_keluar.status = 0");
 
 if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
@@ -15,6 +15,8 @@ if (isset($_POST["submit"])) {
   updateStockout($_POST);
 } else if (isset($_POST["submitDelete"])) {
   deleteStockout($_POST);
+} else if (isset($_POST["submitReturn"])){
+  returnStockout($_POST);
 }
 
 ?>
@@ -277,6 +279,14 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
@@ -296,7 +306,7 @@ if (isset($_POST["submit"])) {
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Layout Options
+                  Payments
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -413,7 +423,6 @@ if (isset($_POST["submit"])) {
                     <th>Gross Weight</th>
                     <th>No Of Bags</th>
                     <th>Net Weight</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -480,7 +489,10 @@ if (isset($_POST["submit"])) {
                         <td>
                           <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_barang_keluar"] ?>'>Edit</button>
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?= $row["id_barang_keluar"] ?>">
-                            Delete
+                            Delete 
+                          </button>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_keluar"] ?>">
+                          <i class="fa fa-undo" aria-hidden="true"></i> Return
                           </button>
                         </td>
                       </tr>
@@ -608,7 +620,7 @@ if (isset($_POST["submit"])) {
                                       <div class="form-group col-md-4">
                                         <label for="exampleInputEmail1">Kontainer</label>
                                         <?php
-                                        $datas = query("SELECT * FROM kontainer");
+                                          $datas = query("SELECT * FROM kontainer");
                                         ?>
                                         <select name="kontainer" class="form-control" id="kontainer">
                                           <?php foreach ($datas as $rows) : ?>
@@ -662,6 +674,54 @@ if (isset($_POST["submit"])) {
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                     <button type="submit" id="sumbitDelete" name="submitDelete" class="btn btn-primary">Hapus</button>
+                                  </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="modal fade" id="exampleModalReturn<?= $row['id_barang_keluar'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Return Barang</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <form method="POST">
+                              <div class="modal-body">
+                                <?php
+                                $id = $row['id_barang_keluar'];
+                                $datass = query("SELECT * FROM barang_keluar where id_barang_keluar = $id");
+                                ?>
+                                <?php foreach ($datass as $rowss) : ?>
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <div class="form-group">
+                                        <label for="exampleInputEmail1">ID: </label>
+                                        <input type="text" class="form-control" id="idReturn" name="idReturn" value="<?= $row['id_barang_keluar'] ?>" readonly="true" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="exampleInputEmail1">ID: </label>
+                                        <input type="text" class="form-control" id="idMasterBarang" name="idMasterBarang" value="<?= $rowss['id_barang'] ?>" readonly="true" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="exampleInputEmail1">ID: </label>
+                                        <input type="text" class="form-control" id="netBarangReturn" name="netBarangReturn" value="<?= $row['net_weight'] ?>" readonly="true" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <p class="text-center">
+                                          Apakah anda yakin ingin melakukan return barang dengan <b>Nomor Kontrak <?= $row['contract_no'] ?> </b>?
+                                        </p>
+                                      </div>
+                                    </div>
+                                  <?php endforeach; ?>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                    <button type="submit" id="submitReturn" name="submitReturn" class="btn btn-primary">Return</button>
                                   </div>
                               </div>
                             </form>

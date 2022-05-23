@@ -117,14 +117,14 @@ if (!isset($_SESSION["admin"])) {
             </li>
             <li class="nav-item">
               <a href="employee_data.php" class="nav-link">
-                <i class="nav-icon fas fa-dollar-sign"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   User Data
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="stock_in.php" class="nav-link">
+              <a href="stock_in_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-sign-in-alt"></i>
                 <p>
                   Stock Going In
@@ -132,7 +132,7 @@ if (!isset($_SESSION["admin"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="stock_out.php" class="nav-link">
+              <a href="stock_out_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
                 <p>
                   Stock Going Out
@@ -140,26 +140,73 @@ if (!isset($_SESSION["admin"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="supplier.php" class="nav-link">
-                <i class="nav-icon fas fa-dollar-sign"></i>
+              <a href="return_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="master_barang_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-folder"></i>
+                <p>
+                  Master Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="supplier_data_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
                 <p>
                   Supplier Data
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="supplier_payment.php" class="nav-link">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Payments
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="customer_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Customer Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="supplier_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Supplier Payments</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="customer_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
-                  Supplier Payments
+                  Customer Data
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="ship_data.php" class="nav-link">
-                <i class="nav-icon fas fa-dollar-sign"></i>
+              <a href="ship_data_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-ship"></i>
                 <p>
                   Ship Data
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="kontainer_data_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                  Container Data
                 </p>
               </a>
             </li>

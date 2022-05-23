@@ -182,6 +182,14 @@ foreach ($under_100 as $row){
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
@@ -198,28 +206,28 @@ foreach ($under_100 as $row){
               </a>
             </li>
             <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Layout Options
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-                <a href="customer_payment_admin.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Customer Payments</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="supplier_payment_admin.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Supplier Payments</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Payments
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="customer_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Customer Payments</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="supplier_payment_admin.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Supplier Payments</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a href="customer_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>

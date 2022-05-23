@@ -236,6 +236,14 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
@@ -255,7 +263,7 @@ if (isset($_POST["submit"])) {
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                  Layout Options
+                  Payments
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
