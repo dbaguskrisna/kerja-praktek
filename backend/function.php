@@ -1110,6 +1110,7 @@ function downGrade($data)
                 $stokChoosen = intval($rowChoosen['stok']);
     
                 $count = $stokChoosen + $netto;
+                var_dump($count);
     
                 $update = "UPDATE master_barang SET stok = '$count' WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'";
     
@@ -1136,7 +1137,7 @@ function downGrade($data)
                         . "</div>";
                 }
             } else {
-                $insertBarang = "INSERT INTO master_barang (nama, jenis_barang,grade)VALUES('$namaBarang', '$choosenGrade','$choosenGrade')";
+                $insertBarang = "INSERT INTO master_barang (nama,jenis_barang,grade)VALUES('$namaBarang', '$jenisBarang','$choosenGrade')";
 
                 if (mysqli_query($conn, $insertBarang)) {
                     $checkBarangUpdate = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'");
@@ -1146,16 +1147,24 @@ function downGrade($data)
                         $stokChoosen = intval($newRow['stok']);
 
                         $result = $stokChoosen + $netto; 
-
+                        var_dump($result);
                         $update = "UPDATE master_barang SET stok = '$result' WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'";
+                        $updateStatus = "UPDATE barang_masuk SET grade = '$choosenGrade' WHERE id_barang_masuk = '$idBarang'";
 
                         if (mysqli_query($conn, $update)) {
-                            echo "
-                            <div class='alert alert-success text-center' role='alert'>
-                                Tambah Stok Berhasil
-                            </div>
-                                ";
-                            header("Refresh:3");
+                            if (mysqli_query($conn, $updateStatus)) { 
+                                echo "
+                                <div class='alert alert-success text-center' role='alert'>
+                                    Tambah Stok Berhasil
+                                </div>
+                                    ";
+                                header("Refresh:3");
+                            } else {
+                                echo "
+                                <div class='alert alert-danger text-center' role='alert'>" .
+                                    $updateStatus . "<br>" . mysqli_error($conn)
+                                    . "</div>";
+                            }
                         } else {
                             echo "
                             <div class='alert alert-success text-center' role='alert'>
