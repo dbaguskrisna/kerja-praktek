@@ -60,7 +60,7 @@ if (isset($_POST["submit"])) {
               </div>
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Bank</label>
-                <input type="text" class="form-control" id="bank" name="bank" required>
+                <input type="text" class="form-control" id="bank" name="bank" placeholder="Masukkan Bank" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="jabatan">Supplier : </label>
@@ -70,6 +70,20 @@ if (isset($_POST["submit"])) {
                     <option value="<?= $rowSupplier['id_supplier'] ?>"><?= $rowSupplier['nama_supplier'] ?></option>
                   <?php endforeach; ?>
                 </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">Coly</label>
+                <input type="text" class="form-control" id="coly" name="coly" placeholder="Coly" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">Gross</label>
+                <input type="text" class="form-control" id="gross" name="gross" placeholder="Gross" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">Netto</label>
+                <input type="text" class="form-control" id="netto" name="netto" placeholder="Netto" required>
               </div>
             </div>
             <div class="form-row">
@@ -367,6 +381,9 @@ if (isset($_POST["submit"])) {
                               <th>Jenis Barang</th>
                               <th>Grade</th>
                               <th>Asal</th>
+                              <th>Coly</th>
+                              <th>Gross</th>
+                              <th>Netto</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -406,6 +423,15 @@ if (isset($_POST["submit"])) {
                                   </td>
                                   <td>
                                     <?= $row["asal"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["coly"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["gross"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["netto"] ?>
                                   </td>
                                   <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>'>Edit</button>

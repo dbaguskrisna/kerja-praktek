@@ -344,60 +344,79 @@ function insertStockin($data)
     $noNota = $_POST['noNota'];
     $tanggal = $_POST['tanggal'];
     $truck = $_POST['truck'];
-    $namaBarang = $_POST['namaBarang'];
-    $jenisBarang = $_POST['jenis'];
-    $coly = $_POST['coly'];
-    $gross = $_POST['gross'];
-    $netto = $_POST['netto'];
     $kontainer = $_POST['kontainer'];
-    $grade = $_POST['gradeBarang'];
-    $asal = $_POST['asalBarang'];
 
-    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$grade' AND jenis_barang ='$jenisBarang'");
+    $checkNota = mysqli_query($conn, "SELECT * FROM pembayaran_supplier WHERE id_pembayaran = '$noNota'");
 
-    $sql = "INSERT INTO barang_masuk (tanggal,truck,coly,gross,netto,id_pembayaran_supplier,id_kontainer,nama,jenis_barang,grade,asal) VALUES ('$tanggal', '$truck', '$coly', '$gross', '$netto', '$noNota', '$kontainer', '$namaBarang', '$jenisBarang','$grade','$asal')";
+    if (mysqli_num_rows($checkNota) === 1) {
+        $rowNota = mysqli_fetch_assoc($checkNota);
+        $colyNota =  intval($rowNota['coly']);
+        $grossNota =  intval($rowNota['gross']);
+        $nettoNota =  intval($rowNota['netto']);
+        $namaBarangNota = $rowNota['nama'];
+        $jenisBarangNota = $rowNota['jenis_barang'];
+        $gradeNota = $rowNota['grade'];
+        $asalNota = $rowNota['asal'];
 
-    if (mysqli_query($conn, $sql)) {
-        if (mysqli_num_rows($checkBarang) === 1) {
-            $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
-            $stok = intval($row['stok']);
-            $stok = $stok + $netto;
-            $update = "UPDATE master_barang SET stok = '$stok'  WHERE nama = '$namaBarang' AND grade = '$grade'";
-            
-            if (mysqli_query($conn, $update)) {
-                header("Refresh:3");
-                echo "
-                    <div class='alert alert-success text-center' role='alert'>
-                        Tambah Stok Berhasil
-                    </div>
-                        ";
-            } else {
-                echo "
+        $sql = "INSERT INTO barang_masuk (tanggal,truck,coly,gross,netto,id_pembayaran_supplier,id_kontainer,nama,jenis_barang,grade,asal) VALUES ('$tanggal', '$truck', '$colyNota', '$grossNota', '$nettoNota', '$noNota', '$kontainer', '$namaBarangNota', '$jenisBarangNota','$gradeNota','$asalNota')";
+
+        $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarangNota' AND grade = '$gradeNota' AND jenis_barang ='$jenisBarangNota'");
+
+        if (mysqli_query($conn, $sql)) {
+            if (mysqli_num_rows($checkBarang) === 1) {
+                $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
+                $stok = intval($row['stok']);
+                $stok = $stok + $nettoNota;
+                $update = "UPDATE master_barang SET stok = '$stok' WHERE nama = '$namaBarangNota' AND grade = '$gradeNota'";
+                $updateStatusNota = "UPDATE pembayaran_supplier SET status_nota = '1' WHERE id_pembayaran = '$noNota'";
+                if (mysqli_query($conn, $update)) {
+                    if (mysqli_query($conn, $updateStatusNota)) {
+                        header("Refresh:3");
+                        echo "
+                            <div class='alert alert-success text-center' role='alert'>
+                                Tambah Stok Berhasil
+                            </div>
+                                ";
+                    } else {
+                        echo "
+                            <div class='alert alert-danger text-center' role='alert'>" .
+                            $updateStatusNota . "<br>" . mysqli_error($conn)
+                            . "</div>";
+                    }
+                } else {
+                    echo "
                     <div class='alert alert-danger text-center' role='alert'>" .
-                    $update . "<br>" . mysqli_error($conn)
-                    . "</div>";
-            }
-        } else {
-            $insert_master_barang = "INSERT INTO master_barang (nama,jenis_barang,grade,asal,stok) VALUES ('$namaBarang', '$jenisBarang', '$grade', '$asal', '$netto')";
-            if (mysqli_query($conn, $insert_master_barang)) {
-                header("Refresh:3");
-                echo "
+                        $update . "<br>" . mysqli_error($conn)
+                        . "</div>";
+                }
+            } else {
+                $insert_master_barang = "INSERT INTO master_barang (nama,jenis_barang,grade,asal,stok) VALUES ('$namaBarangNota', '$jenisBarangNota', '$gradeNota', '$asalNota', '$nettoNota')";
+                if (mysqli_query($conn, $insert_master_barang)) {
+                    header("Refresh:3");
+                    echo "
                     <div class='alert alert-success text-center' role='alert'>
                         Update stok barang berhasil
                     </div>
                         ";
-            } else {
-                echo "
+                } else {
+                    echo "
                     <div class='alert alert-danger text-center' role='alert'>" .
-                    $insert_master_barang . "<br>" . mysqli_error($conn)
-                    . "</div>";
+                        $insert_master_barang . "<br>" . mysqli_error($conn)
+                        . "</div>";
+                }
             }
+        } else {
+            echo "
+            <div class='alert alert-danger text-center' role='alert'>" .
+                $sql . "<br>" . mysqli_error($conn)
+                . "</div>";
         }
     } else {
         echo "
-            <div class='alert alert-danger text-center' role='alert'>" .
-            $sql . "<br>" . mysqli_error($conn)
-            . "</div>";
+        <div class='alert alert-success text-center' role='alert'>
+            ERROR
+        </div>
+            ";
     }
 }
 
@@ -409,54 +428,22 @@ function updateStockin($data)
     }
 
     $idEdit = $_POST['idUpdate'];
-    $noNota = $_POST['noNota'];
-    $tanggal = $_POST['tanggal'];
     $truck = $_POST['truck'];
-    $namaBarang = $_POST['namaBarang'];
-    $jenisBarang = $_POST['jenis'];
-    $coly = $_POST['coly'];
-    $gross = $_POST['gross'];
-    $netto = $_POST['netto'];
     $kontainer = $_POST['kontainer'];
-    $grade = $_POST['grade'];
-    $asal = $_POST['asalBarang'];
-    $netto2 = $_POST['netto2'];
 
-    $sql = "UPDATE barang_masuk SET tanggal = '$tanggal', truck = '$truck', coly = '$coly',gross = '$gross', netto = '$netto',id_pembayaran_supplier = '$noNota', id_kontainer = '$kontainer',nama = '$namaBarang', jenis_barang = '$jenisBarang',grade = '$grade', asal='$asal' WHERE id_barang_masuk = '$idEdit'";
-
-    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$grade'");
-
-    if (mysqli_num_rows($checkBarang) === 1) {
-        $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
-        $stok = intval($row['stok']);
-        $netto2 = intval($netto2);
-        $stokBaru = ($stok - $netto2) + $netto;
-      
-        $update = "UPDATE master_barang SET stok = '$stokBaru' WHERE nama = '$namaBarang' AND grade = '$grade'";
-        if (mysqli_query($conn, $update)) {
-            if (mysqli_query($conn, $sql)) {
-                header("refresh: 3;");
-                echo "
-                    <div class='alert alert-success text-center' role='alert'>
-                        Update stok barang berhasil
-                    </div>
-                    ";
-            } else {
-                echo "
-                    <div class='alert alert-danger text-center' role='alert'>" .
-                    $update . "<br>" . mysqli_error($conn)
-                    . "</div>";
-            }
-        } else {
-            echo "
-                <div class='alert alert-danger text-center' role='alert'>" .
-                $update . "<br>" . mysqli_error($conn)
-                . "</div>";
-        }
+    $sql = "UPDATE barang_masuk SET truck = '$truck', id_kontainer = '$kontainer' WHERE id_barang_masuk = '$idEdit'";
+    if (mysqli_query($conn, $sql)) {
+        echo "
+                <div class='alert alert-success text-center' role='alert'>
+                    Update data customer sukses
+                </div>
+            ";
+        header("refresh: 3;");
     } else {
-        echo "<div class='alert alert-success text-center' role='alert'>
-                Data not found
-            </div>";
+        echo "
+            <div class='alert alert-danger text-center' role='alert'>" .
+            $sql . "<br>" . mysqli_error($conn)
+            . "</div>";
     }
 }
 
@@ -499,57 +486,72 @@ function insertStockout($data)
     $description = $_POST['description'];
     $packing = $_POST['packing'];
     $freight = $_POST['freight'];
-    $id_barang = $_POST['nama_barang'];
     $notaPembayaran = $_POST['nota_pembayaran'];
     $id_kapal = $_POST['kapal'];
     $kontainer = $_POST['kontainer'];
-    $netWeight = $_POST['netWeight'];
-    $grossWeight = $_POST['grossWeight'];
-    $noOfWeight = $_POST['noOfBags'];
 
-    $sql = "INSERT INTO barang_keluar (tanggal,contract_no,consigne,notify_party,port_of_loading,country_of_origin,destination,description,packing,freight,id_barang,id_kapal,id_pembayaran_customer,id_kontainer,gross_weight,no_of_bags,net_weight) VALUES ('$tanggal', '$contractno', '$consigne', '$notifyParty', '$portofloading', '$countryoforigin', '$destination', '$description', '$packing','$freight','$id_barang', '$id_kapal','$notaPembayaran','$kontainer','$grossWeight','$noOfWeight','$netWeight')";
+    $checkNota = mysqli_query($conn, "SELECT * FROM pembayaran_customer WHERE id_pembayaran = '$notaPembayaran'");
 
-    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE id_barang = $id_barang");
-    
-    if (mysqli_query($conn, $sql)) {
-        if (mysqli_num_rows($checkBarang) === 1) {
-            $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
-            $stok = intval($row['stok']);
-            if( $netWeight >= $stok){
-                echo "
+    if (mysqli_num_rows($checkNota) === 1) {
+        $rowNota = mysqli_fetch_assoc($checkNota);
+        $colyNota =  intval($rowNota['coly']);
+        $grossNota =  intval($rowNota['gross']);
+        $nettoNota =  intval($rowNota['netto']);
+        $namaBarangNota = $rowNota['nama_barang'];
+        $jenisBarangNota = $rowNota['jenis_barang'];
+        $gradeNota = $rowNota['grade'];
+
+        $checkMasterBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama='$namaBarangNota' AND jenis_barang='$jenisBarangNota' AND grade='$gradeNota'");
+
+        if (mysqli_num_rows($checkMasterBarang) === 1) {
+            $rowBarang = mysqli_fetch_assoc($checkMasterBarang);
+            $idMasterBarang = $rowBarang['id_barang'];
+
+            $sql = "INSERT INTO barang_keluar (tanggal,contract_no,consigne,notify_party,port_of_loading,country_of_origin,destination,description,packing,freight,id_barang,id_kapal,id_pembayaran_customer,id_kontainer,gross_weight,no_of_bags,net_weight) VALUES ('$tanggal', '$contractno', '$consigne', '$notifyParty', '$portofloading', '$countryoforigin', '$destination', '$description', '$packing','$freight','$idMasterBarang', '$id_kapal','$notaPembayaran','$kontainer','$grossNota','$colyNota','$nettoNota')";
+
+            $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE id_barang = $idMasterBarang");
+
+            if (mysqli_query($conn, $sql)) {
+                if (mysqli_num_rows($checkBarang) === 1) {
+                    $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
+                    $stok = intval($row['stok']);
+                    if ($nettoNota >= $stok) {
+                        echo "
                     <div class='alert alert-warning text-center' role='alert'>
                         Tidak dapat melakukan pengiriman karena pengiriman melibihi stock gudang
                     </div>
-                    "; 
-            } else {
-                $stok = $stok - $netWeight;
-                $update = "UPDATE master_barang SET stok = '$stok' WHERE id_barang = $id_barang";
-    
-                if (mysqli_query($conn, $update)) {
-                    echo "
-                        <div class='alert alert-success text-center' role='alert'>
-                            Stock Out Berhasil barang berhasil
-                        </div>
+                    ";
+                    } else {
+                        $stok = $stok - $nettoNota;
+                        $update = "UPDATE master_barang SET stok = '$stok' WHERE id_barang = $idMasterBarang";
+
+                        if (mysqli_query($conn, $update)) {
+                            echo "
+                            <div class='alert alert-success text-center' role='alert'>
+                                Stock Out Berhasil barang berhasil
+                            </div>
                             ";
-                    header("Refresh:3");
+                            header("Refresh:3");
+                        } else {
+                            echo "
+                        <div class='alert alert-danger text-center' role='alert'>" .
+                                $update . "<br>" . mysqli_error($conn)
+                                . "</div>";
+                        }
+                    }
                 } else {
                     echo "
-                        <div class='alert alert-danger text-center' role='alert'>" .
-                        $update . "<br>" . mysqli_error($conn)
-                        . "</div>";
-                }
-            }
-        } else {
-            echo "
                 <div class='alert alert-danger text-center' role='alert'>
                     Error
                 </div>";
-        }
-    } else {
-        echo "
+                }
+            } else {
+                echo "
             <div class='alert alert-danger text-center' role='alert'>" .
-            $sql . "<br>" . mysqli_error($conn)
-            . "</div>";
+                    $sql . "<br>" . mysqli_error($conn)
+                    . "</div>";
+            }
+        }
     }
 }
 
@@ -655,7 +657,7 @@ function returnStockout($data)
         $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
         $stokMaster = intval($row['stok']);
         $IntStok = intval($stok);
-        $stokBaru = $IntStok + $stokMaster; 
+        $stokBaru = $IntStok + $stokMaster;
 
         $update = "UPDATE master_barang SET stok = '$stokBaru' WHERE id_barang = $id_barang";
         if (mysqli_query($conn, $update)) {
@@ -678,7 +680,7 @@ function returnStockout($data)
             $checkBarang . "<br>" . mysqli_error($conn)
             . "</div>";
         header("refresh: 3;");
-    }   
+    }
 }
 
 function cancelStockOut($data)
@@ -694,7 +696,7 @@ function cancelStockOut($data)
         $row = mysqli_fetch_assoc($checkBarang); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan 
         $stokMaster = intval($row['stok']);
         $IntStok = intval($stok);
-        $stokBaru = $stokMaster - $IntStok; 
+        $stokBaru = $stokMaster - $IntStok;
 
         $update = "UPDATE master_barang SET stok = '$stokBaru' WHERE id_barang = $id_barang";
         if (mysqli_query($conn, $update)) {
@@ -717,7 +719,7 @@ function cancelStockOut($data)
             $checkBarang . "<br>" . mysqli_error($conn)
             . "</div>";
         header("refresh: 3;");
-    }  
+    }
 }
 
 function insertKontainer($data)
@@ -881,7 +883,6 @@ function deleteCustomerData($data)
 
 function insertPembayaranSupplier($user)
 {
-
     global $conn;
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
@@ -898,8 +899,11 @@ function insertPembayaranSupplier($user)
     $jenis_barang = $_POST['jenisBarang'];
     $grade_barang = $_POST['gradeBarang'];
     $asal = $_POST['asalBarang'];
+    $coly = $_POST['coly'];
+    $gross = $_POST['gross'];
+    $netto = $_POST['netto'];
 
-    $sql = "INSERT INTO pembayaran_supplier (nomor_nota, tanggal, jumlah_pembayaran, total_barang,status_pembayaran,bank,supplier_id_supplier,nama,jenis_barang,grade,asal)VALUES('$nomor_nota', '$tanggal', '$jumlah_pembayaran', '$total_barang','$status_pembayaran','$bank','$supplier', '$nama_barang','$jenis_barang','$grade_barang','$asal')";
+    $sql = "INSERT INTO pembayaran_supplier (nomor_nota, tanggal, jumlah_pembayaran, total_barang,status_pembayaran,bank,supplier_id_supplier,nama,jenis_barang,grade,asal,coly,gross,netto)VALUES('$nomor_nota', '$tanggal', '$jumlah_pembayaran', '$total_barang','$status_pembayaran','$bank','$supplier', '$nama_barang','$jenis_barang','$grade_barang','$asal','$coly','$gross','$netto')";
 
     if (mysqli_query($conn, $sql)) {
         echo "
@@ -983,24 +987,26 @@ function insertCustomerPayment($user)
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    $jumlah_pembayaran = $_POST['jumlahPembayaran'];
+    $jumlah_pembayaran = preg_replace("/[^0-9]/", "", $_POST['jumlahPembayaran']);
     $tanggal = $_POST['tanggal'];
-    $total_barang = $_POST['totalBarang'];
     $bank = $_POST['bank'];
     $status_pembayaran = $_POST['statusPembayaran'];
     $customer = $_POST['customer'];
     $nomor_nota = $_POST['nomorNota'];
     $nama_barang = $_POST['namaBarang'];
     $jenis_barang = $_POST['jenisBarang'];
-    $grade = $_POST['grade'];
+    $grade = $_POST['gradeBarang'];
+    $coly = $_POST['coly'];
+    $gross = $_POST['gross'];
+    $netto = $_POST['netto'];
 
-    $sql = "INSERT INTO pembayaran_customer (jumlah_pembayaran, tanggal, total_barang,bank,status_pembayaran,customer_id,nomor_nota,nama_barang,jenis_barang,grade)VALUES('$jumlah_pembayaran', '$tanggal', '$total_barang','$bank','$status_pembayaran','$customer','$nomor_nota', '$nama_barang','$jenis_barang','$grade')";
+    $sql = "INSERT INTO pembayaran_customer (jumlah_pembayaran, tanggal,bank,status_pembayaran,customer_id,nomor_nota,nama_barang,jenis_barang,grade,coly,gross,netto)VALUES('$jumlah_pembayaran', '$tanggal','$bank','$status_pembayaran','$customer','$nomor_nota', '$nama_barang','$jenis_barang','$grade','$coly','$gross','$netto')";
 
     if (mysqli_query($conn, $sql)) {
         echo "
-                <div class='alert alert-success text-center' role='alert'>
-                    Menambahkan data pembayaran customer sukses
-                </div>
+            <div class='alert alert-success text-center' role='alert'>
+                Menambahkan Data Pembayaran Customer Berhasil
+            </div>
             ";
         header("refresh: 3;");
     } else {
@@ -1022,7 +1028,6 @@ function updateCustomerPayment($user)
     $id_pembayaran = $_POST['idPembayaran'];
     $jumlah_pembayaran = $_POST['jumlahPembayaran'];
     $tanggal = $_POST['tanggal'];
-    $total_barang = $_POST['totalBarang'];
     $bank = $_POST['bank'];
     $status_pembayaran = $_POST['statusPembayaran'];
     $customer = $_POST['customer'];
@@ -1030,8 +1035,11 @@ function updateCustomerPayment($user)
     $nama_barang = $_POST['namaBarang'];
     $jenis_barang = $_POST['jenisBarang'];
     $grade = $_POST['grade'];
+    $coly = $_POST['coly'];
+    $gross = $_POST['gross'];
+    $netto = $_POST['netto'];
 
-    $sql = "UPDATE pembayaran_customer SET jumlah_pembayaran='$jumlah_pembayaran',tanggal = '$tanggal', total_barang='$total_barang', bank='$bank', status_pembayaran='$status_pembayaran', customer_id  = '$customer', nomor_nota = '$nomor_nota',nama_barang='$nama_barang', jenis_barang='$jenis_barang', grade='$grade' WHERE id_pembayaran = '$id_pembayaran'";
+    $sql = "UPDATE pembayaran_customer SET jumlah_pembayaran='$jumlah_pembayaran',tanggal = '$tanggal', bank='$bank', status_pembayaran='$status_pembayaran', customer_id  = '$customer', nomor_nota = '$nomor_nota',nama_barang='$nama_barang', jenis_barang='$jenis_barang', grade='$grade', coly='$coly', gross='$gross', netto='$netto' WHERE id_pembayaran = '$id_pembayaran'";
 
     if (mysqli_query($conn, $sql)) {
         echo "
@@ -1067,5 +1075,123 @@ function deleteCustomerPayment($data)
             <div class='alert alert-danger text-center' role='alert'>" .
             $sql . "<br>" . mysqli_error($conn)
             . "</div>";
+    }
+}
+
+function downGrade($data)
+{
+    global $conn;
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $idBarang = $_POST['idDowngrade'];
+    $namaBarang = $_POST['namaBarang'];
+    $grade = $_POST['grade'];
+    $jenisBarang = $_POST['jenisBarang'];
+    $netto = $_POST['netto'];
+    $choosenGrade = $_POST['choosenGrade'];
+    
+    $checkBarang = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$grade' AND jenis_barang ='$jenisBarang'");
+
+    $checkBarangUpdate = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'");
+
+    if (mysqli_num_rows($checkBarang) === 1) {
+        $rowMaster = mysqli_fetch_assoc($checkBarang);
+        $stok = intval($rowMaster['stok']);
+        $downgrade_stok = $stok - $netto;
+        var_dump($downgrade_stok);
+        
+        $updateBarangLama = "UPDATE master_barang SET stok = '$downgrade_stok' WHERE nama = '$namaBarang' AND grade = '$grade' AND jenis_barang ='$jenisBarang'";
+
+        if (mysqli_query($conn, $updateBarangLama)) {
+            if (mysqli_num_rows($checkBarangUpdate) === 1) {
+                $rowChoosen = mysqli_fetch_assoc($checkBarangUpdate);
+                $stokChoosen = intval($rowChoosen['stok']);
+    
+                $count = $stokChoosen + $netto;
+    
+                $update = "UPDATE master_barang SET stok = '$count' WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'";
+    
+                $updateStatus = "UPDATE barang_masuk SET grade = '$choosenGrade' WHERE id_barang_masuk = '$idBarang'";
+
+                if (mysqli_query($conn, $update)) {
+                    if (mysqli_query($conn, $updateStatus)) { 
+                        echo "
+                        <div class='alert alert-success text-center' role='alert'>
+                            Tambah Stok Berhasil
+                        </div>
+                            ";
+                        header("Refresh:3");
+                    } else {
+                        echo "
+                        <div class='alert alert-danger text-center' role='alert'>" .
+                            $updateStatus . "<br>" . mysqli_error($conn)
+                            . "</div>";
+                    }
+                } else {
+                    echo "
+                        <div class='alert alert-danger text-center' role='alert'>" .
+                        $update . "<br>" . mysqli_error($conn)
+                        . "</div>";
+                }
+            } else {
+                $insertBarang = "INSERT INTO master_barang (nama, jenis_barang,grade)VALUES('$namaBarang', '$choosenGrade','$choosenGrade')";
+
+                if (mysqli_query($conn, $insertBarang)) {
+                    $checkBarangUpdate = mysqli_query($conn, "SELECT * FROM master_barang WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'");
+
+                    if (mysqli_num_rows($checkBarangUpdate) === 1) {
+                        $newRow= mysqli_fetch_assoc($checkBarangUpdate);
+                        $stokChoosen = intval($newRow['stok']);
+
+                        $result = $stokChoosen + $netto; 
+
+                        $update = "UPDATE master_barang SET stok = '$result' WHERE nama = '$namaBarang' AND grade = '$choosenGrade' AND jenis_barang ='$jenisBarang'";
+
+                        if (mysqli_query($conn, $update)) {
+                            echo "
+                            <div class='alert alert-success text-center' role='alert'>
+                                Tambah Stok Berhasil
+                            </div>
+                                ";
+                            header("Refresh:3");
+                        } else {
+                            echo "
+                            <div class='alert alert-success text-center' role='alert'>
+                                Error
+                            </div>
+                                ";
+                            header("Refresh:3");
+                        }
+                    } else {
+                        echo "
+                        <div class='alert alert-success text-center' role='alert'>
+                            Error
+                        </div>
+                            ";
+                        header("Refresh:3");
+                    }
+                } else {
+                    echo "
+                    <div class='alert alert-danger text-center' role='alert'>" .
+                    $insertBarang . "<br>" . mysqli_error($conn)
+                    . "</div>";
+                }
+            }
+        } else {
+            echo "
+            <div class='alert alert-success text-center' role='alert'>
+                ERROR
+            </div>
+                ";
+        }
+       
+    } else {
+        echo "
+        <div class='alert alert-success text-center' role='alert'>
+            ERROR
+        </div>
+            ";
     }
 }

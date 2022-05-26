@@ -15,6 +15,8 @@ if (isset($_POST["submit"])) {
   updateStockin($_POST);
 } else if (isset($_POST["submitDelete"])) {
   deleteStockin($_POST);
+} else if(isset($_POST['submitDownGrade'])) {
+  downGrade($_POST);
 }
 
 ?>
@@ -32,10 +34,10 @@ if (isset($_POST["submit"])) {
         <div class="modal-body">
           <div class="card-body">
             <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Nomor Nota</label>
+              <div class="form-group col-md-3">
+                <label for="exampleInputEmail1">Pilih Nomor Nota</label>
                 <?php
-                $datas = query("SELECT * FROM pembayaran_supplier");
+                $datas = query("SELECT * FROM pembayaran_supplier WHERE pembayaran_supplier.status_nota = 0");
                 ?>
                 <select name="noNota" class="form-control" id="noNota">
                   <?php foreach ($datas as $rows) : ?>
@@ -43,55 +45,16 @@ if (isset($_POST["submit"])) {
                   <?php endforeach; ?>
                 </select>
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Tanggal : </label>
-                <input type="date" class="form-control" name="tanggal" id="tanggal" >
+                <input type="date" class="form-control" name="tanggal" id="tanggal">
               </div>
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Truck : </label>
+              <div class="form-group col-md-3">
+                <label for="exampleInputEmail1">Nomor Truck : </label>
                 <input type="text" class="form-control" name="truck" id="truck" placeholder="masukkan nomor truck">
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Nama Barang : </label>
-                <input type="text" class="form-control" name="namaBarang" id="namaBarang" placeholder="masukkan nama barang">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Jenis Barang: </label>
-                <input type="text" class="form-control" name="jenis" id="jenis" placeholder="jenis barang">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="jabatan">Grade Barang : </label>
-                <select class="form-control" name="gradeBarang" id="gradeBarang" >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="C">C</option>
-                  <option value="D">D</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Coly : </label>
-                <input type="text" class="form-control" name="coly" id="coly" placeholder="masukkan jumlah coly">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Gross : </label>
-                <input type="text" class="form-control" name="gross" id="gross" placeholder="masukkan jumlah gross">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="exampleInputEmail1">Netto : </label>
-                <input type="text" class="form-control" name="netto" id="netto" placeholder="masukkan jumlah netto">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="exampleInputEmail1">Asal Barang : </label>
-                <input type="text" class="form-control" name="asalBarang" id="asalBarang" placeholder="masukkan asal barang">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="exampleInputEmail1">Kontainer</label>
+              <div class="form-group col-md-3">
+                <label for="exampleInputEmail1">Container</label>
                 <?php
                 $datas = query("SELECT * FROM kontainer");
                 ?>
@@ -183,8 +146,8 @@ if (isset($_POST["submit"])) {
           </div>
           <div class="info">
             <a href="#" class="d-block">
-              <?php 
-                echo $_SESSION['user'];
+              <?php
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -343,7 +306,7 @@ if (isset($_POST["submit"])) {
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                  <h3 class="card-title"></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -363,8 +326,8 @@ if (isset($_POST["submit"])) {
                       <div class="col-sm-12 col-md-6"></div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-12">
-                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                      <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
                           <thead>
                             <tr role="row">
                               <th>Nomor Nota</th>
@@ -378,6 +341,7 @@ if (isset($_POST["submit"])) {
                               <th>Grade Barang</th>
                               <th>Asal Barang</th>
                               <th>Kontainer</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -421,6 +385,9 @@ if (isset($_POST["submit"])) {
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_barang_masuk"] ?>'>Edit</button>
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_barang_masuk'] ?>">
                                       Delete
+                                    </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_masuk"] ?>">
+                                      <i class="fa fa-arrow-down" aria-hidden="true"></i> Turun Grade
                                     </button>
                                   </td>
                                 </tr>
@@ -478,78 +445,24 @@ if (isset($_POST["submit"])) {
                                         <div class="modal-body">
                                           <?php
                                           $id = $row['id_barang_masuk'];
-                                          $dataEdit = query("SELECT * FROM barang_masuk where id_barang_masuk = $id");
+                                          $dataEdit = query("SELECT barang_masuk.truck,barang_masuk.id_kontainer,barang_masuk.id_barang_masuk,pembayaran_supplier.nomor_nota FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran where id_barang_masuk =  $id");
                                           ?>
                                           <?php foreach ($dataEdit as $rowEdit) : ?>
                                             <div class="card-body">
                                               <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Nomor Nota</label>
-                                                  <?php
-                                                  $datas = query("SELECT * FROM pembayaran_supplier");
-                                                  ?>
-                                                  <select name="noNota" class="form-control" id="noNota">
-                                                    <?php foreach ($datas as $rows) : ?>
-                                                      <option value="<?= $rows['id_pembayaran'] ?>"><?= $rows['nomor_nota'] ?></option>
-                                                    <?php endforeach; ?>
-                                                  </select>
+                                                <div class="form-group col-md-3" hidden>
+                                                  <label for="exampleInputEmail1">Truck : </label>
+                                                  <input type="text" class="form-control" name="idUpdate" id="idUpdate" value="<?= $rowEdit['id_barang_masuk'] ?>" required>
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Tanggal : </label>
-                                                  <input type="date" class="form-control" name="tanggal" value="<?= $rowEdit['tanggal'] ?>" id="tanggal" required>
+                                                  <label for="exampleInputEmail1">Nomor Nota : </label>
+                                                  <input type="text" class="form-control" name="truck" id="truck" value="<?= $rowEdit['nomor_nota'] ?>" readonly>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                   <label for="exampleInputEmail1">Truck : </label>
                                                   <input type="text" class="form-control" name="truck" id="truck" value="<?= $rowEdit['truck'] ?>" required>
                                                 </div>
-                                                <div class="form-group" hidden>
-                                                  <label for="exampleInputEmail1">Bank</label>
-                                                  <input type="text" class="form-control" id="idUpdate" name="idUpdate" value="<?= $rowEdit['id_barang_masuk'] ?>">
-                                                </div>
-                                              </div>
-                                              <div class="form-row">
                                                 <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Nama Barang : </label>
-                                                  <input type="text" class="form-control" name="namaBarang" id="namaBarang" value="<?= $rowEdit['nama'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Jenis : </label>
-                                                  <input type="text" class="form-control" name="jenis" id="jenis" value="<?= $rowEdit['jenis_barang'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-3">
-                                                  <label for="status_pembayaran">Grade : </label>
-                                                  <select class="form-control" name="grade" id="grade">
-                                                    <option value="A" <?= ($rowEdit['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
-                                                    <option value="B" <?= ($rowEdit['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
-                                                    <option value="C" <?= ($rowEdit['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
-                                                    <option value="D" <?= ($rowEdit['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                              <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Coly : </label>
-                                                  <input type="text" class="form-control" name="coly" id="coly" value="<?= $rowEdit['coly'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Gross : </label>
-                                                  <input type="text" class="form-control" name="gross" id="gross" value="<?= $rowEdit['gross'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                  <label for="exampleInputEmail1">Netto : </label>
-                                                  <input type="text" class="form-control" name="netto" id="netto" value="<?= $rowEdit['netto'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-4" hidden>
-                                                  <label for="exampleInputEmail1">Netto : </label>
-                                                  <input type="text" class="form-control" name="netto2" id="netto2" value="<?= $rowEdit['netto'] ?>" required>
-                                                </div>
-                                              </div>
-                                              <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                  <label for="exampleInputEmail1">Asal Barang : </label>
-                                                  <input type="text" class="form-control" name="asalBarang" id="asalBarang" value="<?= $rowEdit['asal'] ?>" required>
-                                                </div>
-                                                <div class="form-group col-md-6">
                                                   <label for="exampleInputEmail1">Kontainer</label>
                                                   <?php
                                                   $datas = query("SELECT * FROM kontainer");
@@ -567,11 +480,86 @@ if (isset($_POST["submit"])) {
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
                                           <button type="submit" id="submitUpdate" name="submitUpdate" class="btn btn-primary">Update Data</button>
+
                                         </div>
                                       </form>
                                     </div>
                                   </div>
                                 </div>
+
+                                <div class="modal fade" id="exampleModalReturn<?= $row['id_barang_masuk'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Return Barang</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <form method="POST">
+                                        <div class="modal-body">
+                                          <?php
+                                            $id = $row['id_barang_masuk'];
+                                            $datass = query("SELECT barang_masuk.netto,barang_masuk.nama,barang_masuk.jenis_barang,barang_masuk.grade,barang_masuk.id_barang_masuk,pembayaran_supplier.nomor_nota,barang_masuk.grade FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran where id_barang_masuk = $id");
+                                          ?>
+                                          <?php foreach ($datass as $rowss) : ?>
+                                            <div class="card-body">
+                                              <div class="form-group">
+                                                <div class="form-group">
+                                                  <p class="text-center">
+                                                    Apakah anda yakin ingin melakukan penurunan grade barang dengan <b>Nomor Nota : <?= $row['nomor_nota'] ?> </b>?
+                                                  </p>
+                                                </div>
+                                                <div class="form-group" >
+                                                  <label for="exampleInputEmail1">ID: </label>
+                                                  <input type="text" class="form-control" id="idDowngrade" name="idDowngrade" value="<?= $row['id_barang_masuk'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group" >
+                                                  <label for="exampleInputEmail1">Nama Barang : </label>
+                                                  <input type="text" class="form-control" id="namaBarang" name="namaBarang" value="<?= $rowss['nama'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group" >
+                                                  <label for="exampleInputEmail1">Jenis Barang : </label>
+                                                  <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" value="<?= $rowss['jenis_barang'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group" >
+                                                  <label for="exampleInputEmail1">Jenis Barang : </label>
+                                                  <input type="text" class="form-control" id="grade" name="grade" value="<?= $rowss['grade'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group" >
+                                                  <label for="exampleInputEmail1">Netto : </label>
+                                                  <input type="text" class="form-control" id="netto" name="netto" value="<?= $rowss['netto'] ?>" readonly="true" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="status_pembayaran">Pilih Grade : </label>
+                                                  <select class="form-control" name="choosenGrade" id="choosenGrade">
+                                                    <?php 
+                                                        if ($rowss['grade'] == "A"){
+                                                          echo "
+                                                            <option value='B' <?= ($rowss[grade] == 'B')>B</option>
+                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
+                                                          ";
+                                                        } else if ($rowss['grade'] == "B"){
+                                                          echo "
+                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
+                                                          ";
+                                                        }
+                                                    ?>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            <?php endforeach; ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                              <button type="submit" id="submitDownGrade" name="submitDownGrade" class="btn btn-primary">Return</button>
+                                            </div>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
                               <?php endforeach; ?>
                             </form>
                           </tbody>

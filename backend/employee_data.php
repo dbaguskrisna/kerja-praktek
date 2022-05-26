@@ -112,9 +112,7 @@ if (isset($_POST["submit"])) {
       <a href="index3.html" class="brand-link">
         <img src="dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">
-              <?php 
-                echo $_SESSION['user'];
-              ?>
+             <p>PT.Alfian Putra Jaya</p>
         </span>
       </a>
 
@@ -399,7 +397,7 @@ if (isset($_POST["submit"])) {
                                                   <label for="exampleInputEmail1">Password : </label>
                                                   <input class="form-control" type="password" name="passwordUpdate" value="<?= $rows['decrypt'] ?>" required>
                                                 </div>
-
+                                                
                                                 <div class="form-group">
                                                   <label for="jabatan">Jabatan : </label>
                                                   <select class="form-control" name="jabatanUpdate" id="jabatanUpdate">
