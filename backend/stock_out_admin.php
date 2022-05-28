@@ -452,13 +452,13 @@ if (isset($_POST["submit"])) {
                           <?= $row["nama_kontainer"] ?>
                         </td>
                         <td>
-                          <?= $row["no_of_bags"] ?>
+                          <?= $row["no_of_bags"] ?> kg
                         </td>
                         <td>
-                          <?= $row["gross_weight"] ?>
+                          <?= $row["gross_weight"] ?> kg
                         </td>
                         <td>
-                          <?= $row["net_weight"] ?>
+                          <?= $row["net_weight"] ?> kg
                         </td>
                         <td>
                           <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_barang_keluar"] ?>'>Edit</button>

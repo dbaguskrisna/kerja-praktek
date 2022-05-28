@@ -16,6 +16,22 @@ function query($query)
     }
 }
 
+function chart($query)
+{
+    global $conn; //untuk mengambil variable mysqli diatas
+    $result = mysqli_query($conn, $query); //untuk melakukan queery
+    $rows = []; //tempat untuk menampung row
+
+    if (empty($result)) {
+        return false;
+    } else {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row; //untuk menambahkan elemen baru ke tiap array kayak 1 1 masuknya
+        }
+    }
+    echo json_encode($rows);
+}
+
 function insertSupplier($ship)
 {
     global $conn;

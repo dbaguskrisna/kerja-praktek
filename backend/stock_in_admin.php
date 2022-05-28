@@ -358,13 +358,13 @@ if (isset($_POST["submit"])) {
                                     <?= $row["truck"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["coly"] ?>
+                                    <?= $row["coly"] ?> kg
                                   </td>
                                   <td>
-                                    <?= $row["gross"] ?>
+                                    <?= $row["gross"] ?> kg
                                   </td>
                                   <td>
-                                    <?= $row["netto"] ?>
+                                    <?= $row["netto"] ?> kg
                                   </td>
                                   <td>
                                     <?= $row["nama"] ?>

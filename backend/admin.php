@@ -6,11 +6,13 @@ if (!isset($_SESSION["admin"])) {
   header("Location: ../login/index.php");
   exit;
 }
-
-$data = query("SELECT nama,jenis_barang,grade, MAX(master_barang.stok) as stok FROM master_barang WHERE master_barang.stok > 100 GROUP BY stok DESC LIMIT 4;");
 $dataSupplier = query("SELECT count(supplier.id_supplier) AS supplier FROM supplier;");
 $pembayaranCustomer = query("SELECT count(pembayaran_customer.id_pembayaran) AS pembayaran_customer FROM pembayaran_customer;");
 $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
+
+$koneksi     = mysqli_connect("localhost", "root", "", "coba");
+$bulan       = mysqli_query($koneksi, "SELECT nama,jenis_barang,grade, MAX(master_barang.stok) as stok FROM master_barang WHERE master_barang.stok > 100 GROUP BY stok DESC LIMIT 4;");
+$penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHERE tahun='2016' order by id asc");
 ?>
 
 <!DOCTYPE html>
@@ -53,17 +55,17 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-     
+
 
       <!-- SEARCH FORM -->
-   
+
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-       
+
         <!-- Notifications Dropdown Menu -->
-        
+
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -90,9 +92,9 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
           </div>
           <div class="info">
             <a href="#" class="d-block">
-            <?php
-             echo $_SESSION["user"];
-            ?>
+              <?php
+              echo $_SESSION["user"];
+              ?>
             </a>
           </div>
         </div>
@@ -159,6 +161,14 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
                   Master Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="stock_in_admin.php" class="nav-link">
+                <i class="nav-icon fas fa-sign-in-alt"></i>
+                <p>
+                  Downgrade history
                 </p>
               </a>
             </li>
@@ -296,77 +306,67 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
           <!-- ./col -->
         </div>
         <div class="row">
-          <div class="col-lg-6 col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <b>Data Barang dengan Stok Terbanyak</b>
-                </h3>
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
 
-                  </div>
+          <div class="col-lg-12">
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Pie Chart</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
                 </div>
               </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <tbody>
-                    <?php foreach ($data as $row) : ?>
-                      <tr>
-                        <td> <?= $row["nama"] ?></td>
-                        <td> <?= $row["jenis_barang"] ?></td>
-                        <td> <?= $row["grade"] ?></td>
-                        <td> <?= $row["stok"] ?></td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
+              <div class="card-body">
+                <div class="div">
+                  <form method="POST" action="" class="form-inline">
+                    <label for="date1" style=" text-align: center; padding-right: 27px;"> Informasi: </label>
+                    <select class="form-control mr-2" name="info" id="info">
+                      <option value="stock_barang_tertinggi">5 Stock Barang Tertinggi</option>
+                      <option value="">5 Bad Omzet (Barang)</option>
+                    </select>
+                    <br>
+                    <label for="date1" style="text-align: center; padding-right: 27px;
+            padding-left: 50px;"> Periode bulan: </label>
+                    <select class="form-control mr-2" name="bulan" id="bulan">
+                      <option value="1">Januari</option>
+                      <option value="2">Febuari</option>
+                      <option value="3">Maret</option>
+                      <option value="4">April</option>
+                      <option value="5">Mei</option>
+                      <option value="6">Juni</option>
+                      <option value="7">Juli</option>
+                      <option value="8">Agustus</option>
+                      <option value="9">September</option>
+                      <option value="10">Oktober</option>
+                      <option value="11">November</option>
+                      <option value="12">Desember</option>
+                    </select>
+                    <div class="div">
+                      <button type="button" id="getdata" name="getdata" class="btn btn-primary float-lg-right">Tampilkan </button>
+                    </div>
+
+                  </form>
+                </div>
+                <br>
+
+                <canvas id="myChart" style="min-height: 650px; height: 650px; max-height: 650px; max-width: 100%;"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
           </div>
-          <div class="col-lg-6 col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <b>Data Barang yang telah mencapai stok minimum</b>
-                </h3>
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
 
-                  </div>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                  <tbody>
-                    <?php foreach ($under_100 as $row) : ?>
-                      <tr>
-                        <td> <?= $row["nama"] ?></td>
-                        <td> <?= $row["jenis_barang"] ?></td>
-                        <td> <?= $row["grade"] ?></td>
-                        <td> <?= $row["stok"] ?></td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          </div>
+
         </div>
       </section>
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.1.0-rc
-      </div>
+
     </footer>
 
     <!-- Control Sidebar -->
@@ -377,6 +377,7 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
   </div>
   <!-- ./wrapper -->
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -389,6 +390,46 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
+  <script src="plugins/chart.js/Chart.js"></script>
+  <script>
+      $("#getdata").click(function() {
+        var visualisasi = $("#info").val();
+
+        $.getJSON("http://localhost/kp/backend/chart/"+visualisasi+".php", function(data) {
+
+          var isi_labels = [];
+          var isi_data = [];
+          $(data).each(function(i) {
+            isi_labels.push(data[i].nama + " GRADE " + data[i].grade);
+            isi_data.push(data[i].stok);
+          });
+
+          //deklarasi chartjs untuk membuat grafik 2d di id mychart   
+          var ctx = document.getElementById('myChart').getContext('2d');
+
+          var myChart = new Chart(ctx, {
+            //chart akan ditampilkan sebagai bar chart
+            type: 'doughnut',
+            data: {
+              //membuat label chart
+              labels: isi_labels,
+              datasets: [{
+                label: 'Data Produk',
+                //isi chart
+                data: isi_data,
+                //membuat warna pada bar chart
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+              }]
+            },
+          });
+
+        });
+      })
+  </script>
   <!-- Sparkline -->
   <script src="plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
@@ -424,9 +465,7 @@ $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
   <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-  <script>
 
-  </script>
 </body>
 
 </html>

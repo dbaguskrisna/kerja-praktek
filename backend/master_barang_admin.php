@@ -19,45 +19,6 @@ foreach ($under_100 as $row){
 }
 ?>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="POST">
-        <div class="modal-body">
-          <div class="card-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Username : </label>
-              <input type="text" class="form-control" name="username" id="username">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Password : </label>
-              <input type="text" class="form-control" name="password" id="password">
-            </div>
-            <div class="form-group">
-              <label for="jabatan">Jabatan : </label>
-              <select class="form-control" name="jabatan" id="jabatan">
-                <option value="admin">admin</option>
-                <option value="staff_gudang">staff gudang</option>
-                <option value="staff_kantor">staff kantor</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-          <button type="submit" id="submit" name="submit" class="btn btn-primary">Tambahkan Data</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <!DOCTYPE html>
 <html lang="en">
 

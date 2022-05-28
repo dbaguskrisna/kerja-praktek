@@ -366,9 +366,9 @@ if (isset($_POST["submit"])) {
                       <div class="col-sm-12 col-md-6"></div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-12">
-                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
-                          <thead>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                        <thead>
                             <tr role="row">
                               <th>Nomor Nota</th>
                               <th>Tanggal</th>
@@ -398,7 +398,7 @@ if (isset($_POST["submit"])) {
                                     <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["jumlah_pembayaran"] ?>
+                                    Rp. <?= number_format($row["jumlah_pembayaran"]),0 ?>
                                   </td>
                                   <td>
                                     <?= $row["total_barang"] ?>
@@ -425,13 +425,13 @@ if (isset($_POST["submit"])) {
                                     <?= $row["asal"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["coly"] ?>
+                                    <?= $row["coly"] ?> kg
                                   </td>
                                   <td>
-                                    <?= $row["gross"] ?>
+                                    <?= $row["gross"] ?> kg
                                   </td>
                                   <td>
-                                    <?= $row["netto"] ?>
+                                    <?= $row["netto"] ?> kg
                                   </td>
                                   <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>'>Edit</button>
@@ -574,12 +574,10 @@ if (isset($_POST["submit"])) {
                                     </div>
                                   </div>
                                 </div>
-                                
                               <?php endforeach; ?>
                             </form>
                           </tbody>
                         </table>
-                      </div>
                     </div>
                   </div>
                 </div>

@@ -348,8 +348,8 @@ if (isset($_POST["submit"])) {
                       <div class="col-sm-12 col-md-6"></div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-12">
-                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                      <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
                           <thead>
                             <tr role="row">
                               <th>Nomer Nota</th>
@@ -366,7 +366,6 @@ if (isset($_POST["submit"])) {
                               <th>Netto</th>
                               <th>Action</th>
                             </tr>
-                          </thead>
                           <tbody>
                             <form method="POST">
                               <?php foreach ($data as $row) : ?>
@@ -379,7 +378,7 @@ if (isset($_POST["submit"])) {
                                   </td>
                                   <td>
                                     Rp.
-                                    <?= $row["jumlah_pembayaran"] ?>
+                                    <?= number_format($row["jumlah_pembayaran"]),0 ?>
                                   </td>
                                   <td>
                                     <?= $row["bank"] ?>
@@ -561,6 +560,7 @@ if (isset($_POST["submit"])) {
                               <?php endforeach; ?>
                             </form>
                           </tbody>
+                          </thead>
                         </table>
                       </div>
                     </div>
