@@ -1,6 +1,9 @@
 <?php
      require '../function.php';
-     $data = chart("SELECT nama,jenis_barang,grade, MAX(master_barang.stok) as stok FROM master_barang WHERE master_barang.stok > 100 GROUP BY stok DESC LIMIT 4;");
 
-     echo$data;
+     $bulan = $_POST['bulan'];
+
+     $data = chart("SELECT barang_masuk.nama,barang_masuk.grade,barang_masuk.jenis_barang,MAX(barang_masuk.netto) as stok FROM barang_masuk WHERE month(barang_masuk.tanggal) = ".$bulan." GROUP BY barang_masuk.grade DESC LIMIT 4");
+
+     echo $data;
 ?>

@@ -126,6 +126,40 @@ if (isset($_POST["submit"])) {
   </div>
 </div>
 
+<div class="modal fade" id="exampleModalReturn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Return Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Silahkan Memilih Nomor Kontrak : </label>
+              <?php
+                $datass = query("SELECT * FROM barang_keluar WHERE barang_keluar.status =0");
+              ?>
+              <select name="idReturn" class="form-control" id="idReturn">
+                <?php foreach ($datass as $rows) : ?>
+                  <option value="<?= $rows['id_barang_keluar'] ?>"><?= $rows['contract_no'] ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+            <button type="submit" id="submitReturn" name="submitReturn" class="btn btn-primary">Return</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -357,6 +391,9 @@ if (isset($_POST["submit"])) {
               <div class="row">
                 <div class="col-sm">
                   <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                  <button type="button" class="btn btn-warning mb-2" data-toggle="modal" data-target="#exampleModalReturn">
+                    <i class="fa fa-undo" aria-hidden="true"></i> Return
+                  </button>
                 </div>
                 <div class="col-sm d-flex justify-content-end">
                   <a href="cetak_stock_out.php">
@@ -465,9 +502,6 @@ if (isset($_POST["submit"])) {
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal<?= $row["id_barang_keluar"] ?>">
                             Delete
                           </button>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_keluar"] ?>">
-                            <i class="fa fa-undo" aria-hidden="true"></i> Return
-                          </button>
                         </td>
                       </tr>
 
@@ -476,6 +510,9 @@ if (isset($_POST["submit"])) {
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLongTitle">tambah data stock out</h5>
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalReturn">
+                                <i class="fa fa-undo" aria-hidden="true"></i> Return
+                              </button>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -566,7 +603,6 @@ if (isset($_POST["submit"])) {
                                         <label for="exampleInputEmail1">Net Weight : </label>
                                         <input type="text" class="form-control" name="netWeight2" id="netWeight2">
                                       </div>
-
                                     </div>
                                     <div class="form-row">
                                       <div class="form-group col-md-4">
@@ -655,53 +691,6 @@ if (isset($_POST["submit"])) {
                         </div>
                       </div>
 
-                      <div class="modal fade" id="exampleModalReturn<?= $row['id_barang_keluar'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLongTitle">Return Barang</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <form method="POST">
-                              <div class="modal-body">
-                                <?php
-                                $id = $row['id_barang_keluar'];
-                                $datass = query("SELECT * FROM barang_keluar where id_barang_keluar = $id");
-                                ?>
-                                <?php foreach ($datass as $rowss) : ?>
-                                  <div class="card-body">
-                                    <div class="form-group">
-                                      <div class="form-group">
-                                        <label for="exampleInputEmail1">ID: </label>
-                                        <input type="text" class="form-control" id="idReturn" name="idReturn" value="<?= $row['id_barang_keluar'] ?>" readonly="true" required>
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="exampleInputEmail1">ID: </label>
-                                        <input type="text" class="form-control" id="idMasterBarang" name="idMasterBarang" value="<?= $rowss['id_barang'] ?>" readonly="true" required>
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="exampleInputEmail1">ID: </label>
-                                        <input type="text" class="form-control" id="netBarangReturn" name="netBarangReturn" value="<?= $row['net_weight'] ?>" readonly="true" required>
-                                      </div>
-                                      <div class="form-group">
-                                        <p class="text-center">
-                                          Apakah anda yakin ingin melakukan return barang dengan <b>Nomor Kontrak <?= $row['contract_no'] ?> </b>?
-                                        </p>
-                                      </div>
-                                    </div>
-                                  <?php endforeach; ?>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                    <button type="submit" id="submitReturn" name="submitReturn" class="btn btn-primary">Return</button>
-                                  </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
                       <!-- modal edit -->
                     <?php endforeach; ?>
                   </form>

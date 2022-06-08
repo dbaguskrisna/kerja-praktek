@@ -1,5 +1,6 @@
 <?php
 require 'function.php';
+
 $data = query("SELECT barang_masuk.id_barang_masuk ,pembayaran_supplier.nomor_nota, barang_masuk.tanggal, barang_masuk.truck, barang_masuk.coly, barang_masuk.gross, barang_masuk.netto, barang_masuk.nama, barang_masuk.jenis_barang, barang_masuk.grade, barang_masuk.asal, kontainer.nama_kontainer FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran INNER JOIN kontainer ON barang_masuk.id_kontainer = kontainer.id_kontainer;");
 //Koneksi dan Menentukan Database Di Server
 $conn = mysqli_connect("localhost", "root", "", "coba");
@@ -97,7 +98,7 @@ if (!$conn) {
 
      </table>
      <td>
-          <h3>LAPORAN DATA CONTOH</h3>
+          <h3>LAPORAN DATA BARANG MASUK</h3>
      </td>
      <tr>
           <td>

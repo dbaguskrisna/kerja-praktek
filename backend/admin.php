@@ -325,8 +325,10 @@ $penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHE
                   <form method="POST" action="" class="form-inline">
                     <label for="date1" style=" text-align: center; padding-right: 27px;"> Informasi: </label>
                     <select class="form-control mr-2" name="info" id="info">
-                      <option value="stock_barang_tertinggi">5 Stock Barang Tertinggi</option>
-                      <option value="">5 Bad Omzet (Barang)</option>
+                      <option value="stock_barang_tertinggi">Data Barang Masuk Tertinggi</option>
+                      <option value="stock_barang_terendah">Data Barang Masuk Terendah</option>
+                      <option value="stock_barang_keluar_tertinggi">Data Barang Keluar Tertinggi</option>
+                      <option value="stock_barang_keluar_terendah">Data Barang Keluar Terendah</option>
                     </select>
                     <br>
                     <label for="date1" style="text-align: center; padding-right: 27px;
@@ -391,45 +393,6 @@ $penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHE
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
   <script src="plugins/chart.js/Chart.js"></script>
-  <script>
-      $("#getdata").click(function() {
-        var visualisasi = $("#info").val();
-
-        $.getJSON("http://localhost/kp/backend/chart/"+visualisasi+".php", function(data) {
-
-          var isi_labels = [];
-          var isi_data = [];
-          $(data).each(function(i) {
-            isi_labels.push(data[i].nama + " GRADE " + data[i].grade);
-            isi_data.push(data[i].stok);
-          });
-
-          //deklarasi chartjs untuk membuat grafik 2d di id mychart   
-          var ctx = document.getElementById('myChart').getContext('2d');
-
-          var myChart = new Chart(ctx, {
-            //chart akan ditampilkan sebagai bar chart
-            type: 'doughnut',
-            data: {
-              //membuat label chart
-              labels: isi_labels,
-              datasets: [{
-                label: 'Data Produk',
-                //isi chart
-                data: isi_data,
-                //membuat warna pada bar chart
-                backgroundColor: [
-                  'rgb(255, 99, 132)',
-                  'rgb(54, 162, 235)',
-                  'rgb(255, 205, 86)'
-                ],
-              }]
-            },
-          });
-
-        });
-      })
-  </script>
   <!-- Sparkline -->
   <script src="plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
@@ -465,7 +428,68 @@ $penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHE
   <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var myChart;
+      var refreshChart = 0;
 
+      $("#getdata").click(function() {
+        var visualisasi = $("#info").val();
+        var bulan = $('#bulan').val();
+
+        if(refreshChart > 0){
+            myChart.data.labels.pop();
+            myChart.data.datasets.pop();
+            myChart.update();
+        }
+
+        $.ajax({
+          method: "POST",
+          url: "http://localhost/kp/backend/chart/" + visualisasi + ".php",
+          data: {
+            bulan: bulan,
+            submit: "getdata"
+          },
+          success: function(data) {
+            var data = JSON.parse(data);
+          
+            var isi_labels = [];
+            var isi_data = [];
+            $(data).each(function(i) {
+              isi_labels.push(data[i].nama + " GRADE " + data[i].grade);
+              isi_data.push(data[i].stok);
+            });
+
+            //deklarasi chartjs untuk membuat grafik 2d di id mychart   
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            myChart = new Chart(ctx, {
+              //chart akan ditampilkan sebagai bar chart
+              type: 'doughnut',
+              data: {
+                //membuat label chart
+                labels: isi_labels,
+                datasets: [{
+                  label: 'Data Produk',
+                  //isi chart
+                  data: isi_data,
+                  //membuat warna pada bar chart
+                  backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                  ],
+                }]
+              },
+            });
+            refreshChart++;         
+          }
+        });
+
+      });
+
+    });
+  </script>
 </body>
 
 </html>

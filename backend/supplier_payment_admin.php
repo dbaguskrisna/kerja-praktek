@@ -45,7 +45,7 @@ if (isset($_POST["submit"])) {
                 <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
               </div>
               <div class="form-group col-md-3">
-                <label for="inputPassword4">Total Barang: </label>
+                <label for="inputPassword4">Total Barang (Kg): </label>
                 <input type="text" class="form-control" id="totalBarang" name="totalBarang" placeholder="Masukkan Total Barang" required>
               </div>
             </div>
@@ -74,16 +74,16 @@ if (isset($_POST["submit"])) {
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputEmail4">Coly</label>
+                <label for="inputEmail4">Coly (Kg):</label>
                 <input type="text" class="form-control" id="coly" name="coly" placeholder="Coly" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="inputEmail4">Gross</label>
+                <label for="inputEmail4">Gross (Kg):</label>
                 <input type="text" class="form-control" id="gross" name="gross" placeholder="Gross" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="inputEmail4">Netto</label>
-                <input type="text" class="form-control" id="netto" name="netto" placeholder="Netto" required>
+                <label for="inputEmail4">Netto (Kg):</label>
+                <input type="text" class="form-control" id="netto" name="netto" placeholder="Netto" readonly required>
               </div>
             </div>
             <div class="form-row">
@@ -93,7 +93,7 @@ if (isset($_POST["submit"])) {
               </div>
               <div class="form-group col-md-3">
                 <label for="inputEmail4">Jenis Barang</label>
-                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" placeholder="Masukkan Jenis Barang" required>
+                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" placeholder="Masukkan Jenis Barang"  required>
               </div>
               <div class="form-group col-md-3">
                 <label for="jabatan">Grade Barang : </label>
@@ -101,7 +101,6 @@ if (isset($_POST["submit"])) {
                   <option value="A">A</option>
                   <option value="B">B</option>
                   <option value="C">C</option>
-                  <option value="D">D</option>
                 </select>
               </div>
               <div class="form-group col-md-3">
@@ -114,6 +113,79 @@ if (isset($_POST["submit"])) {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
           <button type="submit" id="submit" name="submit" class="btn btn-primary">Tambahkan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalReturn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Turun Grade</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <?php
+          $id = $row['id_barang_masuk'];
+          $datass = query("SELECT barang_masuk.netto,barang_masuk.nama,barang_masuk.jenis_barang,barang_masuk.grade,barang_masuk.id_barang_masuk,pembayaran_supplier.nomor_nota,barang_masuk.grade FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran where id_barang_masuk = $id");
+          ?>
+          <?php foreach ($datass as $rowss) : ?>
+            <div class="card-body">
+              <div class="form-group">
+                <div class="form-group">
+                  <p class="text-center">
+                    Apakah anda yakin ingin melakukan penurunan grade barang dengan <b>Nomor Nota : <?= $row['nomor_nota'] ?> </b>?
+                  </p>
+                </div>
+                <div class="form-group" hidden>
+                  <label for="exampleInputEmail1">ID: </label>
+                  <input type="text" class="form-control" id="idDowngrade" name="idDowngrade" value="<?= $row['id_barang_masuk'] ?>" readonly="true" required>
+                </div>
+                <div class="form-group" hidden>
+                  <label for="exampleInputEmail1">Nama Barang : </label>
+                  <input type="text" class="form-control" id="namaBarang" name="namaBarang" value="<?= $rowss['nama'] ?>" readonly="true" required>
+                </div>
+                <div class="form-group" hidden>
+                  <label for="exampleInputEmail1">Jenis Barang : </label>
+                  <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" value="<?= $rowss['jenis_barang'] ?>" readonly="true" required>
+                </div>
+                <div class="form-group" hidden>
+                  <label for="exampleInputEmail1">Jenis Barang : </label>
+                  <input type="text" class="form-control" id="grade" name="grade" value="<?= $rowss['grade'] ?>" readonly="true" required>
+                </div>
+                <div class="form-group" hidden>
+                  <label for="exampleInputEmail1">Netto : </label>
+                  <input type="text" class="form-control" id="netto" name="netto" value="<?= $rowss['netto'] ?>" readonly="true" required>
+                </div>
+                <div class="form-group">
+                  <label for="status_pembayaran">Pilih Grade : </label>
+                  <select class="form-control" name="choosenGrade" id="choosenGrade">
+                    <?php
+                    if ($rowss['grade'] == "A") {
+                      echo "
+                                                            <option value='B' <?= ($rowss[grade] == 'B')>B</option>
+                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
+                                                          ";
+                    } else if ($rowss['grade'] == "B") {
+                      echo "
+                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
+                                                          ";
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+            <?php endforeach; ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+              <button type="submit" id="submitDownGrade" name="submitDownGrade" class="btn btn-primary">Turunkan</button>
+            </div>
         </div>
       </form>
     </div>
@@ -156,17 +228,17 @@ if (isset($_POST["submit"])) {
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
-     
+
 
       <!-- SEARCH FORM -->
-   
+
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-       
+
         <!-- Notifications Dropdown Menu -->
-        
+
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -193,8 +265,8 @@ if (isset($_POST["submit"])) {
           </div>
           <div class="info">
             <a href="#" class="d-block">
-              <?php 
-                echo $_SESSION['user'];
+              <?php
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -366,9 +438,9 @@ if (isset($_POST["submit"])) {
                       <div class="col-sm-12 col-md-6"></div>
                     </div>
                     <div class="row">
-                    <div class="card-body table-responsive p-0">
+                      <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
-                        <thead>
+                          <thead>
                             <tr role="row">
                               <th>Nomor Nota</th>
                               <th>Tanggal</th>
@@ -398,7 +470,7 @@ if (isset($_POST["submit"])) {
                                     <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    Rp. <?= number_format($row["jumlah_pembayaran"]),0 ?>
+                                    Rp. <?= number_format($row["jumlah_pembayaran"]), 0 ?>
                                   </td>
                                   <td>
                                     <?= $row["total_barang"] ?>
@@ -578,19 +650,19 @@ if (isset($_POST["submit"])) {
                             </form>
                           </tbody>
                         </table>
+                      </div>
                     </div>
                   </div>
+                  <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.card -->
+                <!-- /.card -->
               </div>
-              <!-- /.card -->
-              <!-- /.card -->
+              <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
           </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
+          <!-- /.container-fluid -->
       </section>
       <!-- Main content -->
       <section class="content">
@@ -647,6 +719,14 @@ if (isset($_POST["submit"])) {
   <script src="dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
+
+  <script>
+    $("#gross,#coly").keyup(function() {
+
+      $('#netto').val($('#gross').val() - $('#coly').val());
+
+    });
+  </script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
 </body>

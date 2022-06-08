@@ -15,7 +15,7 @@ if (isset($_POST["submit"])) {
   updateStockin($_POST);
 } else if (isset($_POST["submitDelete"])) {
   deleteStockin($_POST);
-} else if(isset($_POST['submitDownGrade'])) {
+} else if (isset($_POST['submitDownGrade'])) {
   downGrade($_POST);
 }
 
@@ -70,6 +70,50 @@ if (isset($_POST["submit"])) {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
           <button type="submit" id="submit" name="submit" class="btn btn-primary">Tambahkan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Cetak Laporan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="jabatan">Silahkan Pilih Bulan : </label>
+                <select class="form-control" name="season" id="season">
+                <option value="1">Januari</option>
+                      <option value="2">Febuari</option>
+                      <option value="3">Maret</option>
+                      <option value="4">April</option>
+                      <option value="5">Mei</option>
+                      <option value="6">Juni</option>
+                      <option value="7">Juli</option>
+                      <option value="8">Agustus</option>
+                      <option value="9">September</option>
+                      <option value="10">Oktober</option>
+                      <option value="11">November</option>
+                      <option value="12">Desember</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+          <a href="cetak_stock_in.php">
+            <button type="button" class="btn btn-success mb-2 ">Cetak Laporan</button>
+          </a>
         </div>
       </form>
     </div>
@@ -386,9 +430,7 @@ if (isset($_POST["submit"])) {
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong<?= $row['id_barang_masuk'] ?>">
                                       Delete
                                     </button>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_masuk"] ?>">
-                                      <i class="fa fa-arrow-down" aria-hidden="true"></i> Turun Grade
-                                    </button>
+                                  
                                   </td>
                                 </tr>
 
@@ -481,79 +523,6 @@ if (isset($_POST["submit"])) {
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
                                           <button type="submit" id="submitUpdate" name="submitUpdate" class="btn btn-primary">Update Data</button>
 
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="modal fade" id="exampleModalReturn<?= $row['id_barang_masuk'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Return Barang</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <form method="POST">
-                                        <div class="modal-body">
-                                          <?php
-                                            $id = $row['id_barang_masuk'];
-                                            $datass = query("SELECT barang_masuk.netto,barang_masuk.nama,barang_masuk.jenis_barang,barang_masuk.grade,barang_masuk.id_barang_masuk,pembayaran_supplier.nomor_nota,barang_masuk.grade FROM barang_masuk INNER JOIN pembayaran_supplier ON barang_masuk.id_pembayaran_supplier = pembayaran_supplier.id_pembayaran where id_barang_masuk = $id");
-                                          ?>
-                                          <?php foreach ($datass as $rowss) : ?>
-                                            <div class="card-body">
-                                              <div class="form-group">
-                                                <div class="form-group">
-                                                  <p class="text-center">
-                                                    Apakah anda yakin ingin melakukan penurunan grade barang dengan <b>Nomor Nota : <?= $row['nomor_nota'] ?> </b>?
-                                                  </p>
-                                                </div>
-                                                <div class="form-group" >
-                                                  <label for="exampleInputEmail1">ID: </label>
-                                                  <input type="text" class="form-control" id="idDowngrade" name="idDowngrade" value="<?= $row['id_barang_masuk'] ?>" readonly="true" required>
-                                                </div>
-                                                <div class="form-group" >
-                                                  <label for="exampleInputEmail1">Nama Barang : </label>
-                                                  <input type="text" class="form-control" id="namaBarang" name="namaBarang" value="<?= $rowss['nama'] ?>" readonly="true" required>
-                                                </div>
-                                                <div class="form-group" >
-                                                  <label for="exampleInputEmail1">Jenis Barang : </label>
-                                                  <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" value="<?= $rowss['jenis_barang'] ?>" readonly="true" required>
-                                                </div>
-                                                <div class="form-group" >
-                                                  <label for="exampleInputEmail1">Jenis Barang : </label>
-                                                  <input type="text" class="form-control" id="grade" name="grade" value="<?= $rowss['grade'] ?>" readonly="true" required>
-                                                </div>
-                                                <div class="form-group" >
-                                                  <label for="exampleInputEmail1">Netto : </label>
-                                                  <input type="text" class="form-control" id="netto" name="netto" value="<?= $rowss['netto'] ?>" readonly="true" required>
-                                                </div>
-                                                <div class="form-group">
-                                                  <label for="status_pembayaran">Pilih Grade : </label>
-                                                  <select class="form-control" name="choosenGrade" id="choosenGrade">
-                                                    <?php 
-                                                        if ($rowss['grade'] == "A"){
-                                                          echo "
-                                                            <option value='B' <?= ($rowss[grade] == 'B')>B</option>
-                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
-                                                          ";
-                                                        } else if ($rowss['grade'] == "B"){
-                                                          echo "
-                                                            <option value='C' <?= ($rowss[grade] == 'C')>C</option>
-                                                          ";
-                                                        }
-                                                    ?>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                            <?php endforeach; ?>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                              <button type="submit" id="submitDownGrade" name="submitDownGrade" class="btn btn-primary">Return</button>
-                                            </div>
                                         </div>
                                       </form>
                                     </div>

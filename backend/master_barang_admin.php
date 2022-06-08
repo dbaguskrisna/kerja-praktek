@@ -10,14 +10,66 @@ if (!isset($_SESSION["admin"])) {
 }
 $under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
 
-foreach ($under_100 as $row){
+foreach ($under_100 as $row) {
   echo "
-  <div class='alert alert-danger text-center' role='alert'>".
-      'Silahkan menambah stock barang '.$row['nama'].' grade '. $row['grade'] . ' karena telah mencapai batas stock minimum'
-  ."</div>
+  <div class='alert alert-danger text-center' role='alert'>" .
+    'Silahkan menambah stock barang ' . $row['nama'] . ' grade ' . $row['grade'] . ' karena telah mencapai batas stock minimum'
+    . "</div>
   ";
 }
+
+if (isset($_POST['submit'])) {
+  downGrade($_POST);
+}
+
 ?>
+
+
+<div class="modal fade" id="exampleModalReturn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Turun Grade</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Pilih Barang : </label>
+              <?php
+              $datas = query("SELECT master_barang.nama, master_barang.id_barang, master_barang.grade FROM master_barang");
+              ?>
+              <select name="idDowngrade" class="form-control" id="idDowngrade" required>
+                <?php foreach ($datas as $rows) : ?>
+                  <option value="<?= $rows['id_barang'] ?>"><?= $rows['nama'] ?> Grade <?= $rows['grade'] ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Pilih Grade : </label>
+              <select name="choosenGrade" class="form-control" id="choosenGrade" required>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Masukkan Jumlah (Kg) : </label>
+              <input type="text" class="form-control" name="netto" id="netto" placeholder="masukkan jumlah barang" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+          <button type="submit" id="submit" name="submit" class="btn btn-primary">Turunkan Data Barang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,10 +106,10 @@ foreach ($under_100 as $row){
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-     
+
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        
+
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -84,8 +136,8 @@ foreach ($under_100 as $row){
           </div>
           <div class="info">
             <a href="#" class="d-block">
-              <?php 
-                echo $_SESSION['user'];
+              <?php
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -248,8 +300,10 @@ foreach ($under_100 as $row){
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                  <div class="row-md-2">
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalReturn">
+                      <i class="fa fa-arrow-down" aria-hidden="true"></i> Turun Grade
+                    </button>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
@@ -281,7 +335,7 @@ foreach ($under_100 as $row){
                                     <?= $row["grade"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["stok"] ?>
+                                    <?= $row["stok"] ?> kg
                                   </td>
                                 </tr>
                               <?php endforeach; ?>

@@ -56,8 +56,12 @@ if (isset($_POST["submit"])) {
                 <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" placeholder="Masukkan Jenis Barang" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Grade Barang : </label>
-                <input type="text" class="form-control" id="gradeBarang" name="gradeBarang" placeholder="Masukkan Grade Barang" required>
+                <label for="jabatan">Grade Barang : </label>
+                <select class="form-control" name="gradeBarang" id="gradeBarang">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                </select>
               </div>
             </div>
             <div class="form-row">
@@ -94,7 +98,7 @@ if (isset($_POST["submit"])) {
               </div>
               <div class="form-group col-md-4">
                 <label for="jabatan">Netto (Kg) : </label>
-                <input type="text" class="form-control" id="netto" name="netto" placeholder="Masukkan Jenis Barang" required>
+                <input type="text" class="form-control" id="netto" name="netto" placeholder="Masukkan Jenis Barang" readonly required>
               </div>
             </div>
           </div>
@@ -378,7 +382,7 @@ if (isset($_POST["submit"])) {
                                   </td>
                                   <td>
                                     Rp.
-                                    <?= number_format($row["jumlah_pembayaran"]),0 ?>
+                                    <?= number_format($row["jumlah_pembayaran"]), 0 ?>
                                   </td>
                                   <td>
                                     <?= $row["bank"] ?>
@@ -634,7 +638,13 @@ if (isset($_POST["submit"])) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+  <script>
+    $("#gross,#coly").keyup(function() {
 
+      $('#netto').val($('#gross').val() - $('#coly').val());
+
+    });
+  </script>
   <script type="text/javascript">
     var rupiah = document.getElementById('rupiah');
     rupiah.addEventListener('keyup', function(e) {
