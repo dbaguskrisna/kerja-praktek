@@ -58,11 +58,6 @@
 							<div class="form-group">
 								<button type="submit" class="form-control btn btn-primary rounded submit px-3" name="login" id="login">Masuk</button>
 							</div>
-							<div class="form-group d-md-flex">
-								<div class="w-100 text-md-right">
-									<a href="#">Lupa Password ? </a>
-								</div>
-							</div>
 						</form>
 					</div>
 				</div>

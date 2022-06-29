@@ -128,6 +128,14 @@ $databarangmasuk = query("SELECT count(barang_masuk.id_barang_masuk) AS barang_m
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_gudang.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_gudang.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>

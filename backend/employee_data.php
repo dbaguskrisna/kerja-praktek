@@ -23,7 +23,7 @@ if (isset($_POST["submit"])) {
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -42,9 +42,9 @@ if (isset($_POST["submit"])) {
             <div class="form-group">
               <label for="jabatan">Jabatan : </label>
               <select class="form-control" name="jabatan" id="jabatan">
-                <option value="admin">admin</option>
-                <option value="staff_gudang">staff gudang</option>
-                <option value="staff_kantor">staff kantor</option>
+                <option value="manager">Manager</option>
+                <option value="staff_gudang">Staff gudang</option>
+                <option value="staff_kantor">Staff kantor</option>
               </select>
             </div>
           </div>

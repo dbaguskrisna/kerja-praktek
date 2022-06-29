@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Stock In</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -47,11 +47,11 @@ if (isset($_POST["submit"])) {
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Tanggal : </label>
-                <input type="date" class="form-control" name="tanggal" id="tanggal">
+                <input type="date" class="form-control" name="tanggal" id="tanggal" required>
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Nomor Truck : </label>
-                <input type="text" class="form-control" name="truck" id="truck" placeholder="masukkan nomor truck">
+                <input type="text" class="form-control" name="truck" id="truck" placeholder="masukkan nomor truck" required>
               </div>
               <div class="form-group col-md-3">
                 <label for="exampleInputEmail1">Container</label>
@@ -478,7 +478,7 @@ if (isset($_POST["submit"])) {
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Stock In</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>

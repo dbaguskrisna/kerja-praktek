@@ -34,31 +34,42 @@ if (isset($_POST["submit"])) {
           <div class="card-body">
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Jumlah Pembayaran: </label>
-                <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
+                <label for="inputPassword4">No Nota: </label>
+                <input type="text" class="form-control" id="nomorNota" name="nomorNota" placeholder="Masukkan Nomor Nota" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Tanggal</label>
                 <input type="date" class="form-control" id="tanggal" name="tanggal" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Total Barang: </label>
-                <input type="text" class="form-control" id="totalBarang" name="totalBarang" placeholder="Masukkan Total Barang" required>
+                <label for="inputPassword4">Jumlah Pembayaran (Rupiah): </label>
+                <input type="text" class="form-control" id="rupiah" name="jumlahPembayaran" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="inputEmail4">Bank</label>
-                <input type="text" class="form-control" id="bank" name="bank" required>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">Nama Barang : </label>
+                <input type="text" class="form-control" id="namaBarang" name="namaBarang" placeholder="Masukkan Nama Barang" required>
               </div>
-              <div class="form-group col-md-3">
-                <label for="jabatan">Status Pembayaran : </label>
-                <select class="form-control" name="statusPembayaran" id="statusPembayaran">
-                  <option value="Lunas">Lunas</option>
-                  <option value="Bayar di Muka">Bayar di Muka</option>
+              <div class="form-group col-md-4">
+                <label for="inputPassword4">Jenis Barang : </label>
+                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" placeholder="Masukkan Jenis Barang" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="jabatan">Grade Barang : </label>
+                <select class="form-control" name="gradeBarang" id="gradeBarang">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
                 </select>
               </div>
-              <div class="form-group col-md-3">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputEmail4">Bank</label>
+                <input type="text" class="form-control" id="bank" name="bank" placeholder="Masukkan Nama Bank" required>
+              </div>
+              <div class="form-group col-md-4">
                 <label for="jabatan">Customer : </label>
                 <select class="form-control" name="customer" id="customer">
                   <?php $dataCustomer = query("SELECT * FROM customer"); ?>
@@ -67,33 +78,27 @@ if (isset($_POST["submit"])) {
                   <?php endforeach; ?>
                 </select>
               </div>
-              <div class="form-group col-md-3">
-                <label for="jabatan">Nomor Nota : </label>
-                <select class="form-control" name="nomorNota" id="nomorNota">
-                  <?php $dataCustomer = query("SELECT * FROM pembayaran_customer"); ?>
-                  <?php foreach ($dataCustomer as $rowCustomer) : ?>
-                    <option value="<?= $rowCustomer['id_pembayaran'] ?>"><?= $rowCustomer['nomor_nota'] ?></option>
-                  <?php endforeach; ?>
+              <div class="form-group col-md-4">
+                <label for="jabatan">Status Pembayaran : </label>
+                <select class="form-control" name="statusPembayaran" id="statusPembayaran">
+                  <option value="Lunas">Lunas</option>
+                  <option value="Bayar di Muka">Bayar di Muka</option>
+                  <option value="Dikembalikan">Dikembalikan</option>
                 </select>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputPassword4">Nama Barang</label>
-                <input type="text" class="form-control" id="namaBarang" name="namaBarang" placeholder="Masukkan Nomor Nota" required>
+                <label for="inputPassword4">Coly (Kg) : </label>
+                <input type="text" class="form-control" id="coly" name="coly" placeholder="Masukkan Nomor Nota" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="inputEmail4">Jenis Barang</label>
-                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" placeholder="Masukkan Jenis Barang" required>
+                <label for="inputEmail4">Gross (Kg) : </label>
+                <input type="text" class="form-control" id="gross" name="gross" placeholder="Masukkan Jenis Barang" required>
               </div>
               <div class="form-group col-md-4">
-                <label for="jabatan">Grade Barang : </label>
-                <select class="form-control" name="grade" id="grade">
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="C">C</option>
-                  <option value="D">D</option>
-                </select>
+                <label for="jabatan">Netto (Kg) : </label>
+                <input type="text" class="form-control" id="netto" name="netto" placeholder="Masukkan Jenis Barang" readonly required>
               </div>
             </div>
           </div>
@@ -174,11 +179,12 @@ if (isset($_POST["submit"])) {
           </div>
           <div class="info">
             <a href="#" class="d-block">
-              <?php 
-                echo $_SESSION['user'];
+              <?php
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
+          
         </div>
 
         <!-- SidebarSearch Form -->
@@ -211,6 +217,14 @@ if (isset($_POST["submit"])) {
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Supplier Data
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="master_barang_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-folder"></i>
+                <p>
+                  Master Barang
                 </p>
               </a>
             </li>
@@ -307,22 +321,24 @@ if (isset($_POST["submit"])) {
                       <div class="col-sm-12 col-md-6"></div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-12">
-                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                      <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
                           <thead>
                             <tr role="row">
                               <th>Nomer Nota</th>
                               <th>Tanggal</th>
                               <th>Jumlah Pembayaran</th>
-                              <th>Total Barang</th>
                               <th>Bank</th>
                               <th>Status Pembayaran</th>
                               <th>Customer</th>
                               <th>Nama Barang</th>
                               <th>Jenis Barang</th>
                               <th>Grade</th>
+                              <th>Coly</th>
+                              <th>Gross</th>
+                              <th>Netto</th>
+                              <th>Action</th>
                             </tr>
-                          </thead>
                           <tbody>
                             <form method="POST">
                               <?php foreach ($data as $row) : ?>
@@ -334,10 +350,8 @@ if (isset($_POST["submit"])) {
                                     <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["jumlah_pembayaran"] ?>
-                                  </td>
-                                  <td>
-                                    <?= $row["total_barang"] ?>
+                                    Rp.
+                                    <?= number_format($row["jumlah_pembayaran"]) ?>
                                   </td>
                                   <td>
                                     <?= $row["bank"] ?>
@@ -356,6 +370,18 @@ if (isset($_POST["submit"])) {
                                   </td>
                                   <td>
                                     <?= $row["grade"] ?>
+                                  </td>
+                                  <td>
+                                    <?= $row["coly"] ?>
+                                    kg
+                                  </td>
+                                  <td>
+                                    <?= $row["gross"] ?>
+                                    kg
+                                  </td>
+                                  <td>
+                                    <?= $row["netto"] ?>
+                                    kg
                                   </td>
                                   <td>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target='.bd-example-modal-lg-edit<?= $row["id_pembayaran"] ?>'>Edit</button>
@@ -404,6 +430,7 @@ if (isset($_POST["submit"])) {
                                     </div>
                                   </div>
                                 </div>
+
                                 <!-- Ini nanti di edit dan disesuaikan bisa lihat contoh supplier payment admin -->
                                 <div class="modal fade bd-example-modal-lg-edit<?= $row['id_pembayaran'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg">
@@ -423,6 +450,10 @@ if (isset($_POST["submit"])) {
                                           <?php foreach ($datas as $rows) : ?>
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
+                                                <label for="inputPassword4">Nomor Nota</label>
+                                                <input type="text" class="form-control" name="nomorNota" id="nomorNota" value="<?= $rows['nomor_nota'] ?>" placeholder="Masukkan Nomor Nota" required>
+                                              </div>
+                                              <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Tanggal</label>
                                                 <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $rows['tanggal'] ?>" required>
                                               </div>
@@ -431,27 +462,42 @@ if (isset($_POST["submit"])) {
                                                 <input type="text" class="form-control" id="idPembayaran" name="idPembayaran" value="<?= $rows['id_pembayaran'] ?>" placeholder="Masukkan Nomor Nota" required>
                                               </div>
                                               <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Jumlah Pembayaran: </label>
+                                                <label for="inputPassword4">Jumlah Pembayaran (Rupiah): </label>
                                                 <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" value="<?= $rows['jumlah_pembayaran'] ?>" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
-                                              </div>
-                                              <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Total Barang: </label>
-                                                <input type="text" class="form-control" id="totalBarang" name="totalBarang" value="<?= $rows['total_barang'] ?>" placeholder="Masukkan Total Barang" required>
                                               </div>
                                             </div>
                                             <div class="form-row">
-                                              <div class="form-group col-md-3">
+                                              <div class="form-group col-md-4">
+                                                <label for="inputPassword4">Nama Barang: </label>
+                                                <input type="text" class="form-control" name="namaBarang" id="namaBarang" value="<?= $rows['nama_barang'] ?>" placeholder="Masukkan Nomor Nota" required>
+                                              </div>
+                                              <div class="form-group col-md-4">
+                                                <label for="inputEmail4">Jenis Barang: </label>
+                                                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" value="<?= $rows['jenis_barang'] ?>" required>
+                                              </div>
+                                              <div class="form-group col-md-4">
+                                                <label for="status_pembayaran">Grade Barang: </label>
+                                                <select class="form-control" name="grade" id="grade">
+                                                  <option value="A" <?= ($rows['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
+                                                  <option value="B" <?= ($rows['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
+                                                  <option value="C" <?= ($rows['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
+                                                  <option value="D" <?= ($rows['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="form-row">
+                                              <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Bank</label>
                                                 <input type="text" class="form-control" id="bank" name="bank" value="<?= $rows['bank'] ?>" placeholder="Masukkan Bank" required>
                                               </div>
-                                              <div class="form-group col-md-3">
+                                              <div class="form-group col-md-4">
                                                 <label for="status_pembayaran">Status Pembayaran : </label>
                                                 <select class="form-control" name="statusPembayaran" id="statusPembayaran">
                                                   <option value="Lunas" <?= ($rows['status_pembayaran'] == 'Lunas') ? 'selected="selected"' : '' ?>>Lunas</option>
                                                   <option value="Bayar di Muka" <?= ($rows['status_pembayaran'] == 'Bayar di Muka') ? 'selected="selected"' : '' ?>>Bayar di Awal</option>
                                                 </select>
                                               </div>
-                                              <div class="form-group col-md-3">
+                                              <div class="form-group col-md-4">
                                                 <label for="jabatan">Customer : </label>
                                                 <select class="form-control" name="customer" id="customer">
                                                   <?php $dataCustomer = query("SELECT * FROM customer"); ?>
@@ -460,28 +506,19 @@ if (isset($_POST["submit"])) {
                                                   <?php endforeach; ?>
                                                 </select>
                                               </div>
-                                              <div class="form-group col-md-3">
-                                                <label for="inputPassword4">Nomor Nota</label>
-                                                <input type="text" class="form-control" name="nomorNota" id="nomorNota" value="<?= $rows['nomor_nota'] ?>" placeholder="Masukkan Nomor Nota" required>
-                                              </div>
                                             </div>
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Nama Barang</label>
-                                                <input type="text" class="form-control" id="namaBarang" name="namaBarang" value="<?= $rows['nama_barang'] ?>" placeholder="Masukkan Nomor Nota" required>
+                                                <label for="inputPassword4">Coly (Kg): </label>
+                                                <input type="text" class="form-control" id="coly" name="coly" value="<?= $rows['coly'] ?>" placeholder="Masukkan Nomor Nota" required>
                                               </div>
                                               <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Jenis Barang</label>
-                                                <input type="text" class="form-control" id="jenisBarang" name="jenisBarang" value="<?= $rows['jenis_barang'] ?>" placeholder="Masukkan Jenis Barang" required>
+                                                <label for="inputEmail4">Gross (Kg):</label>
+                                                <input type="text" class="form-control" id="gross" name="gross" value="<?= $rows['gross'] ?>" placeholder="Masukkan Jenis Barang" required>
                                               </div>
                                               <div class="form-group col-md-4">
-                                                <label for="status_pembayaran">Grade : </label>
-                                                <select class="form-control" name="grade" id="grade">
-                                                  <option value="A" <?= ($rows['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
-                                                  <option value="B" <?= ($rows['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
-                                                  <option value="C" <?= ($rows['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
-                                                  <option value="D" <?= ($rows['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
-                                                </select>
+                                                <label for="inputEmail4">Netto (Kg):</label>
+                                                <input type="text" class="form-control" id="netto" name="netto" value="<?= $rows['netto'] ?>" placeholder="Masukkan Jenis Barang" required>
                                               </div>
                                             <?php endforeach; ?>
                                             </div>
@@ -496,6 +533,7 @@ if (isset($_POST["submit"])) {
                               <?php endforeach; ?>
                             </form>
                           </tbody>
+                          </thead>
                         </table>
                       </div>
                     </div>
@@ -569,6 +607,40 @@ if (isset($_POST["submit"])) {
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+  <script>
+    $("#gross,#coly").keyup(function() {
+
+      $('#netto').val($('#gross').val() - $('#coly').val());
+
+    });
+  </script>
+  <script type="text/javascript">
+    var rupiah = document.getElementById('rupiah');
+    rupiah.addEventListener('keyup', function(e) {
+      // tambahkan 'Rp.' pada saat form di ketik
+      // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+      rupiah.value = formatRupiah(this.value, 'Rp. ');
+    });
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix) {
+      var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+      // tambahkan titik jika yang di input sudah menjadi angka ribuan
+      if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+      }
+
+      rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+      return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+  </script>
+
 </body>
 
 </html>

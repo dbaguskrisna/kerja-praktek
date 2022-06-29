@@ -156,6 +156,14 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="master_barang_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-folder"></i>
+                <p>
+                  Master Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -179,7 +187,7 @@ if (isset($_POST["submit"])) {
               </ul>
             </li>
             <li class="nav-item">
-              <a href="customer_data_kantor.php" class="nav-link">
+              <a href="supplier_payment_kantor.php" class="nav-link">
                 <i class="nav-icon fas fa-dollar-sign"></i>
                 <p>
                   Customer Data

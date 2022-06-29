@@ -165,14 +165,6 @@ $penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHE
               </a>
             </li>
             <li class="nav-item">
-              <a href="stock_in_admin.php" class="nav-link">
-                <i class="nav-icon fas fa-sign-in-alt"></i>
-                <p>
-                  Downgrade history
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="supplier_data_admin.php" class="nav-link">
                 <i class="nav-icon fas fa-book"></i>
                 <p>
@@ -445,7 +437,7 @@ $penghasilan = mysqli_query($koneksi, "SELECT hasil_penjualan FROM penjualan WHE
 
         $.ajax({
           method: "POST",
-          url: "http://localhost/kp/backend/chart/" + visualisasi + ".php",
+          url: "http://localhost/simsalfian/backend/chart/" + visualisasi + ".php",
           data: {
             bulan: bulan,
             submit: "getdata"

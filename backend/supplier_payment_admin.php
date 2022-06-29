@@ -227,18 +227,7 @@ if (isset($_POST["submit"])) {
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-
-
-      <!-- SEARCH FORM -->
-
-
-      <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
-
-        <!-- Notifications Dropdown Menu -->
-
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -266,7 +255,7 @@ if (isset($_POST["submit"])) {
           <div class="info">
             <a href="#" class="d-block">
               <?php
-              echo $_SESSION['user'];
+                echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -406,7 +395,7 @@ if (isset($_POST["submit"])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Supplier Payment Admin</h1>
+              <h1 class="m-0">Supplier Payment</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -470,7 +459,7 @@ if (isset($_POST["submit"])) {
                                     <?= $row["tanggal"] ?>
                                   </td>
                                   <td>
-                                    Rp. <?= number_format($row["jumlah_pembayaran"]), 0 ?>
+                                    Rp. <?= number_format($row["jumlah_pembayaran"]) ?>
                                   </td>
                                   <td>
                                     <?= $row["total_barang"] ?>
@@ -557,7 +546,7 @@ if (isset($_POST["submit"])) {
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data User</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Supplier Payment</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>
@@ -580,7 +569,7 @@ if (isset($_POST["submit"])) {
                                               </div>
                                               <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Jumlah Pembayaran: </label>
-                                                <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" value="<?= $rows['jumlah_pembayaran'] ?>" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
+                                                <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" value="<?= $rows['jumlah_pembayaran'] ?>" placeholder="Masukkan Jumlah Pembayaran" required>
                                               </div>
                                               <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Total Barang: </label>
@@ -629,7 +618,6 @@ if (isset($_POST["submit"])) {
                                                   <option value="A" <?= ($rows['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
                                                   <option value="B" <?= ($rows['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
                                                   <option value="C" <?= ($rows['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
-                                                  <option value="D" <?= ($rows['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
                                                 </select>
                                               </div>
                                               <div class="form-group col-md-3">

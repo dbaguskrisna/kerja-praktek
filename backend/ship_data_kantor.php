@@ -163,6 +163,14 @@ if (isset($_POST["submit"])) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="master_barang_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-folder"></i>
+                <p>
+                  Master Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -325,7 +333,7 @@ if (isset($_POST["submit"])) {
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data User</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Kontainer</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>

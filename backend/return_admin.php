@@ -338,9 +338,6 @@ if (isset($_POST["submitReturn"])) {
           <div class="card">
             <div class="card-header">
               <div class="row">
-                <div class="col-sm">
-                  <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
-                </div>
                 <div class="col-sm d-flex justify-content-end">
                   <a href="cetak_return.php">
                     <button type="button" class="btn btn-success mb-2 ">Cetak Laporan</button>
@@ -445,8 +442,8 @@ if (isset($_POST["submitReturn"])) {
                           <?= $row["net_weight"] ?>
                         </td>
                         <td>
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_keluar"] ?>">
-                            <i class="fa fa-times" aria-hidden="true"></i> Batal
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalReturn<?= $row["id_barang_keluar"] ?>">
+                            <i class="fa fa-check" aria-hidden="true"></i>
                           </button>
                         </td>
                       </tr>
@@ -483,7 +480,7 @@ if (isset($_POST["submitReturn"])) {
                                       </div>
                                       <div class="form-group">
                                         <p class="text-center">
-                                          Apakah anda yakin ingin melakukan return barang dengan <b>Nomor Kontrak <?= $row['contract_no'] ?> </b>?
+                                          Apakah anda yakin ingin mengirimkan barang return kembali <b>Nomor Kontrak <?= $row['contract_no'] ?> </b>?
                                         </p>
                                       </div>
                                     </div>

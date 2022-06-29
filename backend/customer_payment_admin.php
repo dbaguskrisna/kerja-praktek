@@ -90,15 +90,15 @@ if (isset($_POST["submit"])) {
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputPassword4">Coly (Kg) : </label>
-                <input type="text" class="form-control" id="coly" name="coly" placeholder="Masukkan Nomor Nota" required>
+                <input type="text" class="form-control" id="coly" name="coly" placeholder="Masukkan Coly Barang" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Gross (Kg) : </label>
-                <input type="text" class="form-control" id="gross" name="gross" placeholder="Masukkan Jenis Barang" required>
+                <input type="text" class="form-control" id="gross" name="gross" placeholder="Masukkan Gross Barang" required>
               </div>
               <div class="form-group col-md-4">
                 <label for="jabatan">Netto (Kg) : </label>
-                <input type="text" class="form-control" id="netto" name="netto" placeholder="Masukkan Jenis Barang" readonly required>
+                <input type="text" class="form-control" id="netto" name="netto" placeholder="Masukkan Netto Barang" readonly required>
               </div>
             </div>
           </div>
@@ -320,7 +320,7 @@ if (isset($_POST["submit"])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Customer Payment Admin</h1>
+              <h1 class="m-0">Customer Payment</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -382,7 +382,7 @@ if (isset($_POST["submit"])) {
                                   </td>
                                   <td>
                                     Rp.
-                                    <?= number_format($row["jumlah_pembayaran"]), 0 ?>
+                                    <?= number_format($row["jumlah_pembayaran"])?>
                                   </td>
                                   <td>
                                     <?= $row["bank"] ?>
@@ -467,7 +467,7 @@ if (isset($_POST["submit"])) {
                                   <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data User</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Data Customer Payment</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>
@@ -494,13 +494,13 @@ if (isset($_POST["submit"])) {
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Jumlah Pembayaran (Rupiah): </label>
-                                                <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" value="<?= $rows['jumlah_pembayaran'] ?>" placeholder="Masukkan Nomor Jumlah Pembayaran" required>
+                                                <input type="text" class="form-control" id="jumlahPembayaran" name="jumlahPembayaran" value="<?= $rows['jumlah_pembayaran'] ?>" placeholder="Masukkan Jumlah Pembayaran" required>
                                               </div>
                                             </div>
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Nama Barang: </label>
-                                                <input type="text" class="form-control" name="namaBarang" id="namaBarang" value="<?= $rows['nama_barang'] ?>" placeholder="Masukkan Nomor Nota" required>
+                                                <input type="text" class="form-control" name="namaBarang" id="namaBarang" value="<?= $rows['nama_barang'] ?>" placeholder="Masukkan Nama Barang" required>
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Jenis Barang: </label>
@@ -512,7 +512,7 @@ if (isset($_POST["submit"])) {
                                                   <option value="A" <?= ($rows['grade'] == 'A') ? 'selected="selected"' : '' ?>>A</option>
                                                   <option value="B" <?= ($rows['grade'] == 'B') ? 'selected="selected"' : '' ?>>B</option>
                                                   <option value="C" <?= ($rows['grade'] == 'C') ? 'selected="selected"' : '' ?>>C</option>
-                                                  <option value="D" <?= ($rows['grade'] == 'D') ? 'selected="selected"' : '' ?>>D</option>
+
                                                 </select>
                                               </div>
                                             </div>
@@ -541,15 +541,15 @@ if (isset($_POST["submit"])) {
                                             <div class="form-row">
                                               <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Coly (Kg): </label>
-                                                <input type="text" class="form-control" id="coly" name="coly" value="<?= $rows['coly'] ?>" placeholder="Masukkan Nomor Nota" required>
+                                                <input type="text" class="form-control" id="coly" name="coly" value="<?= $rows['coly'] ?>" placeholder="Masukkan Jumlah Coly" required>
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Gross (Kg):</label>
-                                                <input type="text" class="form-control" id="gross" name="gross" value="<?= $rows['gross'] ?>" placeholder="Masukkan Jenis Barang" required>
+                                                <input type="text" class="form-control" id="gross" name="gross" value="<?= $rows['gross'] ?>" placeholder="Masukkan Jumlah Gross" required>
                                               </div>
                                               <div class="form-group col-md-4">
                                                 <label for="inputEmail4">Netto (Kg):</label>
-                                                <input type="text" class="form-control" id="netto" name="netto" value="<?= $rows['netto'] ?>" placeholder="Masukkan Jenis Barang" required>
+                                                <input type="text" class="form-control" id="netto" name="netto" value="<?= $rows['netto'] ?>" placeholder="Masukkan Jumlah Netto" required>
                                               </div>
                                             <?php endforeach; ?>
                                             </div>
@@ -640,7 +640,7 @@ if (isset($_POST["submit"])) {
   <script src="dist/js/pages/dashboard.js"></script>
   <script>
     $("#gross,#coly").keyup(function() {
-
+      
       $('#netto').val($('#gross').val() - $('#coly').val());
 
     });

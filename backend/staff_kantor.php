@@ -120,6 +120,14 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
               </a>
             </li>
             <li class="nav-item">
+              <a href="master_barang_kantor.php" class="nav-link">
+                <i class="nav-icon fas fa-folder"></i>
+                <p>
+                  Master Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -201,10 +209,10 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-              <h3>
+                <h3>
                   <?php foreach ($datapembayarancustomer as $rows) : ?>
                     <tr>
-                    <td> <?= $rows["pembayaran_customer"] ?></td>
+                      <td> <?= $rows["pembayaran_customer"] ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </h3>
@@ -221,7 +229,7 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-              <h3>
+                <h3>
                   <?php foreach ($datapembayaransupplier as $rows) : ?>
                     <tr>
                       <td> <?= $rows["pembayaran_supplier"] ?></td>
@@ -278,13 +286,72 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
-                  
+
                 </table>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
           </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-12">
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Pie Chart</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="div">
+                  <form method="POST" action="" class="form-inline">
+                    <label for="date1" style=" text-align: center; padding-right: 27px;"> Informasi: </label>
+                    <select class="form-control mr-2" name="info" id="info">
+                      <option value="stock_barang_tertinggi">Data Barang Masuk Tertinggi</option>
+                      <option value="stock_barang_terendah">Data Barang Masuk Terendah</option>
+                      <option value="stock_barang_keluar_tertinggi">Data Barang Keluar Tertinggi</option>
+                      <option value="stock_barang_keluar_terendah">Data Barang Keluar Terendah</option>
+                    </select>
+                    <br>
+                    <label for="date1" style="text-align: center; padding-right: 27px;
+            padding-left: 50px;"> Periode bulan: </label>
+                    <select class="form-control mr-2" name="bulan" id="bulan">
+                      <option value="1">Januari</option>
+                      <option value="2">Febuari</option>
+                      <option value="3">Maret</option>
+                      <option value="4">April</option>
+                      <option value="5">Mei</option>
+                      <option value="6">Juni</option>
+                      <option value="7">Juli</option>
+                      <option value="8">Agustus</option>
+                      <option value="9">September</option>
+                      <option value="10">Oktober</option>
+                      <option value="11">November</option>
+                      <option value="12">Desember</option>
+                    </select>
+                    <div class="div">
+                      <button type="button" id="getdata" name="getdata" class="btn btn-primary float-lg-right">Tampilkan </button>
+                    </div>
+
+                  </form>
+                </div>
+                <br>
+
+                <canvas id="myChart" style="min-height: 650px; height: 650px; max-height: 650px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+
+
         </div>
       </section>
       <!-- /.content -->
@@ -306,6 +373,7 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
   </div>
   <!-- ./wrapper -->
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -318,6 +386,7 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
+  <script src="plugins/chart.js/Chart.js"></script>
   <!-- Sparkline -->
   <script src="plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->
@@ -340,6 +409,81 @@ $datapembayaransupplier = query("SELECT count(pembayaran_supplier.id_pembayaran)
   <script src="dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="dist/js/pages/dashboard.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="plugins/jszip/jszip.min.js"></script>
+  <script src="plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var myChart;
+      var refreshChart = 0;
+      
+      $("#getdata").click(function() {
+        var visualisasi = $("#info").val();
+        var bulan = $('#bulan').val();
+       
+        if(refreshChart > 0){
+            myChart.data.labels.pop();
+            myChart.data.datasets.pop();
+            myChart.update();
+        }
+
+        $.ajax({
+          method: "POST",
+          url: "http://localhost/simsalfian/backend/chart/" + visualisasi + ".php",
+          data: {
+            bulan: bulan,
+            submit: "getdata"
+          },
+          success: function(data) {
+            var data = JSON.parse(data);
+           
+            var isi_labels = [];
+            var isi_data = [];
+            $(data).each(function(i) {
+              isi_labels.push(data[i].nama + " GRADE " + data[i].grade);
+              isi_data.push(data[i].stok);
+            });
+
+            //deklarasi chartjs untuk membuat grafik 2d di id mychart   
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            myChart = new Chart(ctx, {
+              //chart akan ditampilkan sebagai bar chart
+              type: 'doughnut',
+              data: {
+                //membuat label chart
+                labels: isi_labels,
+                datasets: [{
+                  label: 'Data Produk',
+                  //isi chart
+                  data: isi_data,
+                  //membuat warna pada bar chart
+                  backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                  ],
+                }]
+              },
+            });
+            refreshChart++;         
+          }
+        });
+
+      });
+
+    });
+  </script>
 </body>
 
 </html>

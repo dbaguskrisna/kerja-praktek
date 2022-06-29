@@ -3,7 +3,7 @@
 session_start();
 
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "coba");
+$conn = mysqli_connect("localhost", "root", "", "simsalfian");
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
@@ -20,7 +20,7 @@ function login ($submitdata){
     if ( mysqli_num_rows($checkUsers) === 1 ){
         $row = mysqli_fetch_assoc( $checkUsers ); // mysqli_fetch_assoc digunakan untuk menggambil data dari querry result dan dimasukkan ke dalam $row
         if($pass == $row["password"]){// Berguna untuk mengecek password jika sama
-           if($row["jabatan"] == "admin"){
+           if($row["jabatan"] == "manager"){
                $_SESSION["admin"] = true;
                $_SESSION["user"] = $row['email'];
                header("location: ../backend/admin.php");

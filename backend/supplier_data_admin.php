@@ -33,15 +33,15 @@ if (isset($_POST["submit"])) {
           <div class="card-body">
             <div class="form-group">
               <label for="exampleInputEmail1">Nama Supplier : </label>
-              <input type="text" class="form-control" name="namaSupplier" id="namaSupplier">
+              <input type="text" class="form-control" name="namaSupplier" id="namaSupplier" required>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Alamat : </label>
-              <input type="text" class="form-control" name="alamat" id="alamat">
+              <input type="text" class="form-control" name="alamat" id="alamat" required>
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">No Hp : </label>
-              <input type="text" class="form-control" name="noHp" id="noHp">
+              <input type="text" class="form-control" name="noHp" id="noHp" required>
             </div>
           </div>
         </div>

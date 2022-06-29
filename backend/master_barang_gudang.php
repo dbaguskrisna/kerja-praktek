@@ -8,56 +8,63 @@ if (!isset($_SESSION["staffGudang"])) {
   header("Location: ../login/index.php");
   exit;
 }
+$under_100 = query("SELECT * FROM master_barang WHERE master_barang.stok <100");
 
-if (isset($_POST["submit"])) {
-  insertUser($_POST);
-} else if (isset($_POST["submitUpdate"])){
-  updateUser($_POST);
-} 
-
-if (isset($_POST["submitDelete"])){
+foreach ($under_100 as $row) {
   echo "
-  <div class='alert alert-success text-center' role='alert'>
-      Delete data user sukses
-  </div>
-      ";
+  <div class='alert alert-danger text-center' role='alert'>" .
+    'Silahkan menambah stock barang ' . $row['nama'] . ' grade ' . $row['grade'] . ' karena telah mencapai batas stock minimum'
+    . "</div>
+  ";
+}
+
+if (isset($_POST['submit'])) {
+  downGrade($_POST);
 }
 
 ?>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+
+<div class="modal fade" id="exampleModalReturn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data Supplier</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Turun Grade</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form method="POST">
         <div class="modal-body">
-          <div class="card-body">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Username : </label>
-              <input type="text" class="form-control" name="username" id="username">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Password : </label>
-              <input type="text" class="form-control" name="password" id="password">
-            </div>
-            <div class="form-group">
-              <label for="jabatan">Jabatan : </label>
-              <select class="form-control" name="jabatan" id="jabatan">
-                <option value="admin">admin</option>
-                <option value="staff_gudang">staff gudang</option>
-                <option value="staff_kantor">staff kantor</option>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Pilih Barang : </label>
+              <?php
+              $datas = query("SELECT master_barang.nama, master_barang.id_barang, master_barang.grade FROM master_barang");
+              ?>
+              <select name="idDowngrade" class="form-control" id="idDowngrade" required>
+                <?php foreach ($datas as $rows) : ?>
+                  <option value="<?= $rows['id_barang'] ?>"><?= $rows['nama'] ?> Grade <?= $rows['grade'] ?></option>
+                <?php endforeach; ?>
               </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Pilih Grade : </label>
+              <select name="choosenGrade" class="form-control" id="choosenGrade" required>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="exampleInputEmail1">Masukkan Jumlah (Kg) : </label>
+              <input type="text" class="form-control" name="netto" id="netto" placeholder="masukkan jumlah barang" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-          <button type="submit" id="submit" name="submit" class="btn btn-primary">Tambahkan Data</button>
+          <button type="submit" id="submit" name="submit" class="btn btn-primary">Turunkan Data Barang</button>
         </div>
       </form>
     </div>
@@ -99,12 +106,10 @@ if (isset($_POST["submitDelete"])){
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-     
+
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
-        
-        <!-- Notifications Dropdown Menu -->
+
         <li class="nav-item">
           <a class="nav-link" role="button" href="logout.php">
             <i class="fas fa-sign-out-alt"></i>
@@ -121,7 +126,7 @@ if (isset($_POST["submitDelete"])){
         <img src="dist/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">PT.Alvian Putra Jaya</span>
       </a>
-      
+
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
@@ -131,8 +136,8 @@ if (isset($_POST["submitDelete"])){
           </div>
           <div class="info">
             <a href="#" class="d-block">
-              <?php 
-                echo $_SESSION['user'];
+              <?php
+              echo $_SESSION['user'];
               ?>
             </a>
           </div>
@@ -180,6 +185,14 @@ if (isset($_POST["submitDelete"])){
               </a>
             </li>
             <li class="nav-item">
+              <a href="return_gudang.php" class="nav-link">
+                <i class="nav-icon fas fa-undo"></i>
+                <p>
+                  Return Barang
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="master_barang_gudang.php" class="nav-link">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
@@ -187,7 +200,6 @@ if (isset($_POST["submitDelete"])){
                 </p>
               </a>
             </li>
-          
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -221,12 +233,14 @@ if (isset($_POST["submitDelete"])){
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                  <h3 class="card-title"></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg">+ Tambah</button>
+                  <div class="row-md-2">
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModalReturn">
+                      <i class="fa fa-arrow-down" aria-hidden="true"></i> Turun Grade
+                    </button>
                   </div>
                   <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
@@ -241,7 +255,6 @@ if (isset($_POST["submitDelete"])){
                               <th>Nama</th>
                               <th>Jenis Barang</th>
                               <th>Grade</th>
-                              <th>Asal</th>
                               <th>Stok</th>
                             </tr>
                           </thead>
@@ -259,10 +272,7 @@ if (isset($_POST["submitDelete"])){
                                     <?= $row["grade"] ?>
                                   </td>
                                   <td>
-                                    <?= $row["asal"] ?>
-                                  </td>
-                                  <td>
-                                    <?= $row["stok"] ?>
+                                    <?= $row["stok"] ?> kg
                                   </td>
                                 </tr>
                               <?php endforeach; ?>
